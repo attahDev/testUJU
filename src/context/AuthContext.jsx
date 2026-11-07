@@ -26,6 +26,15 @@ export function AuthProvider({ children }) {
       ready,
       login: (email, password) => authenticate('/api/auth/login', { email, password }),
       register: (name, email, password) => authenticate('/api/auth/register', { name, email, password }),
+      updateName: async (name) => {
+        const updated = await api('/api/auth/me', { method: 'PATCH', body: { name } });
+        setUser(updated);
+      },
+      changePassword: (currentPassword, newPassword) =>
+        api('/api/auth/change-password', {
+          method: 'POST',
+          body: { current_password: currentPassword, new_password: newPassword },
+        }),
       logout: () => {
         setToken(null);
         setUser(null);

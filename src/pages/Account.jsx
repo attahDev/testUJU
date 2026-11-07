@@ -128,6 +128,59 @@ function Orders() {
   );
 }
 
+function Details() {
+  const { user, updateName, changePassword } = useAuth();
+  const [name, setName] = useState(user.name);
+  const [nameMsg, setNameMsg] = useState('');
+  const [passwords, setPasswords] = useState({ current: '', next: '' });
+  const [passMsg, setPassMsg] = useState({ type: '', text: '' });
+
+  async function saveName(e) {
+    e.preventDefault();
+    try {
+      await updateName(name);
+      setNameMsg('Saved');
+    } catch (err) {
+      setNameMsg(err.message);
+    }
+  }
+
+  async function savePassword(e) {
+    e.preventDefault();
+    try {
+      await changePassword(passwords.current, passwords.next);
+      setPasswords({ current: '', next: '' });
+      setPassMsg({ type: 'ok', text: 'Password updated' });
+    } catch (err) {
+      setPassMsg({ type: 'error', text: err.message });
+    }
+  }
+
+  return (
+    <div className="account-details">
+      <form className="account-form" onSubmit={saveName}>
+        <h3>Your details</h3>
+        <input type="text" aria-label="Full name" required value={name} onChange={(e) => { setName(e.target.value); setNameMsg(''); }} />
+        {nameMsg && <span className="account-form__note">{nameMsg}</span>}
+        <Button type="submit" variant="outline">Save name</Button>
+      </form>
+      <form className="account-form" onSubmit={savePassword}>
+        <h3>Change password</h3>
+        <input
+          type="password" placeholder="Current password" aria-label="Current password" required autoComplete="current-password"
+          value={passwords.current} onChange={(e) => setPasswords({ ...passwords, current: e.target.value })}
+        />
+        <input
+          type="password" placeholder="New password (8+ characters)" aria-label="New password" required minLength={8} autoComplete="new-password"
+          value={passwords.next} onChange={(e) => setPasswords({ ...passwords, next: e.target.value })}
+        />
+        {passMsg.text && <span className={passMsg.type === 'error' ? 'account-form__error' : 'account-form__note'}>{passMsg.text}</span>}
+        <Button type="submit" variant="outline">Update password</Button>
+      </form>
+    </div>
+  );
+}
+
 export default function Account() {
   const { user, ready, logout } = useAuth();
 
@@ -150,6 +203,9 @@ export default function Account() {
 
       <h2 className="account-page__title">Order history</h2>
       <Orders />
+
+      <h2 className="account-page__title account-page__title--spaced">Account settings</h2>
+      <Details />
     </div>
   );
 }

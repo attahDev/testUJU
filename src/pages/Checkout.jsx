@@ -202,7 +202,11 @@ export default function Checkout() {
                 <p>{form.email}</p>
                 <p>{shipping.label} — {shipping.detail}</p>
               </div>
-              <p className="checkout-note">You will be taken to Stripe's secure page to enter your card details. Rose Uju never sees or stores your card number.</p>
+              <p className="checkout-note">
+                {config.paymentBypass
+                  ? 'Test mode: no payment is taken and no card is needed. Your order will be marked as paid.'
+                  : "You will be taken to Stripe's secure page to enter your card details. Rose Uju never sees or stores your card number."}
+              </p>
               {serverError && <p className="field__error" role="alert">{serverError}</p>}
             </>
           )}
@@ -210,7 +214,7 @@ export default function Checkout() {
           <button className={`checkout-submit${step === STEPS.length - 1 ? ' is-final' : ''}`} type="submit" disabled={submitting}>
             {step < STEPS.length - 1
               ? <>{STEPS[step + 1]} <span>→</span></>
-              : submitting ? 'Redirecting to Stripe…' : <>Pay {money(total)} <span>→</span></>}
+              : submitting ? (config.paymentBypass ? 'Placing order…' : 'Redirecting to Stripe…') : <>{config.paymentBypass ? 'Place order' : 'Pay'} {money(total)} <span>→</span></>}
           </button>
         </form>
 
