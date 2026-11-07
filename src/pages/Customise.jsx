@@ -1,0 +1,179 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/cartStore.js';
+import { useCatalog } from '../context/catalogStore.js';
+import './Customise.css';
+
+const STEPS = ['Choose Product', 'Choose Pattern', 'Personalize', 'Preview', 'Checkout'];
+const PRODUCT_TYPES = ['Scarf', 'Phone Case', 'Apparel', 'Jewelry'];
+const PATTERNS = [
+  { name: 'Ankara Bloom', tag: 'Ankara', image: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=500&q=80' },
+  { name: 'Isi Agu Weave', tag: 'Isi Agu', image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&q=80' },
+  { name: 'Coastal Abstract', tag: 'Abstract', image: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=500&q=80' },
+  { name: 'Sienna Fold', tag: 'Ankara', image: 'https://images.unsplash.com/photo-1614093302611-8efc4de12407?w=500&q=80' },
+  { name: 'Beaded Border', tag: 'Other', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=500&q=80' },
+  { name: 'Knit Weave', tag: 'Other', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&q=80' },
+];
+const PATTERN_TAGS = ['All', 'Ankara', 'Isi Agu', 'Abstract', 'Other'];
+const BANNER = 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=80';
+const COLORS = [
+  { name: 'Gold', hex: '#C89B4A' },
+  { name: 'Espresso', hex: '#3A2620' },
+  { name: 'Ink', hex: '#211712' },
+  { name: 'Olive', hex: '#6F7A4E' },
+  { name: 'Crimson', hex: '#B5342E' },
+  { name: 'Indigo', hex: '#3E5C82' },
+];
+
+export default function Customise() {
+  const [step, setStep] = useState(0);
+  const [product, setProduct] = useState('Scarf');
+  const [pattern, setPattern] = useState(PATTERNS[0]);
+  const [tag, setTag] = useState('All');
+  const [color, setColor] = useState(COLORS[0]);
+  const [initials, setInitials] = useState('');
+  const navigate = useNavigate();
+  const { addItem } = useCart();
+  const { config, money } = useCatalog();
+  const visiblePatterns = tag === 'All' ? PATTERNS : PATTERNS.filter((p) => p.tag === tag);
+  const price = config.customBase[product] / 100 + (initials ? config.initialsFee : 0);
+
+  function goNext() {
+    if (step < STEPS.length - 1) {
+      setStep(step + 1);
+      return;
+    }
+    addItem(
+      {
+        id: `custom-${product}-${pattern.name}-${initials}`.replace(/\s+/g, '-'),
+        name: `Custom ${product} — ${pattern.name}`,
+        price,
+        image: pattern.image,
+        collection: 'Customised',
+        custom: {
+          product_type: product,
+          pattern: pattern.name,
+          pattern_image: pattern.image,
+          color: color.name,
+          initials,
+        },
+      },
+      { color: color.name, size: initials ? `Initials ${initials}` : 'One size' }
+    );
+    navigate('/checkout');
+  }
+
+  function choosePattern(p) {
+    setPattern(p);
+    if (step === 0) setStep(1);
+  }
+
+  return (
+    <div className="customise-page">
+      <section className="customise-hero">
+        <img src={BANNER} alt="" />
+        <div className="customise-hero__content container">
+          <p className="crumb">Home &gt; <span>Customize</span></p>
+          <h1>Customize Your Design</h1>
+        </div>
+      </section>
+
+      <div className="container customise-body">
+        <div className="customise-steps">
+          {STEPS.map((label, i) => (
+            <div key={label} className={"customise-step" + (i === step ? ' is-active' : i < step ? ' is-done' : '')}>
+              <span className="customise-step__num">{i + 1}</span>
+              {label}
+              {i < STEPS.length - 1 && <span className="customise-step__arrow">→</span>}
+            </div>
+          ))}
+        </div>
+
+        <div className="customise-layout">
+          <div className="customise-products">
+            <h4>Choose Product</h4>
+            <div className="product-type-list">
+              {PRODUCT_TYPES.map((p) => (
+                <button
+                  key={p}
+                  className={"product-type" + (product === p ? ' is-active' : '')}
+                  onClick={() => setProduct(p)}
+                >
+                  {p} <span>›</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="customise-patterns">
+            <h4>Choose Pattern</h4>
+            <div className="pattern-filters">
+              {PATTERN_TAGS.map((t) => (
+                <button key={t} className={"pattern-filter" + (tag === t ? ' is-active' : '')} onClick={() => setTag(t)}>
+                  {t}
+                </button>
+              ))}
+            </div>
+            <div className="pattern-grid">
+              {visiblePatterns.map((p) => (
+                <button
+                  key={p.name}
+                  className={"pattern-tile" + (pattern.name === p.name ? ' is-active' : '')}
+                  onClick={() => choosePattern(p)}
+                  aria-label={p.name}
+                >
+                  <img src={p.image} alt={p.name} />
+                </button>
+              ))}
+            </div>
+
+            {step >= 2 && (
+              <div className="customise-personalize">
+                <h4>Personalize</h4>
+                <input
+                  className="personalize-input"
+                  type="text"
+                  maxLength={3}
+                  placeholder="Add initials (optional)"
+                  value={initials}
+                  onChange={(e) => setInitials(e.target.value.toUpperCase())}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="customise-preview">
+            <div className="customise-preview__frame" style={{ boxShadow: `inset 0 0 0 6px ${color.hex}22` }}>
+              <img src={pattern.image} alt="Preview" />
+              {initials && <span className="customise-preview__initials">{initials}</span>}
+            </div>
+
+            <h4>Colours</h4>
+            <div className="colour-dots">
+              {COLORS.map((c) => (
+                <button
+                  key={c.name}
+                  className={"colour-dot" + (color.name === c.name ? ' is-active' : '')}
+                  style={{ backgroundColor: c.hex }}
+                  onClick={() => setColor(c)}
+                  aria-label={c.name}
+                />
+              ))}
+            </div>
+
+            {step >= 3 && (
+              <p className="customise-summary">
+                {product} · {pattern.name} · {color.name}{initials ? ` · ${initials}` : ''}
+              </p>
+            )}
+            <p className="customise-price">{product} · {money(price)}</p>
+
+            <button className="next-steps-btn" onClick={goNext}>
+              {step < STEPS.length - 1 ? 'Next Steps' : 'Add to Cart & Checkout'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

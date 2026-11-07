@@ -1,0 +1,45 @@
+.stars { letter-spacing: 2px; }
+.stars__on { color: var(--color-gold); }
+.stars__off { color: var(--color-line); }
+
+.product-reviews { margin: clamp(48px, 6vw, 80px) 0; padding-top: 40px; border-top: 1px solid var(--color-line); }
+.product-reviews__title { font-size: var(--step-2); margin-bottom: 28px; }
+.product-reviews__layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+.product-reviews__summary { margin-bottom: 20px; font-size: 0.9375rem; }
+.product-reviews__item { padding: 18px 0; border-top: 1px solid var(--color-line); }
+.product-reviews__item p { margin: 8px 0 6px; color: var(--color-text-soft); line-height: 1.7; }
+.product-reviews__item small { color: var(--color-text-soft); font-size: 0.75rem; }
+.product-reviews__empty { color: var(--color-text-soft); }
+
+.product-reviews__form { display: flex; flex-direction: column; gap: 12px; }
+.product-reviews__form h3 { font-size: var(--step-3); }
+.product-reviews__form input,
+.product-reviews__form textarea {
+  border: 1px solid var(--color-line);
+  background: var(--color-cream);
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+  resize: vertical;
+}
+.product-reviews__rating { display: flex; gap: 4px; }
+.product-reviews__rating button { background: none; border: none; padding: 0; font-size: 1.5rem; color: var(--color-line); cursor: pointer; }
+.product-reviews__rating button.is-on { color: var(--color-gold); }
+.product-reviews__error { color: #B5342E; font-size: 0.8125rem; }
+.product-reviews__note { color: var(--color-olive); font-size: 0.875rem; }
+.product-reviews__submit {
+  align-self: flex-start;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  border: none;
+  padding: 12px 28px;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.product-reviews__submit:disabled { opacity: 0.6; }
+@media (max-width: 800px) {
+  .product-reviews__layout { grid-template-columns: 1fr; }
+}

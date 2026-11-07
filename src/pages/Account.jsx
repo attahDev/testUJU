@@ -1,0 +1,155 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { api } from '../api/client.js';
+import { formatDate } from '../api/mappers.js';
+import Button from '../components/Button.jsx';
+import { useAuth } from '../context/authStore.js';
+import { useCatalog } from '../context/catalogStore.js';
+import './Account.css';
+
+function AuthForm() {
+  const { login, register } = useAuth();
+  const [mode, setMode] = useState('login');
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
+
+  const [sent, setSent] = useState(false);
+
+  function switchMode(next) {
+    setMode(next);
+    setError('');
+    setSent(false);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setBusy(true);
+    setError('');
+    try {
+      if (mode === 'forgot') {
+        await api('/api/auth/forgot', { method: 'POST', auth: false, body: { email: form.email } });
+        setSent(true);
+      } else if (mode === 'login') {
+        await login(form.email, form.password);
+      } else {
+        await register(form.name, form.email, form.password);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+    setBusy(false);
+  }
+
+  return (
+    <div className="container section account-page account-page--narrow">
+      <h1>{mode === 'login' ? 'Sign in' : mode === 'register' ? 'Create account' : 'Reset password'}</h1>
+      <p className="account-page__lead">
+        {mode === 'login' && 'Welcome back. Sign in to see your orders.'}
+        {mode === 'register' && 'Create an account to track your orders and check out faster.'}
+        {mode === 'forgot' && 'Enter your email and we will send you a link to choose a new password.'}
+      </p>
+      <form className="account-form" onSubmit={handleSubmit}>
+        {mode === 'register' && (
+          <input
+            type="text" placeholder="Full name" aria-label="Full name" required autoComplete="name"
+            value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
+        )}
+        <input
+          type="email" placeholder="Email address" aria-label="Email address" required autoComplete="email"
+          value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
+        {mode !== 'forgot' && (
+          <input
+            type="password" placeholder="Password (8+ characters)" aria-label="Password" required minLength={8}
+            autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+            value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })}
+          />
+        )}
+        {error && <span className="account-form__error" role="alert">{error}</span>}
+        {sent && <span className="account-form__note">If an account exists for that email, a reset link is on its way.</span>}
+        <Button type="submit" variant="dark" disabled={busy}>
+          {mode === 'login' ? 'Sign in' : mode === 'register' ? 'Create account' : 'Send reset link'}
+        </Button>
+      </form>
+      <p className="account-page__switch">
+        {mode === 'login' && (
+          <>
+            <button type="button" onClick={() => switchMode('forgot')}>Forgot password?</button>
+            {' · New to Rose Uju? '}
+            <button type="button" onClick={() => switchMode('register')}>Create an account</button>
+          </>
+        )}
+        {mode === 'register' && (
+          <>Already have an account? <button type="button" onClick={() => switchMode('login')}>Sign in</button></>
+        )}
+        {mode === 'forgot' && <button type="button" onClick={() => switchMode('login')}>Back to sign in</button>}
+      </p>
+    </div>
+  );
+}
+
+function Orders() {
+  const { moneyPence } = useCatalog();
+  const [orders, setOrders] = useState(null);
+
+  useEffect(() => {
+    api('/api/orders').then(setOrders).catch(() => setOrders([]));
+  }, []);
+
+  if (orders === null) return <p className="cart-empty">Loading your orders…</p>;
+  if (orders.length === 0) {
+    return (
+      <p className="cart-empty">
+        You have not placed any orders yet. <Link to="/shop">Start shopping</Link>.
+      </p>
+    );
+  }
+  return (
+    <div className="account-orders">
+      {orders.map((order) => (
+        <Link key={order.id} to={`/order/${order.id}`} className="account-order">
+          <div>
+            <p className="account-order__id">{order.id}</p>
+            <p className="account-order__meta">
+              {formatDate(order.created_at)} · {order.items.reduce((sum, i) => sum + i.qty, 0)} items · {order.status}
+            </p>
+          </div>
+          <div className="account-order__thumbs">
+            {order.items.slice(0, 3).map((item) => (
+              <img key={item.id} src={item.image_url} alt="" />
+            ))}
+          </div>
+          <strong>{moneyPence(order.total_pence)}</strong>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+export default function Account() {
+  const { user, ready, logout } = useAuth();
+
+  if (!ready) return <div className="container section"><p>Loading…</p></div>;
+  if (!user) return <AuthForm />;
+
+  return (
+    <div className="container section account-page">
+      <div className="account-page__head">
+        <div>
+          <p className="eyebrow">Welcome back</p>
+          <h1>{user.name}</h1>
+          <p className="account-page__lead">{user.email}</p>
+        </div>
+        <div className="account-page__actions">
+          {user.is_admin && <Button as={Link} to="/admin" variant="dark">Admin</Button>}
+          <Button variant="outline" onClick={logout}>Sign out</Button>
+        </div>
+      </div>
+
+      <h2 className="account-page__title">Order history</h2>
+      <Orders />
+    </div>
+  );
+}
