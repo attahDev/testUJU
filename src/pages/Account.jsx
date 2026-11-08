@@ -181,6 +181,31 @@ function Details() {
   );
 }
 
+function VerifyBanner() {
+  const [status, setStatus] = useState('idle');
+
+  async function resend() {
+    setStatus('sending');
+    try {
+      await api('/api/auth/resend-verification', { method: 'POST' });
+      setStatus('sent');
+    } catch {
+      setStatus('error');
+    }
+  }
+
+  return (
+    <div className="account-verify" role="status">
+      <p>
+        Verify your email to see orders you placed before creating this account. We sent you a link when you signed up.
+      </p>
+      <button type="button" onClick={resend} disabled={status === 'sending' || status === 'sent'}>
+        {status === 'sent' ? 'Email sent' : status === 'error' ? 'Try again' : 'Resend email'}
+      </button>
+    </div>
+  );
+}
+
 export default function Account() {
   const { user, ready, logout } = useAuth();
 
@@ -200,6 +225,8 @@ export default function Account() {
           <Button variant="outline" onClick={logout}>Sign out</Button>
         </div>
       </div>
+
+      {!user.email_verified && <VerifyBanner />}
 
       <h2 className="account-page__title">Order history</h2>
       <Orders />

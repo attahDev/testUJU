@@ -15,6 +15,7 @@ import Account from './pages/Account.jsx';
 import OrderConfirmation from './pages/OrderConfirmation.jsx';
 import NotFound from './pages/NotFound.jsx';
 import CatalogGate from './components/CatalogGate.jsx';
+import VerifyEmail from './pages/VerifyEmail.jsx';
 import ResetPassword from './pages/ResetPassword.jsx';
 import Admin from './pages/admin/Admin.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
@@ -40,6 +41,7 @@ export default function App() {
             <Route path="/account" element={<Account />} />
             <Route path="/order/:id" element={<OrderConfirmation />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>

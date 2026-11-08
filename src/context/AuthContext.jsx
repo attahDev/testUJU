@@ -26,6 +26,7 @@ export function AuthProvider({ children }) {
       ready,
       login: (email, password) => authenticate('/api/auth/login', { email, password }),
       register: (name, email, password) => authenticate('/api/auth/register', { name, email, password }),
+      refreshUser: () => api('/api/auth/me').then(setUser),
       updateName: async (name) => {
         const updated = await api('/api/auth/me', { method: 'PATCH', body: { name } });
         setUser(updated);
