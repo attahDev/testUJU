@@ -7,7 +7,7 @@ import { useAuth } from '../context/authStore.js';
 import { useCatalog } from '../context/catalogStore.js';
 import './Account.css';
 
-function AuthForm() {
+export function AuthForm({ heading, lead } = {}) {
   const { login, register } = useAuth();
   const [mode, setMode] = useState('login');
   const [form, setForm] = useState({ name: '', email: '', password: '' });
@@ -43,10 +43,10 @@ function AuthForm() {
 
   return (
     <div className="container section account-page account-page--narrow">
-      <h1>{mode === 'login' ? 'Sign in' : mode === 'register' ? 'Create account' : 'Reset password'}</h1>
+      <h1>{heading && mode !== 'forgot' ? heading : mode === 'login' ? 'Sign in' : mode === 'register' ? 'Create account' : 'Reset password'}</h1>
       <p className="account-page__lead">
-        {mode === 'login' && 'Welcome back. Sign in to see your orders.'}
-        {mode === 'register' && 'Create an account to track your orders and check out faster.'}
+        {mode === 'login' && (lead || 'Welcome back. Sign in to see your orders.')}
+        {mode === 'register' && (lead || 'Create an account to track your orders and check out faster.')}
         {mode === 'forgot' && 'Enter your email and we will send you a link to choose a new password.'}
       </p>
       <form className="account-form" onSubmit={handleSubmit}>

@@ -3,7 +3,6 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { api } from '../api/client.js';
 import { formatDate } from '../api/mappers.js';
 import Button from '../components/Button.jsx';
-import { useAuth } from '../context/authStore.js';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
 import NotFound from './NotFound.jsx';
@@ -14,7 +13,6 @@ export default function OrderConfirmation() {
   const [params] = useSearchParams();
   const sessionId = params.get('session_id');
   const { clearCart } = useCart();
-  const { user } = useAuth();
   const { moneyPence: money } = useCatalog();
   const [order, setOrder] = useState(null);
   const [missing, setMissing] = useState(false);
@@ -98,15 +96,9 @@ export default function OrderConfirmation() {
         </aside>
       </div>
 
-      {!user && paid && (
-        <p className="order-page__lead">
-          Keep your confirmation email for your records. Create an account with {order.email} to track this and future orders.
-        </p>
-      )}
-
       <div className="order-page__actions">
         <Button as={Link} to="/shop">Continue shopping</Button>
-        <Button as={Link} to="/account" variant="outline">{user ? 'View my orders' : 'Create an account'}</Button>
+        <Button as={Link} to="/account" variant="outline">View my orders</Button>
       </div>
     </div>
   );

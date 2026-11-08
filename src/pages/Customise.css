@@ -190,3 +190,20 @@
 @media (max-width: 500px) {
   .option-row { grid-template-columns: 1fr; }
 }
+
+.ai-preview { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 8px; }
+.ai-preview__btn {
+  width: 100%; padding: 13px 18px; border-radius: 999px; cursor: pointer;
+  background: var(--color-ink); color: var(--color-cream, #fff); border: 1px solid var(--color-ink);
+  font: inherit; font-size: 0.875rem; letter-spacing: 0.04em; text-align: center; text-decoration: none;
+}
+.ai-preview__btn:disabled { opacity: 0.6; cursor: progress; }
+.ai-preview__btn--link { background: none; color: var(--color-ink); }
+.ai-preview__toggle { display: flex; gap: 6px; }
+.ai-preview__toggle button {
+  flex: 1; padding: 8px; border-radius: 999px; background: none; cursor: pointer;
+  border: 1px solid var(--color-line); font: inherit; font-size: 0.8125rem;
+}
+.ai-preview__toggle button.is-active { border-color: var(--color-clay); color: var(--color-clay); }
+.ai-preview__note { font-size: 0.75rem; color: var(--color-text-soft); margin: 0; }
+.ai-preview__error { font-size: 0.8125rem; color: #b5342e; margin: 0; }

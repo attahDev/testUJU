@@ -1,7 +1,10 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { api } from '../api/client.js';
+import { useAuth } from '../context/authStore.js';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
+import { readJSON, writeJSON } from '../utils/storage.js';
 import './Customise.css';
 
 const STEPS = ['Choose Product', 'Choose Pattern', 'Personalize', 'Preview', 'Checkout'];
@@ -41,23 +44,73 @@ const COLORS = [
   { name: 'Indigo', hex: '#3E5C82' },
 ];
 
+const DRAFT_KEY = 'rose-uju-customise-draft-v1';
+
+function loadDraft() {
+  const d = readJSON(DRAFT_KEY, {});
+  return {
+    step: Number.isInteger(d.step) && d.step >= 0 && d.step < STEPS.length ? d.step : 0,
+    product: PRODUCT_TYPES.includes(d.product) ? d.product : 'Scarf',
+    pattern: PATTERNS.find((p) => p.name === d.pattern) || PATTERNS[0],
+    color: COLORS.find((c) => c.name === d.color) || COLORS[0],
+    text: typeof d.text === 'string' ? d.text.slice(0, 12) : '',
+    finish: FINISHES.some((f) => f.id === d.finish) ? d.finish : 'emboss',
+    font: FONTS.some((f) => f.id === d.font) ? d.font : 'serif',
+    placement: PLACEMENTS.some((p) => p.id === d.placement) ? d.placement : 'center',
+  };
+}
+
 export default function Customise() {
-  const [step, setStep] = useState(0);
-  const [product, setProduct] = useState('Scarf');
-  const [pattern, setPattern] = useState(PATTERNS[0]);
+  const [draft] = useState(loadDraft);
+  const [step, setStep] = useState(draft.step);
+  const [product, setProduct] = useState(draft.product);
+  const [pattern, setPattern] = useState(draft.pattern);
   const [tag, setTag] = useState('All');
-  const [color, setColor] = useState(COLORS[0]);
-  const [text, setText] = useState('');
-  const [finish, setFinish] = useState('emboss');
-  const [font, setFont] = useState('serif');
-  const [placement, setPlacement] = useState('center');
+  const [color, setColor] = useState(draft.color);
+  const [text, setText] = useState(draft.text);
+  const [finish, setFinish] = useState(draft.finish);
+  const [font, setFont] = useState(draft.font);
+  const [placement, setPlacement] = useState(draft.placement);
+  const [ai, setAi] = useState({ status: 'idle', src: '', signature: '', error: '' });
+  const [showAi, setShowAi] = useState(true);
   const navigate = useNavigate();
   const { addItem } = useCart();
+  const { user } = useAuth();
   const { config, money } = useCatalog();
+
+  useEffect(() => {
+    writeJSON(DRAFT_KEY, { step, product, pattern: pattern.name, color: color.name, text, finish, font, placement });
+  }, [step, product, pattern, color, text, finish, font, placement]);
   const visiblePatterns = tag === 'All' ? PATTERNS : PATTERNS.filter((p) => p.tag === tag);
   const marked = text.trim() !== '';
   const price = config.customBase[product] / 100 + (marked ? config.finishFee[finish] : 0);
   const finishLabel = FINISHES.find((f) => f.id === finish).label;
+  const signature = [product, pattern.name, color.name, marked ? `${finish}|${font}|${placement}|${text.trim()}` : 'plain'].join('~');
+  const aiFresh = ai.status === 'done' && ai.signature === signature;
+
+  async function generatePreview() {
+    const requested = signature;
+    setAi({ status: 'loading', src: '', signature: '', error: '' });
+    try {
+      const res = await api('/api/customise/preview', {
+        method: 'POST',
+        body: {
+          product_type: product,
+          pattern: pattern.name,
+          pattern_image: pattern.image,
+          color: color.name,
+          text: text.trim(),
+          finish: marked ? finish : 'none',
+          font,
+          placement,
+        },
+      });
+      setAi({ status: 'done', src: `data:${res.mime_type};base64,${res.data}`, signature: requested, error: '' });
+      setShowAi(true);
+    } catch (err) {
+      setAi({ status: 'error', src: '', signature: '', error: err.message });
+    }
+  }
 
   function goNext() {
     if (step < STEPS.length - 1) {
@@ -212,8 +265,12 @@ export default function Customise() {
 
           <div className="customise-preview">
             <div className="customise-preview__frame" style={{ boxShadow: `inset 0 0 0 6px ${color.hex}22` }}>
-              <img src={pattern.image} alt="Preview" />
-              {marked && (
+              {aiFresh && showAi ? (
+                <img src={ai.src} alt={`Realistic preview of your custom ${product}`} />
+              ) : (
+                <img src={pattern.image} alt="Preview" />
+              )}
+              {marked && !(aiFresh && showAi) && (
                 <span
                   className={`customise-mark mark-${finish} font-${font} place-${placement}`}
                   style={{ '--len': Math.max(text.trim().length, 3), '--thread': color.hex }}
@@ -222,6 +279,27 @@ export default function Customise() {
                 </span>
               )}
             </div>
+
+            {config.aiPreview && (
+              <div className="ai-preview">
+                {user ? (
+                  <button type="button" className="ai-preview__btn" onClick={generatePreview} disabled={ai.status === 'loading'}>
+                    {ai.status === 'loading' ? 'Creating your preview… (about 15s)' : aiFresh ? 'Regenerate realistic preview' : 'See it realistically'}
+                  </button>
+                ) : (
+                  <Link to="/account" className="ai-preview__btn ai-preview__btn--link">Sign in to see a realistic preview</Link>
+                )}
+                {ai.status === 'done' && !aiFresh && <p className="ai-preview__note">You changed your design. Generate again to update the preview.</p>}
+                {aiFresh && (
+                  <div className="ai-preview__toggle" role="group" aria-label="Preview style">
+                    <button type="button" className={showAi ? 'is-active' : ''} onClick={() => setShowAi(true)}>Realistic</button>
+                    <button type="button" className={!showAi ? 'is-active' : ''} onClick={() => setShowAi(false)}>Pattern</button>
+                  </div>
+                )}
+                {ai.status === 'error' && <p className="ai-preview__error" role="alert">{ai.error}</p>}
+                <p className="ai-preview__note">AI-generated illustration. Your finished piece may differ slightly in detail.</p>
+              </div>
+            )}
 
             <h4>Colours</h4>
             <div className="colour-dots">
