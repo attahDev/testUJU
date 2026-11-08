@@ -1,3 +1,4 @@
+import { BASE } from '../api/client.js';
 import { useCatalog } from '../context/catalogStore.js';
 import Button from './Button.jsx';
 
@@ -11,7 +12,8 @@ export default function CatalogGate({ children }) {
     return (
       <div className="container section" style={{ textAlign: 'center' }}>
         <h2>We could not load the store</h2>
-        <p style={{ margin: '12px 0 24px', color: 'var(--color-text-soft)' }}>Please check your connection and try again.</p>
+        <p style={{ margin: '12px 0 8px', color: 'var(--color-text-soft)' }}>Please check your connection and try again.</p>
+        <p style={{ margin: '0 0 24px', color: 'var(--color-text-soft)', fontSize: '0.75rem' }}>Could not reach {BASE}</p>
         <Button onClick={refresh}>Try again</Button>
       </div>
     );

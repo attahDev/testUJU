@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/cartStore.js';
+import { useCatalog } from '../context/catalogStore.js';
 import './Header.css';
 
 const NAV = [
@@ -18,7 +19,8 @@ export default function Header() {
   const { count } = useCart();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const overlay = pathname === '/';
+  const { status } = useCatalog();
+  const overlay = pathname === '/' && status === 'ready';
 
   function submitSearch(e) {
     e.preventDefault();
