@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../api/client.js';
 import { useAuth } from '../context/authStore.js';
+import { AuthForm } from './Account.jsx';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
 import './Checkout.css';
@@ -40,7 +41,7 @@ function toCartLine(item) {
   return { product_id: item.id, qty: item.qty, color: item.color || '', size: item.size || '' };
 }
 
-export default function Checkout() {
+function CheckoutForm() {
   const { items, subtotal } = useCart();
   const { user } = useAuth();
   const { config, money } = useCatalog();
@@ -156,12 +157,6 @@ export default function Checkout() {
           {step === 0 && (
             <>
               <h4>Contact Info</h4>
-              {!user && (
-                <p className="checkout-note checkout-guest">
-                  Checking out as a guest, no account needed. Your order confirmation will be emailed to you.{' '}
-                  <Link to="/account">Sign in</Link> if you already have an account.
-                </p>
-              )}
               {field('email', 'Email', { type: 'email', autoComplete: 'email' })}
               {field('phone', 'Phone', { type: 'tel', autoComplete: 'tel' })}
 
@@ -254,4 +249,19 @@ export default function Checkout() {
       </div>
     </div>
   );
+}
+
+export default function Checkout() {
+  const { user, ready } = useAuth();
+  const { items } = useCart();
+  if (!ready) return <div className="container section checkout-page"><p>Loading…</p></div>;
+  if (!user && items.length > 0) {
+    return (
+      <AuthForm
+        heading="Sign in to check out"
+        lead="An account is needed to place an order, so you can track it and reach us about it. Your bag is saved and will be waiting."
+      />
+    );
+  }
+  return <CheckoutForm />;
 }

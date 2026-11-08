@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Button from '../components/Button.jsx';
+import { useAuth } from '../context/authStore.js';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
 import './Cart.css';
@@ -8,6 +9,7 @@ import './Cart.css';
 export default function Cart() {
   const { items, removeItem, setQty, subtotal } = useCart();
   const { config, money } = useCatalog();
+  const { user } = useAuth();
   const [agreed, setAgreed] = useState(false);
   const navigate = useNavigate();
   const shipping = items.length ? config.shipping[0].price : 0;
@@ -66,7 +68,7 @@ export default function Cart() {
             onClick={() => navigate('/checkout')}
             style={{ width: '100%', opacity: agreed && items.length ? 1 : 0.5 }}
           >
-            Continue
+            {user ? 'Continue' : 'Sign in to continue'}
           </Button>
         </aside>
       </div>

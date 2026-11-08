@@ -16,6 +16,7 @@ async function fetchCatalog() {
     config: {
       currency: config.currency,
       paymentBypass: config.payment_bypass,
+      aiPreview: Boolean(config.ai_preview),
       shipping: config.shipping.map((s) => ({ ...s, price: s.pence / 100 })),
       customBase: config.custom_base_pence,
       finishFee: Object.fromEntries(Object.entries(config.finish_pence).map(([key, pence]) => [key, pence / 100])),
