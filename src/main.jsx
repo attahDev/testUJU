@@ -13,6 +13,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import { CartProvider } from './context/CartContext.jsx';
 import { CatalogProvider } from './context/CatalogContext.jsx';
+import { WishlistProvider } from './context/WishlistContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import './styles/tokens.css';
 import './styles/layout.css';
@@ -23,7 +24,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <CatalogProvider>
           <CartProvider>
-            <App />
+            <WishlistProvider>
+              <App />
+            </WishlistProvider>
           </CartProvider>
         </CatalogProvider>
       </AuthProvider>

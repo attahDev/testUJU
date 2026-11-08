@@ -7,6 +7,7 @@ import ProductReviews from '../components/ProductReviews.jsx';
 import Stars from '../components/Stars.jsx';
 import { api } from '../api/client.js';
 import { useCatalog } from '../context/catalogStore.js';
+import HeartButton from '../components/HeartButton.jsx';
 import { useCart } from '../context/cartStore.js';
 import './Product.css';
 
@@ -117,6 +118,7 @@ function ProductView({ product }) {
               <button onClick={() => setQty((q) => q + 1)} aria-label="Increase quantity">+</button>
             </div>
             <Button onClick={handleAdd} disabled={soldOut}>{soldOut ? 'Sold out' : added ? 'Added ✓' : 'Add to Cart'}</Button>
+            <HeartButton productId={product.id} className="product-cta__like" />
           </div>
         </div>
       </div>

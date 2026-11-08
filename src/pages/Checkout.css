@@ -116,3 +116,4 @@
 .checkout-submit:hover { background: var(--color-line); }
 .checkout-submit.is-final { background: var(--color-clay); border-color: var(--color-clay); color: var(--color-white); }
 .checkout-submit.is-final:hover { background: var(--color-ink); border-color: var(--color-ink); }
+.checkout-guest { margin-bottom: 8px; } .checkout-guest a { color: var(--color-clay); text-decoration: underline; }

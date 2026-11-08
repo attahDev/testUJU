@@ -156,6 +156,12 @@ export default function Checkout() {
           {step === 0 && (
             <>
               <h4>Contact Info</h4>
+              {!user && (
+                <p className="checkout-note checkout-guest">
+                  Checking out as a guest, no account needed. Your order confirmation will be emailed to you.{' '}
+                  <Link to="/account">Sign in</Link> if you already have an account.
+                </p>
+              )}
               {field('email', 'Email', { type: 'email', autoComplete: 'email' })}
               {field('phone', 'Phone', { type: 'tel', autoComplete: 'tel' })}
 
