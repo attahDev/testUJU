@@ -83,7 +83,7 @@ export default function AdminOrders() {
                       <div className="admin-details">
                         <div>
                           {o.items.map((i) => (
-                            <p key={i.id}>{i.qty} × {i.name} {[i.color, i.size].filter(Boolean).join(' / ')} — {money(i.unit_pence * i.qty)}</p>
+                            <p key={i.id}>{i.qty} × {i.name} {[i.color, i.size].filter(Boolean).join(' / ')} — {money(i.unit_pence * i.qty)}{i.custom?.text && <small> ({i.custom.finish}, {i.custom.font}, {i.custom.placement})</small>}</p>
                           ))}
                           <p>Shipping ({o.shipping_method}): {money(o.shipping_pence)}</p>
                           {o.refunded_pence > 0 && <p>Refunded so far: {money(o.refunded_pence)}</p>}

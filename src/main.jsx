@@ -1,3 +1,4 @@
+import '@fontsource/great-vibes/400.css';
 import '@fontsource/bodoni-moda/400.css';
 import '@fontsource/bodoni-moda/500.css';
 import '@fontsource/bodoni-moda/600.css';

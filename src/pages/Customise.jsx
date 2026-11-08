@@ -16,6 +16,22 @@ const PATTERNS = [
 ];
 const PATTERN_TAGS = ['All', 'Ankara', 'Isi Agu', 'Abstract', 'Other'];
 const BANNER = 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=80';
+const FINISHES = [
+  { id: 'emboss', label: 'Emboss', hint: 'Raised' },
+  { id: 'deboss', label: 'Deboss', hint: 'Pressed in' },
+  { id: 'foil', label: 'Foil', hint: 'Metallic' },
+  { id: 'embroidery', label: 'Embroidery', hint: 'Thread' },
+];
+const FONTS = [
+  { id: 'serif', label: 'Serif' },
+  { id: 'sans', label: 'Sans' },
+  { id: 'script', label: 'Script' },
+];
+const PLACEMENTS = [
+  { id: 'center', label: 'Centre' },
+  { id: 'corner', label: 'Corner' },
+  { id: 'edge', label: 'Edge' },
+];
 const COLORS = [
   { name: 'Gold', hex: '#C89B4A' },
   { name: 'Espresso', hex: '#3A2620' },
@@ -31,12 +47,17 @@ export default function Customise() {
   const [pattern, setPattern] = useState(PATTERNS[0]);
   const [tag, setTag] = useState('All');
   const [color, setColor] = useState(COLORS[0]);
-  const [initials, setInitials] = useState('');
+  const [text, setText] = useState('');
+  const [finish, setFinish] = useState('emboss');
+  const [font, setFont] = useState('serif');
+  const [placement, setPlacement] = useState('center');
   const navigate = useNavigate();
   const { addItem } = useCart();
   const { config, money } = useCatalog();
   const visiblePatterns = tag === 'All' ? PATTERNS : PATTERNS.filter((p) => p.tag === tag);
-  const price = config.customBase[product] / 100 + (initials ? config.initialsFee : 0);
+  const marked = text.trim() !== '';
+  const price = config.customBase[product] / 100 + (marked ? config.finishFee[finish] : 0);
+  const finishLabel = FINISHES.find((f) => f.id === finish).label;
 
   function goNext() {
     if (step < STEPS.length - 1) {
@@ -45,7 +66,7 @@ export default function Customise() {
     }
     addItem(
       {
-        id: `custom-${product}-${pattern.name}-${initials}`.replace(/\s+/g, '-'),
+        id: `custom-${product}-${pattern.name}-${marked ? `${finish}-${font}-${placement}-${text.trim()}` : 'plain'}`.replace(/\s+/g, '-'),
         name: `Custom ${product} — ${pattern.name}`,
         price,
         image: pattern.image,
@@ -55,10 +76,13 @@ export default function Customise() {
           pattern: pattern.name,
           pattern_image: pattern.image,
           color: color.name,
-          initials,
+          text: text.trim(),
+          finish: marked ? finish : 'none',
+          font,
+          placement,
         },
       },
-      { color: color.name, size: initials ? `Initials ${initials}` : 'One size' }
+      { color: color.name, size: marked ? `${finishLabel}: ${text.trim()}` : 'One size' }
     );
     navigate('/checkout');
   }
@@ -133,11 +157,55 @@ export default function Customise() {
                 <input
                   className="personalize-input"
                   type="text"
-                  maxLength={3}
-                  placeholder="Add initials (optional)"
-                  value={initials}
-                  onChange={(e) => setInitials(e.target.value.toUpperCase())}
+                  maxLength={12}
+                  placeholder="Your initials or name (up to 12)"
+                  aria-label="Text to add"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
                 />
+
+                <p className="personalize-label">Finish</p>
+                <div className="option-row">
+                  {FINISHES.map((f) => (
+                    <button
+                      key={f.id}
+                      type="button"
+                      className={"option-chip" + (finish === f.id ? ' is-active' : '')}
+                      onClick={() => setFinish(f.id)}
+                    >
+                      <strong>{f.label}</strong>
+                      <span>{f.hint} · +{money(config.finishFee[f.id])}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <p className="personalize-label">Lettering</p>
+                <div className="option-row option-row--compact">
+                  {FONTS.map((f) => (
+                    <button
+                      key={f.id}
+                      type="button"
+                      className={"option-chip option-chip--font font-" + f.id + (font === f.id ? ' is-active' : '')}
+                      onClick={() => setFont(f.id)}
+                    >
+                      {f.label}
+                    </button>
+                  ))}
+                </div>
+
+                <p className="personalize-label">Placement</p>
+                <div className="option-row option-row--compact">
+                  {PLACEMENTS.map((pl) => (
+                    <button
+                      key={pl.id}
+                      type="button"
+                      className={"option-chip" + (placement === pl.id ? ' is-active' : '')}
+                      onClick={() => setPlacement(pl.id)}
+                    >
+                      {pl.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -145,7 +213,14 @@ export default function Customise() {
           <div className="customise-preview">
             <div className="customise-preview__frame" style={{ boxShadow: `inset 0 0 0 6px ${color.hex}22` }}>
               <img src={pattern.image} alt="Preview" />
-              {initials && <span className="customise-preview__initials">{initials}</span>}
+              {marked && (
+                <span
+                  className={`customise-mark mark-${finish} font-${font} place-${placement}`}
+                  style={{ '--len': Math.max(text.trim().length, 3), '--thread': color.hex }}
+                >
+                  {text.trim()}
+                </span>
+              )}
             </div>
 
             <h4>Colours</h4>
@@ -163,7 +238,7 @@ export default function Customise() {
 
             {step >= 3 && (
               <p className="customise-summary">
-                {product} · {pattern.name} · {color.name}{initials ? ` · ${initials}` : ''}
+                {product} · {pattern.name} · {color.name}{marked ? ` · ${finishLabel} "${text.trim()}"` : ''}
               </p>
             )}
             <p className="customise-price">{product} · {money(price)}</p>
