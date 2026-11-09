@@ -34,3 +34,15 @@ export function toArticle(a) {
     image: a.image_url,
   };
 }
+
+export function toLook(l) {
+  return {
+    id: l.id,
+    slug: l.slug,
+    name: l.name,
+    description: l.description,
+    image: l.image_url,
+    totalPence: l.total_pence,
+    products: l.products.map(toProduct),
+  };
+}

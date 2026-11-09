@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import SectionHeading from '../components/SectionHeading.jsx';
 import ProductCard from '../components/ProductCard.jsx';
+import LookCarousel from '../components/LookCarousel.jsx';
 import { useCatalog } from '../context/catalogStore.js';
 import './Home.css';
 
@@ -15,7 +16,7 @@ const COLLECTION_TILES = [
 ];
 
 export default function Home() {
-  const { products, articles } = useCatalog();
+  const { products, articles, looks } = useCatalog();
   const newThisWeek = products.slice(0, 3);
   const featured = products.slice(3, 7);
   const stories = articles.slice(0, 3);
@@ -57,6 +58,13 @@ export default function Home() {
           {newThisWeek.map((p) => <ProductCard key={p.id} product={p} />)}
         </div>
       </section>
+
+      {looks.length > 0 && (
+        <section className="container section">
+          <SectionHeading eyebrow="Styled by Rose Uju" title="Shop the Look" linkTo="/looks" linkLabel="All looks" />
+          <LookCarousel looks={looks} />
+        </section>
+      )}
 
       <section className="container section">
         <SectionHeading title="Featured Product" linkTo="/shop" />

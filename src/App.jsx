@@ -5,6 +5,7 @@ import Home from './pages/Home.jsx';
 import Shop from './pages/Shop.jsx';
 import Product from './pages/Product.jsx';
 import Collections from './pages/Collections.jsx';
+import Looks from './pages/Looks.jsx';
 import Wishlist from './pages/Wishlist.jsx';
 import Cart from './pages/Cart.jsx';
 import Checkout from './pages/Checkout.jsx';
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/product/:id" element={<Product />} />
             <Route path="/collections" element={<Collections />} />
+            <Route path="/looks" element={<Looks />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
