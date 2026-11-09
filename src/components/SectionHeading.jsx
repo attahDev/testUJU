@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
+import Reveal from './Reveal.jsx';
 import './SectionHeading.css';
 
 export default function SectionHeading({ eyebrow, title, linkTo, linkLabel }) {
   return (
-    <div className="section-heading">
+    <Reveal className="section-heading">
       <div>
         {eyebrow && <p className="section-heading__eyebrow">{eyebrow}</p>}
         <h2 className="section-heading__title">{title}</h2>
@@ -13,6 +14,6 @@ export default function SectionHeading({ eyebrow, title, linkTo, linkLabel }) {
           {linkLabel || 'View more'} <span>→</span>
         </Link>
       )}
-    </div>
+    </Reveal>
   );
 }

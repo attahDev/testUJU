@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
+import { useInView } from '../hooks/useInView.js';
 import './LookCard.css';
 
 function inStock(p) {
@@ -46,8 +47,17 @@ export default function LookCard({ look }) {
   const [chosen, setChosen] = useState(() =>
     Object.fromEntries(look.products.map((p) => [p.id, { on: inStock(p), size: '', color: p.colors[0]?.name || '' }]))
   );
+  const [ref, inView] = useInView({ threshold: 0.25, rootMargin: '0px 0px -5% 0px' });
+  const [settled, setSettled] = useState(false);
   const [problem, setProblem] = useState('');
   const [added, setAdded] = useState(false);
+
+  // Once the entrance has played, drop the staggered delays so later interactions respond instantly.
+  useEffect(() => {
+    if (!inView) return undefined;
+    const timer = setTimeout(() => setSettled(true), 2600);
+    return () => clearTimeout(timer);
+  }, [inView]);
 
   function patch(id, change) {
     setChosen((prev) => ({ ...prev, [id]: { ...prev[id], ...change } }));
@@ -74,7 +84,7 @@ export default function LookCard({ look }) {
   }
 
   return (
-    <article className="look-card">
+    <article ref={ref} className={`look-card${inView ? ' is-in' : ''}${settled ? ' is-settled' : ''}`}>
       <LookMedia look={look} />
 
       <div className="look-card__body">
@@ -83,11 +93,11 @@ export default function LookCard({ look }) {
         {look.description && <p className="look-card__desc">{look.description}</p>}
 
         <ul className="look-pieces">
-          {look.products.map((p) => {
+          {look.products.map((p, i) => {
             const c = chosen[p.id];
             const soldOut = !inStock(p);
             return (
-              <li key={p.id} className={`look-piece${c.on ? '' : ' is-off'}`}>
+              <li key={p.id} className={`look-piece${c.on ? '' : ' is-off'}`} style={{ '--i': i }}>
                 <label className="look-piece__check">
                   <input
                     type="checkbox"

@@ -132,7 +132,7 @@ export default function Shop() {
             <p className="shop-empty">No products match those filters yet.</p>
           ) : (
             <div className="product-grid product-grid--3">
-              {filtered.map((p) => <ProductCard key={p.id} product={p} />)}
+              {filtered.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
             </div>
           )}
         </div>

@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import SectionHeading from '../components/SectionHeading.jsx';
 import ProductCard from '../components/ProductCard.jsx';
+import JournalCard from '../components/JournalCard.jsx';
+import { stagger } from '../hooks/useInView.js';
 import Hero from '../components/Hero.jsx';
 import Reveal from '../components/Reveal.jsx';
 import LookCarousel from '../components/LookCarousel.jsx';
@@ -42,7 +44,7 @@ export default function Home() {
       <section className="container section">
         <SectionHeading title={<>New<br />This Week</>} linkTo="/shop" />
         <div className="product-grid product-grid--3">
-          {newThisWeek.map((p) => <ProductCard key={p.id} product={p} />)}
+          {newThisWeek.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
         </div>
       </section>
 
@@ -56,7 +58,7 @@ export default function Home() {
       <section className="container section">
         <SectionHeading title="Featured Product" linkTo="/shop" />
         <div className="product-grid product-grid--4">
-          {featured.map((p) => <ProductCard key={p.id} product={p} />)}
+          {featured.map((p, i) => <ProductCard key={p.id} product={p} index={i} columns={4} />)}
         </div>
       </section>
 
@@ -86,13 +88,8 @@ export default function Home() {
           <h2>Stories of culture, style, and cultivated living</h2>
         </div>
         <div className="journal-grid">
-          {stories.map((a) => (
-            <Link key={a.id} to={"/journal/" + a.id} className="journal-card">
-              <img src={a.image} alt="" loading="lazy" />
-              <span className="journal-card__meta">{a.tag} · {a.readTime}</span>
-              <h3>{a.title}</h3>
-              <p>{a.excerpt}</p>
-            </Link>
+          {stories.map((a, i) => (
+            <JournalCard key={a.id} article={a} meta={`${a.tag} · ${a.readTime}`} delay={stagger(i)} />
           ))}
         </div>
       </section>

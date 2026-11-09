@@ -42,3 +42,10 @@
 @media (max-width: 800px) {
   .journal-grid { grid-template-columns: 1fr; }
 }
+
+/* journal card: the photo sits in a frame so it can zoom slowly on hover */
+.journal-card__media { display: block; overflow: hidden; margin-bottom: 16px; }
+.journal-card__media img { margin-bottom: 0; transition: transform 0.9s cubic-bezier(0.2, 0.6, 0.2, 1); }
+.journal-card:hover .journal-card__media img { transform: scale(1.04); }
+.journal-card h3 { transition: color 0.3s ease; }
+.journal-card:hover h3 { color: var(--color-clay); }
