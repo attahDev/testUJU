@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import SectionHeading from '../components/SectionHeading.jsx';
 import ProductCard from '../components/ProductCard.jsx';
+import Hero from '../components/Hero.jsx';
+import Reveal from '../components/Reveal.jsx';
 import LookCarousel from '../components/LookCarousel.jsx';
 import { useCatalog } from '../context/catalogStore.js';
 import './Home.css';
@@ -23,31 +25,16 @@ export default function Home() {
 
   return (
     <>
-      <section className="hero">
-        <img
-          className="hero__image"
-          src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1600&q=80"
-          alt="Model wearing a Rose Uju silk wrap"
-        />
-        <div className="hero__overlay" />
-        <div className="hero__content">
-          <h1>Cultivated Beauty,<br />Worn Well</h1>
-          <p>Afro-Caribbean luxury translating heritage into modern elegance.</p>
-          <div className="hero__actions">
-            <Button as={Link} to="/shop">Shop Collection</Button>
-            <Button as={Link} to="/about" variant="outline">Explore Story</Button>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       <section className="container section">
-        <p className="eyebrow eyebrow--center">The Prints Collection</p>
+        <Reveal as="p" className="eyebrow eyebrow--center">The Prints Collection</Reveal>
         <div className="collection-grid">
-          {COLLECTION_TILES.map((tile) => (
-            <Link key={tile.name} to="/collections" className="collection-tile">
+          {COLLECTION_TILES.map((tile, i) => (
+            <Reveal key={tile.name} as={Link} to="/collections" className="collection-tile" delay={120 + (i % 3) * 130}>
               <img src={tile.image} alt={tile.name} loading="lazy" />
               <span>{tile.name}</span>
-            </Link>
+            </Reveal>
           ))}
         </div>
       </section>
