@@ -51,6 +51,7 @@ export default function Footer() {
           <Link to="/collections">Collections</Link>
           <Link to="/journal">The Journal</Link>
           <Link to="/account">My Account</Link>
+          <Link to="/track-order">Find My Order</Link>
         </div>
         <div className="site-footer__col">
           <h4>Contact Us</h4>

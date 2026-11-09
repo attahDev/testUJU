@@ -1,0 +1,25 @@
+.track-page h1 { margin-bottom: 8px; }
+.track-form { max-width: 520px; }
+.track-page__alt { margin-top: 20px; font-size: 0.875rem; color: var(--color-text-soft); }
+.track-page__alt a { color: var(--color-clay); text-decoration: underline; }
+
+.track-result { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--color-line); }
+.track-result h2 { font-size: var(--step-1); margin-bottom: 12px; }
+
+.track-steps { list-style: none; padding: 0; margin: 0 0 40px; display: flex; max-width: 520px; }
+.track-steps li {
+  flex: 1; position: relative; padding-top: 28px; font-size: 0.8125rem; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--color-text-soft);
+}
+.track-steps li::before {
+  content: ''; position: absolute; top: 6px; left: 0; right: 0; height: 1px; background: var(--color-line);
+}
+.track-steps__dot {
+  position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--color-cream); border: 1px solid var(--color-line);
+}
+.track-steps li.is-done, .track-steps li.is-current { color: var(--color-ink); }
+.track-steps li.is-done::before, .track-steps li.is-current::before { background: var(--color-clay); }
+.track-steps li.is-done .track-steps__dot { background: var(--color-clay); border-color: var(--color-clay); }
+.track-steps li.is-current .track-steps__dot { border-color: var(--color-clay); box-shadow: 0 0 0 4px rgba(181, 86, 44, 0.18); background: var(--color-clay); }
+.track-steps li:last-child::before { right: 50%; }
