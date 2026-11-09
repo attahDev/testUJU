@@ -6,6 +6,7 @@ import { useApiList } from './useApiList.js';
 
 const STATUSES = ['pending', 'paid', 'shipped', 'delivered', 'cancelled', 'refunded'];
 const REFUNDABLE = ['paid', 'shipped', 'delivered'];
+const SHIPPABLE = ['paid', 'shipped', 'delivered'];
 
 export default function AdminOrders() {
   const { moneyPence: money } = useCatalog();
@@ -15,10 +16,39 @@ export default function AdminOrders() {
   const [refund, setRefund] = useState({ amount: '', restock: false });
   const [refundError, setRefundError] = useState('');
   const [refunding, setRefunding] = useState(false);
+  const { config } = useCatalog();
+  const [track, setTrack] = useState({ carrier: '', number: '' });
+  const [trackMsg, setTrackMsg] = useState({ text: '', error: false });
+  const [savingTrack, setSavingTrack] = useState(false);
 
   async function setStatus(order, status) {
     await api(`/api/admin/orders/${order.id}`, { method: 'PATCH', body: { status } });
     await reload();
+  }
+
+  function openOrder(o) {
+    setOpen(open === o.id ? null : o.id);
+    setRefund({ amount: '', restock: false });
+    setRefundError('');
+    setTrack({ carrier: o.carrier || config.carriers[0] || '', number: o.tracking_number || '' });
+    setTrackMsg({ text: '', error: false });
+  }
+
+  async function saveTracking(order) {
+    setSavingTrack(true);
+    setTrackMsg({ text: '', error: false });
+    const clearing = track.number.trim() === '';
+    try {
+      await api(`/api/admin/orders/${order.id}/tracking`, {
+        method: 'PUT',
+        body: { carrier: clearing ? '' : track.carrier, tracking_number: track.number },
+      });
+      setTrackMsg({ text: clearing ? 'Tracking removed.' : order.status === 'paid' ? 'Marked as shipped and the customer has been emailed.' : 'Tracking saved.', error: false });
+      await reload();
+    } catch (err) {
+      setTrackMsg({ text: err.message, error: true });
+    }
+    setSavingTrack(false);
   }
 
   async function submitRefund(order) {
@@ -74,7 +104,7 @@ export default function AdminOrders() {
                     </select>
                   </td>
                   <td className="admin-table__actions">
-                    <button className="admin-link" onClick={() => { setOpen(open === o.id ? null : o.id); setRefund({ amount: '', restock: false }); setRefundError(''); }}>{open === o.id ? 'Hide' : 'Details'}</button>
+                    <button className="admin-link" onClick={() => openOrder(o)}>{open === o.id ? 'Hide' : 'Details'}</button>
                   </td>
                 </tr>
                 {open === o.id && (
@@ -87,6 +117,23 @@ export default function AdminOrders() {
                           ))}
                           <p>Shipping ({o.shipping_method}): {money(o.shipping_pence)}</p>
                           {o.refunded_pence > 0 && <p>Refunded so far: {money(o.refunded_pence)}</p>}
+                          {SHIPPABLE.includes(o.status) && (
+                            <div className="admin-refund admin-tracking">
+                              <strong>Shipping</strong>
+                              <select aria-label="Carrier" value={track.carrier} onChange={(e) => setTrack({ ...track, carrier: e.target.value })}>
+                                {config.carriers.map((c) => <option key={c} value={c}>{c}</option>)}
+                              </select>
+                              <input
+                                placeholder="Tracking number" aria-label="Tracking number" value={track.number}
+                                onChange={(e) => setTrack({ ...track, number: e.target.value })}
+                              />
+                              <button className="admin-btn" disabled={savingTrack} onClick={() => saveTracking(o)}>
+                                {savingTrack ? 'Saving…' : o.status === 'paid' ? 'Save and mark as shipped' : 'Save tracking'}
+                              </button>
+                              {trackMsg.text && <span className={trackMsg.error ? 'admin-error' : 'admin-note'} role={trackMsg.error ? 'alert' : 'status'}>{trackMsg.text}</span>}
+                              {o.status === 'paid' && <small>The customer gets a shipped email with the tracking link.</small>}
+                            </div>
+                          )}
                           {REFUNDABLE.includes(o.status) && o.total_pence > o.refunded_pence && (
                             <div className="admin-refund">
                               <input

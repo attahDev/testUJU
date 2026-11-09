@@ -95,3 +95,6 @@
   position: absolute; top: 10px; left: 10px; width: 24px; height: 24px; border-radius: 50%;
   background: var(--color-clay); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem;
 }
+
+.admin-tracking { margin: 16px 0; }
+.admin-note { font-size: 0.8125rem; color: var(--color-olive); }

@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { api } from '../api/client.js';
 import { formatDate } from '../api/mappers.js';
 import Button from '../components/Button.jsx';
+import TrackingInfo from '../components/TrackingInfo.jsx';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
 import NotFound from './NotFound.jsx';
@@ -93,6 +94,7 @@ export default function OrderConfirmation() {
             <div><span>Shipping</span><span>{money(order.shipping_pence)}</span></div>
             <div className="order-page__grand"><span>Total</span><span>{money(order.total_pence)}</span></div>
           </div>
+          <TrackingInfo order={order} />
         </aside>
       </div>
 
