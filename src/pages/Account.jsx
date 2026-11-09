@@ -103,6 +103,8 @@ function Orders() {
     return (
       <p className="cart-empty">
         You have not placed any orders yet. <Link to="/shop">Start shopping</Link>.
+        <br />
+        Ordered before without an account? <Link to="/track-order">Find your order</Link>.
       </p>
     );
   }
@@ -124,6 +126,9 @@ function Orders() {
           <strong>{moneyPence(order.total_pence)}</strong>
         </Link>
       ))}
+      <p className="account-orders__guest">
+        Missing an older order placed without an account? <Link to="/track-order">Find it with its order number</Link>.
+      </p>
     </div>
   );
 }
