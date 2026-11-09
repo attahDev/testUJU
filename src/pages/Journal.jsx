@@ -1,3 +1,5 @@
+import JournalCard from '../components/JournalCard.jsx';
+import { stagger } from '../hooks/useInView.js';
 import { Link } from 'react-router-dom';
 import { useCatalog } from '../context/catalogStore.js';
 import './Journal.css';
@@ -14,13 +16,8 @@ export default function Journal() {
         <h1 className="journal-page__title">The Journal</h1>
         {ARTICLES.length === 0 && <p>New stories are coming soon.</p>}
         <div className="journal-grid">
-          {ARTICLES.map((a) => (
-            <Link key={a.id} to={`/journal/${a.id}`} className="journal-card">
-              <img src={a.image} alt="" loading="lazy" />
-              <span className="journal-card__meta">{a.tag.toUpperCase()} • {a.readTime}</span>
-              <h3>{a.title}</h3>
-              <p>{a.excerpt}</p>
-            </Link>
+          {ARTICLES.map((a, i) => (
+            <JournalCard key={a.id} article={a} meta={`${a.tag.toUpperCase()} • ${a.readTime}`} delay={stagger(i)} />
           ))}
         </div>
       </div>
@@ -77,13 +74,8 @@ export default function Journal() {
           <hr />
         </div>
         <div className="journal-grid">
-          {grid3.map((a) => (
-            <Link key={a.id} to={`/journal/${a.id}`} className="journal-card">
-              <img src={a.image} alt="" loading="lazy" />
-              <span className="journal-card__meta">{a.tag.toUpperCase()} • {a.readTime}</span>
-              <h3>{a.title}</h3>
-              <p>{a.excerpt}</p>
-            </Link>
+          {grid3.map((a, i) => (
+            <JournalCard key={a.id} article={a} meta={`${a.tag.toUpperCase()} • ${a.readTime}`} delay={stagger(i)} />
           ))}
         </div>
       </section>}

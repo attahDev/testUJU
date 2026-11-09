@@ -70,3 +70,41 @@
 }
 .look-carousel__nav button:disabled { opacity: 0.35; cursor: default; }
 @media (prefers-reduced-motion: reduce) { .look-media__hero img, .look-media__side img { transition: none; } }
+
+/* entrance: photo first, then the words, the pieces one by one, and finally the button */
+.look-card .look-media,
+.look-card .look-card__eyebrow,
+.look-card .look-card__title,
+.look-card .look-card__desc,
+.look-card .look-piece,
+.look-card .look-card__foot {
+  opacity: 0;
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.look-card .look-media { transform: translateX(-26px) scale(0.985); }
+.look-card .look-card__eyebrow, .look-card .look-card__title, .look-card .look-card__desc,
+.look-card .look-piece, .look-card .look-card__foot { transform: translateY(18px); }
+
+.look-card.is-in .look-media,
+.look-card.is-in .look-card__eyebrow,
+.look-card.is-in .look-card__title,
+.look-card.is-in .look-card__desc,
+.look-card.is-in .look-piece,
+.look-card.is-in .look-card__foot { opacity: 1; transform: none; }
+
+.look-card.is-in .look-card__eyebrow { transition-delay: 0.25s; }
+.look-card.is-in .look-card__title { transition-delay: 0.35s; }
+.look-card.is-in .look-card__desc { transition-delay: 0.45s; }
+.look-card.is-in .look-piece { transition-delay: calc(0.55s + var(--i, 0) * 0.1s); }
+.look-card.is-in .look-card__foot { transition-delay: calc(0.65s + var(--look-count, 4) * 0.1s); }
+
+/* a piece being switched off should still dim, not snap back to full strength */
+.look-card.is-in .look-piece.is-off { opacity: 0.45; }
+
+@media (prefers-reduced-motion: reduce) {
+  .look-card .look-media, .look-card .look-card__eyebrow, .look-card .look-card__title,
+  .look-card .look-card__desc, .look-card .look-piece, .look-card .look-card__foot { opacity: 1; transform: none; transition: none; }
+  .look-card .look-piece.is-off { opacity: 0.45; }
+}
+.look-card.is-settled .look-media, .look-card.is-settled .look-card__eyebrow, .look-card.is-settled .look-card__title,
+.look-card.is-settled .look-card__desc, .look-card.is-settled .look-piece, .look-card.is-settled .look-card__foot { transition-delay: 0s; transition-duration: 0.25s; }

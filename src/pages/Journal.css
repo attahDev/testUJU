@@ -58,6 +58,6 @@
 
 .journal-hero { height: min(78vh, 720px); min-height: 420px; }
 .journal-hero__content h1 { font-size: clamp(2rem, 4.2vw, 3.5rem); max-width: 18ch; font-weight: 400; }
-.journal-feature, .journal-feature img, .journal-feature-stack__deco, .journal-card img { border-radius: 12px; }
+.journal-feature, .journal-feature img, .journal-feature-stack__deco, .journal-card img, .journal-card__media { border-radius: 12px; }
 .journal-page .eyebrow { color: var(--color-ink); text-transform: uppercase; letter-spacing: 0.04em; }
 .journal-card__meta { color: var(--color-gold); }

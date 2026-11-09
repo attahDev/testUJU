@@ -1,3 +1,4 @@
 .wishlist-page h1 { font-size: var(--step-1); margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--color-line); }
 .wishlist-page__note { color: var(--color-text-soft); font-size: 0.875rem; margin-bottom: 24px; }
 .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 32px 24px; }
+.wishlist-page__note a { color: var(--color-clay); text-decoration: underline; }

@@ -158,7 +158,7 @@ function ProductView({ product }) {
       <section className="section">
         <h2 className="related-title">You May Also Love</h2>
         <div className="product-grid product-grid--4">
-          {related.map((p) => <ProductCard key={p.id} product={p} />)}
+          {related.map((p, i) => <ProductCard key={p.id} product={p} index={i} columns={4} />)}
         </div>
       </section>
     </div>
