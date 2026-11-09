@@ -29,7 +29,7 @@ export class ApiError extends Error {
 function errorMessage(data) {
   const detail = data?.detail;
   if (typeof detail === 'string') return detail;
-  if (Array.isArray(detail)) return detail.map((d) => d.msg).join(', ');
+  if (Array.isArray(detail)) return detail.map((d) => String(d.msg).replace(/^Value error, /, '')).join(', ');
   return 'Something went wrong. Please try again.';
 }
 
