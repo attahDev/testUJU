@@ -6,7 +6,7 @@ import './Shop.css';
 
 
 export default function Shop() {
-  const { products: PRODUCTS, collections: COLLECTIONS, money } = useCatalog();
+  const { products: PRODUCTS, collections: COLLECTIONS, money, siteImage } = useCatalog();
   const CATEGORIES = [...new Set(PRODUCTS.map((p) => p.category))];
   const MATERIALS = [...new Set(PRODUCTS.map((p) => p.material).filter(Boolean))];
   const [activeCollections, setActiveCollections] = useState([]);
@@ -49,7 +49,7 @@ export default function Shop() {
   return (
     <>
       <section className="shop-hero">
-        <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=1400&q=80" alt="" />
+        <img src={siteImage('shop-banner')} alt="" />
         <div className="shop-hero__content container">
           <p className="shop-hero__crumb">Home / Shop</p>
           <h1>Shop All</h1>

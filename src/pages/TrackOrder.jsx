@@ -17,20 +17,22 @@ const HEADLINE = {
   pending: 'We have not received payment yet',
   paid: 'Confirmed, and being prepared',
   shipped: 'On its way to you',
-  delivered: 'Delivered',
+  delivered: 'Delivered. We hope you love it',
   cancelled: 'This order was cancelled',
   refunded: 'This order was refunded',
 };
 
-function Progress({ status }) {
-  const current = STEP_OF[status];
+function Progress({ order }) {
+  const current = STEP_OF[order.status];
   if (current === undefined) return null;
+  const when = [order.paid_at, order.shipped_at, order.delivered_at];
   return (
     <ol className="track-steps" aria-label="Order progress">
       {STEPS.map((label, i) => (
         <li key={label} className={i < current ? 'is-done' : i === current ? 'is-current' : ''} aria-current={i === current ? 'step' : undefined}>
           <span className="track-steps__dot" aria-hidden="true" />
           {label}
+          {i <= current && when[i] && <time className="track-steps__date" dateTime={when[i]}>{formatDate(when[i])}</time>}
         </li>
       ))}
     </ol>
@@ -50,7 +52,7 @@ function Result({ order }) {
         {order.status === 'refunded' && order.refunded_pence > 0 && <> {money(order.refunded_pence)} was returned to your original payment method.</>}
       </p>
 
-      <Progress status={order.status} />
+      <Progress order={order} />
 
       <div className="order-page__grid">
         <div className="order-page__items">

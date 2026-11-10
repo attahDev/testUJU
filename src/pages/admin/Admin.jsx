@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/authStore.js';
 import AdminArticles from './AdminArticles.jsx';
 import AdminComments from './AdminComments.jsx';
+import AdminSiteImages from './AdminSiteImages.jsx';
 import AdminLooks from './AdminLooks.jsx';
 import AdminOrders from './AdminOrders.jsx';
 import AdminProducts from './AdminProducts.jsx';
@@ -14,6 +15,7 @@ const TABS = [
   { id: 'looks', label: 'Looks', View: AdminLooks },
   { id: 'journal', label: 'Journal', View: AdminArticles },
   { id: 'orders', label: 'Orders', View: AdminOrders },
+  { id: 'site-images', label: 'Site images', View: AdminSiteImages },
   { id: 'comments', label: 'Comments', View: AdminComments },
   { id: 'reviews', label: 'Reviews', View: AdminReviews },
 ];

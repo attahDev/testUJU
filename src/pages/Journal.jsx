@@ -5,7 +5,7 @@ import { useCatalog } from '../context/catalogStore.js';
 import './Journal.css';
 
 export default function Journal() {
-  const { articles: ARTICLES } = useCatalog();
+  const { articles: ARTICLES, siteImage } = useCatalog();
   const [hero] = ARTICLES;
   const featured3 = ARTICLES.slice(0, 3);
   const grid3 = ARTICLES.slice(3);
@@ -55,7 +55,7 @@ export default function Journal() {
                 <p>By {featured3[1].author}</p>
               </div>
             </Link>
-            <img className="journal-feature-stack__deco" src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=500&q=80" alt="" />
+            <img className="journal-feature-stack__deco" src={siteImage('journal-deco')} alt="" />
           </div>
           <Link to={`/journal/${featured3[2].id}`} className="journal-feature journal-feature--tall">
             <img src={featured3[2].image} alt="" />

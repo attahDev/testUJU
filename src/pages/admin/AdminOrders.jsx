@@ -132,6 +132,10 @@ export default function AdminOrders() {
                               </button>
                               {trackMsg.text && <span className={trackMsg.error ? 'admin-error' : 'admin-note'} role={trackMsg.error ? 'alert' : 'status'}>{trackMsg.text}</span>}
                               {o.status === 'paid' && <small>The customer gets a shipped email with the tracking link.</small>}
+                              {o.status === 'shipped' && (
+                                <button className="admin-btn admin-btn--ghost" onClick={() => setStatus(o, 'delivered')}>Mark as delivered</button>
+                              )}
+                              {o.status === 'shipped' && <small>Marking it delivered emails the customer once.</small>}
                             </div>
                           )}
                           {REFUNDABLE.includes(o.status) && o.total_pence > o.refunded_pence && (
