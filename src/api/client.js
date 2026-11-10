@@ -1,3 +1,4 @@
+import { prepareImage } from '../utils/image.js';
 export const BASE = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '');
 
 const TOKEN_KEY = 'rose-uju-token';
@@ -55,7 +56,8 @@ export async function api(path, { method = 'GET', body, auth = true } = {}) {
   return data;
 }
 
-export async function uploadImage(file) {
+export async function uploadImage(original) {
+  const file = await prepareImage(original);
   const info = await api('/api/admin/uploads', {
     method: 'POST',
     body: { filename: file.name, content_type: file.type },

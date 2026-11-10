@@ -27,7 +27,7 @@ export default function Product() {
 
 function ProductView({ product }) {
   const { addItem } = useCart();
-  const { products, money } = useCatalog();
+  const { products, money, siteImage } = useCatalog();
   const colors = product.colors;
   const sizes = product.sizes;
   const gallery = [product.image, ...product.gallery].filter(Boolean);
@@ -148,7 +148,7 @@ function ProductView({ product }) {
       <ProductReviews productId={product.id} summary={summary} />
 
       <section className="product-banner">
-        <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=1400&q=80" alt="" />
+        <img src={siteImage('product-banner')} alt="" />
         <div className="product-banner__copy">
           <h2>Style in Elegance</h2>
           <p>Wear African clothes to the world and experience greatness in the culture</p>

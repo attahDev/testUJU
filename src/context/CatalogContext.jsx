@@ -3,19 +3,22 @@ import { CatalogContext } from './catalogStore.js';
 import { api } from '../api/client.js';
 import { toArticle, toLook, toProduct } from '../api/mappers.js';
 import { makeMoney } from '../api/money.js';
+import { SITE_IMAGE_DEFAULTS } from '../data/siteImages.js';
 
 async function fetchCatalog() {
-  const [products, articles, config, looks] = await Promise.all([
+  const [products, articles, config, looks, siteImages] = await Promise.all([
     api('/api/products', { auth: false }),
     api('/api/articles', { auth: false }),
     api('/api/config', { auth: false }),
     // Looks are an extra: if they fail to load the rest of the shop still works.
     api('/api/looks', { auth: false }).catch(() => []),
+    api('/api/site-images', { auth: false }).catch(() => ({})),
   ]);
   return {
     products: products.map(toProduct),
     articles: articles.map(toArticle),
     looks: looks.map(toLook),
+    siteImages,
     config: {
       currency: config.currency,
       paymentBypass: config.payment_bypass,
@@ -30,7 +33,7 @@ async function fetchCatalog() {
 }
 
 export function CatalogProvider({ children }) {
-  const [state, setState] = useState({ products: [], articles: [], looks: [], config: null, status: 'loading' });
+  const [state, setState] = useState({ products: [], articles: [], looks: [], siteImages: {}, config: null, status: 'loading' });
 
   const load = useCallback(
     () =>
@@ -50,6 +53,7 @@ export function CatalogProvider({ children }) {
       ...makeMoney(state.config?.currency || 'GBP'),
       collections: [...new Set(state.products.map((p) => p.collection))],
       refresh: load,
+      siteImage: (key) => state.siteImages[key] || SITE_IMAGE_DEFAULTS[key],
       getProduct: (id) => state.products.find((p) => String(p.id) === String(id)),
       getArticle: (id) => state.articles.find((a) => a.id === id),
     }),

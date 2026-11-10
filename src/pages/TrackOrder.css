@@ -23,3 +23,4 @@
 .track-steps li.is-done .track-steps__dot { background: var(--color-clay); border-color: var(--color-clay); }
 .track-steps li.is-current .track-steps__dot { border-color: var(--color-clay); box-shadow: 0 0 0 4px rgba(181, 86, 44, 0.18); background: var(--color-clay); }
 .track-steps li:last-child::before { right: 50%; }
+.track-steps__date { display: block; margin-top: 2px; font-size: 0.75rem; letter-spacing: 0; text-transform: none; color: var(--color-text-soft); }

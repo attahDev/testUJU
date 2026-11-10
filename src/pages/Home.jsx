@@ -11,16 +11,16 @@ import { useCatalog } from '../context/catalogStore.js';
 import './Home.css';
 
 const COLLECTION_TILES = [
-  { name: 'Adornments', image: 'https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=700&q=80' },
-  { name: 'Apparel', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=700&q=80' },
-  { name: 'Foundations', image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=700&q=80' },
-  { name: 'Rituals', image: 'https://images.unsplash.com/photo-1608181831718-c9ffd8a4fc03?w=700&q=80' },
-  { name: 'Legacy', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=700&q=80' },
-  { name: 'Modern Aesthetics', image: 'https://images.unsplash.com/photo-1578500494198-246f612d3b3d?w=700&q=80' },
+  { name: 'Adornments', key: 'tile-adornments' },
+  { name: 'Apparel', key: 'tile-apparel' },
+  { name: 'Foundations', key: 'tile-foundations' },
+  { name: 'Rituals', key: 'tile-rituals' },
+  { name: 'Legacy', key: 'tile-legacy' },
+  { name: 'Modern Aesthetics', key: 'tile-modern-aesthetics' },
 ];
 
 export default function Home() {
-  const { products, articles, looks } = useCatalog();
+  const { products, articles, looks, siteImage } = useCatalog();
   const newThisWeek = products.slice(0, 3);
   const featured = products.slice(3, 7);
   const stories = articles.slice(0, 3);
@@ -34,7 +34,7 @@ export default function Home() {
         <div className="collection-grid">
           {COLLECTION_TILES.map((tile, i) => (
             <Reveal key={tile.name} as={Link} to="/collections" className="collection-tile" delay={120 + (i % 3) * 130}>
-              <img src={tile.image} alt={tile.name} loading="lazy" />
+              <img src={siteImage(tile.key)} alt={tile.name} loading="lazy" />
               <span>{tile.name}</span>
             </Reveal>
           ))}
@@ -65,7 +65,7 @@ export default function Home() {
       <section className="container section story">
         <img
           className="story__image"
-          src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=80"
+          src={siteImage('story')}
           alt="Rose Uju founder portrait"
         />
         <div className="story__copy">
@@ -107,7 +107,7 @@ export default function Home() {
         </div>
         <img
           className="gifting__image"
-          src="https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=900&q=80"
+          src={siteImage('gifting')}
           alt="Gift box set"
         />
       </section>

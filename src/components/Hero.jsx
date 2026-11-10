@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Button from './Button.jsx';
+import { useCatalog } from '../context/catalogStore.js';
 import { prefersReducedMotion } from '../hooks/useReducedMotion.js';
 import './Hero.css';
 
 export default function Hero() {
+  const { siteImage } = useCatalog();
   const hero = useRef(null);
 
   // Slow parallax: the photo drifts a little slower than the page, and the text eases away as you scroll.
@@ -36,7 +38,7 @@ export default function Hero() {
       <div className="hero__media">
         <img
           className="hero__image"
-          src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1600&q=80"
+          src={siteImage('hero')}
           alt="Model wearing a Rose Uju silk wrap"
         />
       </div>

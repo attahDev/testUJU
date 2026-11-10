@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/Button.jsx';
+import { useCatalog } from '../context/catalogStore.js';
 import './About.css';
 
 export default function About() {
+  const { siteImage } = useCatalog();
   return (
     <div className="about-page">
       <section className="about-hero">
         <img
           className="about-hero__bg"
-          src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=1400&q=80"
+          src={siteImage('about-hero')}
           alt=""
         />
         <div className="about-hero__top container">
@@ -18,7 +20,7 @@ export default function About() {
         <div className="about-hero__inner container">
           <img
             className="about-hero__side about-hero__side--left"
-            src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=500&q=80"
+            src={siteImage('about-scarf')}
             alt="Silk scarf detail"
           />
           <div className="about-hero__center">
@@ -26,7 +28,7 @@ export default function About() {
           </div>
           <img
             className="about-hero__side about-hero__side--right"
-            src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=80"
+            src={siteImage('about-jewelry')}
             alt="Gold jewelry detail"
           />
         </div>
@@ -43,7 +45,7 @@ export default function About() {
         </div>
         <img
           className="about-craft__image"
-          src="https://images.unsplash.com/photo-1614093302611-8efc4de12407?w=800&q=80"
+          src={siteImage('about-portrait')}
           alt="Portrait in natural setting"
         />
         <p className="about-craft__copy about-craft__copy--right">
@@ -56,7 +58,7 @@ export default function About() {
 
       <section className="about-feel">
         <img
-          src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=1400&q=80"
+          src={siteImage('about-closing')}
           alt="Model in Rose Uju garment"
         />
         <div className="about-feel__card">

@@ -18,7 +18,6 @@ const PATTERNS = [
   { name: 'Knit Weave', tag: 'Other', image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&q=80' },
 ];
 const PATTERN_TAGS = ['All', 'Ankara', 'Isi Agu', 'Abstract', 'Other'];
-const BANNER = 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=80';
 const FINISHES = [
   { id: 'emboss', label: 'Emboss', hint: 'Raised' },
   { id: 'deboss', label: 'Deboss', hint: 'Pressed in' },
@@ -76,7 +75,7 @@ export default function Customise() {
   const navigate = useNavigate();
   const { addItem } = useCart();
   const { user } = useAuth();
-  const { config, money } = useCatalog();
+  const { config, money, siteImage } = useCatalog();
 
   useEffect(() => {
     writeJSON(DRAFT_KEY, { step, product, pattern: pattern.name, color: color.name, text, finish, font, placement });
@@ -148,7 +147,7 @@ export default function Customise() {
   return (
     <div className="customise-page">
       <section className="customise-hero">
-        <img src={BANNER} alt="" />
+        <img src={siteImage('customise-banner')} alt="" />
         <div className="customise-hero__content container">
           <p className="crumb">Home &gt; <span>Customize</span></p>
           <h1>Customize Your Design</h1>
