@@ -48,3 +48,4 @@
 .account-verify button:disabled { opacity: 0.6; cursor: default; }
 .account-orders__guest { margin-top: 24px; font-size: 0.875rem; color: var(--color-text-soft); }
 .account-orders__guest a { color: var(--color-clay); text-decoration: underline; }
+.account-form__legal a { color: var(--color-clay); text-decoration: underline; }

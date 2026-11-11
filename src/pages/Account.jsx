@@ -67,6 +67,11 @@ export function AuthForm({ heading, lead } = {}) {
             value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })}
           />
         )}
+        {mode === 'register' && (
+          <span className="account-form__note account-form__legal">
+            By creating an account you agree to our <Link to="/terms">Terms</Link> and <Link to="/privacy">Privacy Policy</Link>.
+          </span>
+        )}
         {error && <span className="account-form__error" role="alert">{error}</span>}
         {sent && <span className="account-form__note">If an account exists for that email, a reset link is on its way.</span>}
         <Button type="submit" variant="dark" disabled={busy}>

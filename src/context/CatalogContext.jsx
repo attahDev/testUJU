@@ -4,21 +4,24 @@ import { api } from '../api/client.js';
 import { toArticle, toLook, toProduct } from '../api/mappers.js';
 import { makeMoney } from '../api/money.js';
 import { SITE_IMAGE_DEFAULTS } from '../data/siteImages.js';
+import { STORE_DEFAULTS } from '../data/storeDefaults.js';
 
 async function fetchCatalog() {
-  const [products, articles, config, looks, siteImages] = await Promise.all([
+  const [products, articles, config, looks, siteImages, settings] = await Promise.all([
     api('/api/products', { auth: false }),
     api('/api/articles', { auth: false }),
     api('/api/config', { auth: false }),
     // Looks are an extra: if they fail to load the rest of the shop still works.
     api('/api/looks', { auth: false }).catch(() => []),
     api('/api/site-images', { auth: false }).catch(() => ({})),
+    api('/api/site-settings', { auth: false }).catch(() => ({})),
   ]);
   return {
     products: products.map(toProduct),
     articles: articles.map(toArticle),
     looks: looks.map(toLook),
     siteImages,
+    settings: { ...STORE_DEFAULTS, ...settings },
     config: {
       currency: config.currency,
       paymentBypass: config.payment_bypass,
@@ -33,7 +36,7 @@ async function fetchCatalog() {
 }
 
 export function CatalogProvider({ children }) {
-  const [state, setState] = useState({ products: [], articles: [], looks: [], siteImages: {}, config: null, status: 'loading' });
+  const [state, setState] = useState({ products: [], articles: [], looks: [], siteImages: {}, settings: STORE_DEFAULTS, config: null, status: 'loading' });
 
   const load = useCallback(
     () =>

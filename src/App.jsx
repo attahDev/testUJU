@@ -5,6 +5,7 @@ import Home from './pages/Home.jsx';
 import Shop from './pages/Shop.jsx';
 import Product from './pages/Product.jsx';
 import Collections from './pages/Collections.jsx';
+import { Privacy, Returns, Terms } from './pages/Legal.jsx';
 import TrackOrder from './pages/TrackOrder.jsx';
 import Looks from './pages/Looks.jsx';
 import Wishlist from './pages/Wishlist.jsx';
@@ -35,6 +36,9 @@ export default function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/product/:id" element={<Product />} />
             <Route path="/collections" element={<Collections />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/returns" element={<Returns />} />
             <Route path="/track-order" element={<TrackOrder />} />
             <Route path="/looks" element={<Looks />} />
             <Route path="/wishlist" element={<Wishlist />} />
