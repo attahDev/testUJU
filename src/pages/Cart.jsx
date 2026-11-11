@@ -4,9 +4,11 @@ import Button from '../components/Button.jsx';
 import { useAuth } from '../context/authStore.js';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Cart.css';
 
 export default function Cart() {
+  usePageMeta({ title: 'Your Bag', noindex: true });
   const { items, removeItem, setQty, subtotal } = useCart();
   const { config, money } = useCatalog();
   const { user } = useAuth();

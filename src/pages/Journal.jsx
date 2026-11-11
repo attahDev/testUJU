@@ -2,9 +2,11 @@ import JournalCard from '../components/JournalCard.jsx';
 import { stagger } from '../hooks/useInView.js';
 import { Link } from 'react-router-dom';
 import { useCatalog } from '../context/catalogStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Journal.css';
 
 export default function Journal() {
+  usePageMeta({ title: 'The Journal', description: 'Stories, style and heritage from the Rose Uju journal.' });
   const { articles: ARTICLES, siteImage } = useCatalog();
   const [hero] = ARTICLES;
   const featured3 = ARTICLES.slice(0, 3);

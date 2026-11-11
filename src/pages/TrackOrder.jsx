@@ -6,6 +6,7 @@ import Button from '../components/Button.jsx';
 import TrackingInfo from '../components/TrackingInfo.jsx';
 import { useAuth } from '../context/authStore.js';
 import { useCatalog } from '../context/catalogStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Account.css';
 import './OrderConfirmation.css';
 import './TrackOrder.css';
@@ -82,6 +83,7 @@ function Result({ order }) {
 }
 
 export default function TrackOrder() {
+  usePageMeta({ title: 'Find my order', noindex: true });
   const [params] = useSearchParams();
   const { user } = useAuth();
   const [orderId, setOrderId] = useState(params.get('order') || '');

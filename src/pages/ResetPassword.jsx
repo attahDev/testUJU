@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { api } from '../api/client.js';
 import Button from '../components/Button.jsx';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Account.css';
 
 export default function ResetPassword() {
+  usePageMeta({ title: 'Reset password', noindex: true });
   const [params] = useSearchParams();
   const token = params.get('token') || '';
   const [password, setPassword] = useState('');

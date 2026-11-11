@@ -5,6 +5,7 @@ import { useAuth } from '../context/authStore.js';
 import { AuthForm } from './Account.jsx';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Checkout.css';
 
 const STEPS = ['Information', 'Shipping', 'Payment'];
@@ -252,6 +253,7 @@ function CheckoutForm() {
 }
 
 export default function Checkout() {
+  usePageMeta({ title: 'Checkout', noindex: true });
   const { user, ready } = useAuth();
   const { items } = useCart();
   if (!ready) return <div className="container section checkout-page"><p>Loading…</p></div>;

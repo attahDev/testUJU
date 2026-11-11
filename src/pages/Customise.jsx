@@ -5,6 +5,7 @@ import { useAuth } from '../context/authStore.js';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
 import { readJSON, writeJSON } from '../utils/storage.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Customise.css';
 
 const STEPS = ['Choose Product', 'Choose Pattern', 'Personalize', 'Preview', 'Checkout'];
@@ -60,6 +61,7 @@ function loadDraft() {
 }
 
 export default function Customise() {
+  usePageMeta({ title: 'Customise', description: 'Design your own piece with Rose Uju: choose a pattern, colour and finish, and add your own text.' });
   const [draft] = useState(loadDraft);
   const [step, setStep] = useState(draft.step);
   const [product, setProduct] = useState(draft.product);

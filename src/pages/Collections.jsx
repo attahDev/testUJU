@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCatalog } from '../context/catalogStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Collections.css';
 
 const BLURBS = {
@@ -12,6 +13,7 @@ const BLURBS = {
 };
 
 export default function Collections() {
+  usePageMeta({ title: 'Collections', description: 'Explore the Rose Uju collections, each one rooted in heritage and made for modern wear.' });
   const { products: PRODUCTS, collections: COLLECTIONS, money } = useCatalog();
   return (
     <div className="collections-page">

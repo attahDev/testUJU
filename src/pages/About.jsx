@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/Button.jsx';
 import { useCatalog } from '../context/catalogStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './About.css';
 
 export default function About() {
+  usePageMeta({ title: 'Our Story', description: 'The story behind Rose Uju: Afro-Caribbean luxury translating heritage into modern elegance.' });
   const { siteImage } = useCatalog();
   return (
     <div className="about-page">

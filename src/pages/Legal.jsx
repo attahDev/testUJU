@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useCatalog } from '../context/catalogStore.js';
 import { LEGAL_UPDATED } from '../data/storeDefaults.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Legal.css';
 
-function LegalPage({ title, children }) {
+function LegalPage({ title, description, children }) {
+  usePageMeta({ title, description });
   return (
     <div className="container section legal">
       <p className="eyebrow">Information</p>
@@ -27,7 +29,7 @@ function useContact() {
 export function Terms() {
   const { settings, name, link } = useContact();
   return (
-    <LegalPage title="Terms & Conditions">
+    <LegalPage title="Terms & Conditions" description="The terms that apply when you use the Rose Uju website and place an order.">
       <p>
         These terms apply when you use this website and buy from {name}. By placing an order you agree to them. Please read
         them alongside our <Link to="/returns">Returns &amp; Shipping</Link> and <Link to="/privacy">Privacy</Link> pages.
@@ -105,7 +107,7 @@ export function Terms() {
 export function Privacy() {
   const { settings, name, link } = useContact();
   return (
-    <LegalPage title="Privacy Policy">
+    <LegalPage title="Privacy Policy" description="What personal information Rose Uju collects, why, who it is shared with, and your choices.">
       <p>
         {name} respects your privacy. This page explains what personal information we collect on this website, why, who we
         share it with, and the choices you have.
@@ -177,7 +179,7 @@ export function Returns() {
   const { config, money } = useCatalog();
   const days = settings.return_days;
   return (
-    <LegalPage title="Returns & Shipping">
+    <LegalPage title="Returns & Shipping" description="Shipping options and costs, how returns and refunds work, and how to track your Rose Uju order.">
       <h2>Shipping</h2>
       {config?.shipping?.length > 0 && (
         <div className="legal__table-wrap">

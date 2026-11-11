@@ -1,7 +1,9 @@
 import Button from '../components/Button.jsx';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './NotFound.css';
 
 export default function NotFound() {
+  usePageMeta({ title: 'Page not found', noindex: true });
   return (
     <div className="container section not-found">
       <p className="eyebrow">404</p>
