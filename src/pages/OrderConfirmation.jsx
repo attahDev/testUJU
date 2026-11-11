@@ -7,9 +7,11 @@ import TrackingInfo from '../components/TrackingInfo.jsx';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
 import NotFound from './NotFound.jsx';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './OrderConfirmation.css';
 
 export default function OrderConfirmation() {
+  usePageMeta({ title: 'Your order', noindex: true });
   const { id } = useParams();
   const [params] = useSearchParams();
   const sessionId = params.get('session_id');

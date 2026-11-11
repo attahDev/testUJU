@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import LookCard from '../components/LookCard.jsx';
 import { useCatalog } from '../context/catalogStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Looks.css';
 
 export default function Looks() {
+  usePageMeta({ title: 'Shop the Look', description: 'Complete outfits styled by Rose Uju. Take the whole look in one tap, or choose only the pieces you love.' });
   const { looks } = useCatalog();
   return (
     <div className="container section looks-page">

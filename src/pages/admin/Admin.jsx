@@ -9,6 +9,7 @@ import AdminLooks from './AdminLooks.jsx';
 import AdminOrders from './AdminOrders.jsx';
 import AdminProducts from './AdminProducts.jsx';
 import AdminReviews from './AdminReviews.jsx';
+import { usePageMeta } from '../../hooks/usePageMeta.js';
 import './Admin.css';
 
 const TABS = [
@@ -23,6 +24,7 @@ const TABS = [
 ];
 
 export default function Admin() {
+  usePageMeta({ title: 'Admin', noindex: true });
   const { user, ready } = useAuth();
   const [tab, setTab] = useState('products');
 

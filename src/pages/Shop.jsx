@@ -2,10 +2,12 @@ import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard.jsx';
 import { useCatalog } from '../context/catalogStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Shop.css';
 
 
 export default function Shop() {
+  usePageMeta({ title: 'Shop', description: 'Browse the full Rose Uju collection: scarves, coats, jewellery, bags and more.' });
   const { products: PRODUCTS, collections: COLLECTIONS, money, siteImage } = useCatalog();
   const CATEGORIES = [...new Set(PRODUCTS.map((p) => p.category))];
   const MATERIALS = [...new Set(PRODUCTS.map((p) => p.material).filter(Boolean))];

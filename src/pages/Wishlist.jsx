@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard.jsx';
 import { useCatalog } from '../context/catalogStore.js';
 import { useWishlist } from '../context/wishlistStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Cart.css';
 import './Wishlist.css';
 
 export default function Wishlist() {
+  usePageMeta({ title: 'Wishlist', noindex: true });
   const { ids, synced } = useWishlist();
   const { getProduct } = useCatalog();
   // Ids of products that no longer exist are simply skipped.

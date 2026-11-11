@@ -9,6 +9,7 @@ import { api } from '../api/client.js';
 import { useCatalog } from '../context/catalogStore.js';
 import HeartButton from '../components/HeartButton.jsx';
 import { useCart } from '../context/cartStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Product.css';
 
 const PANELS = [
@@ -27,7 +28,29 @@ export default function Product() {
 
 function ProductView({ product }) {
   const { addItem } = useCart();
-  const { products, money, siteImage } = useCatalog();
+  const { products, money, siteImage, config } = useCatalog();
+  const page = typeof window === 'undefined' ? '' : `${window.location.origin}${window.location.pathname}`;
+  usePageMeta({
+    title: product.name,
+    description: product.description,
+    image: product.image,
+    type: 'product',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.name,
+      description: product.description,
+      image: [product.image, ...(product.gallery || [])].filter(Boolean),
+      sku: String(product.id),
+      offers: {
+        '@type': 'Offer',
+        url: page,
+        priceCurrency: (config?.currency || 'GBP').toUpperCase(),
+        price: Number(product.price).toFixed(2),
+        availability: product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      },
+    },
+  });
   const colors = product.colors;
   const sizes = product.sizes;
   const gallery = [product.image, ...product.gallery].filter(Boolean);

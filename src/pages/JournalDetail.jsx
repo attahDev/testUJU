@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { api } from '../api/client.js';
 import { useCatalog } from '../context/catalogStore.js';
 import NotFound from './NotFound.jsx';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './JournalDetail.css';
 
 const IMAGE_LINE = /^https?:\/\/\S+\.(jpe?g|png|webp|avif)(\?\S*)?$/i;
@@ -16,6 +17,7 @@ export default function JournalDetail() {
 }
 
 function ArticleView({ article }) {
+  usePageMeta({ title: article.title, description: article.excerpt, image: article.image, type: 'article' });
   const [form, setForm] = useState({ name: '', email: '', comment: '' });
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');

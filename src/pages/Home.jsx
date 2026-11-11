@@ -4,6 +4,7 @@ import SectionHeading from '../components/SectionHeading.jsx';
 import ProductCard from '../components/ProductCard.jsx';
 import JournalCard from '../components/JournalCard.jsx';
 import { stagger } from '../hooks/useInView.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import Hero from '../components/Hero.jsx';
 import Reveal from '../components/Reveal.jsx';
 import LookCarousel from '../components/LookCarousel.jsx';
@@ -20,6 +21,7 @@ const COLLECTION_TILES = [
 ];
 
 export default function Home() {
+  usePageMeta();
   const { products, articles, looks, siteImage } = useCatalog();
   const newThisWeek = products.slice(0, 3);
   const featured = products.slice(3, 7);

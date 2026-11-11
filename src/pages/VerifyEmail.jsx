@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { api, getToken } from '../api/client.js';
 import { useAuth } from '../context/authStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Account.css';
 
 export default function VerifyEmail() {
+  usePageMeta({ title: 'Verify email', noindex: true });
   const [params] = useSearchParams();
   const token = params.get('token') || '';
   const { refreshUser } = useAuth();

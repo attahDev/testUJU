@@ -5,6 +5,7 @@ import { formatDate } from '../api/mappers.js';
 import Button from '../components/Button.jsx';
 import { useAuth } from '../context/authStore.js';
 import { useCatalog } from '../context/catalogStore.js';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Account.css';
 
 export function AuthForm({ heading, lead } = {}) {
@@ -217,6 +218,7 @@ function VerifyBanner() {
 }
 
 export default function Account() {
+  usePageMeta({ title: 'My Account', noindex: true });
   const { user, ready, logout } = useAuth();
 
   if (!ready) return <div className="container section"><p>Loading…</p></div>;
