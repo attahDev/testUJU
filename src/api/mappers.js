@@ -42,6 +42,7 @@ export function toLook(l) {
     name: l.name,
     description: l.description,
     image: l.image_url,
+    aiGenerated: Boolean(l.ai_generated),
     totalPence: l.total_pence,
     products: l.products.map(toProduct),
   };

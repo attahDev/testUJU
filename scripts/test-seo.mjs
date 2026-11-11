@@ -19,6 +19,10 @@ const routes = {
   '/api/site-images': {},
   '/api/products/7': { id: 7, name: NASTY, description: 'Hand-finished silk.\n\n' + 'Lovely. '.repeat(80), price_pence: 14500, image_url: '/media/scarf.webp' },
   '/api/articles/heritage-story': { slug: 'heritage-story', title: 'Our Heritage', excerpt: 'Where it all began.', image_url: 'https://cdn.test/h.jpg' },
+  '/api/looks': [
+    { slug: 'evening-wrap', name: 'The Evening Wrap', description: 'Silk and gold.', image_url: '', products: [{ name: 'Silk Scarf', image_url: '/media/scarf.webp' }, { name: 'Coat', image_url: '/media/coat.webp' }] },
+    { slug: 'dusk', name: 'Dusk', description: '', image_url: 'https://cdn.test/dusk-ai.webp', products: [{ name: 'Wrap', image_url: '/media/w.webp' }, { name: 'Hoops', image_url: '/media/h.webp' }] },
+  ],
   '/api/products': [{ id: 7 }, { id: 8 }],
   '/api/articles': [{ slug: 'heritage-story' }, { slug: 'bad slug/../x' }],
 };
@@ -77,6 +81,24 @@ test('article card uses the article type and its own image', async () => {
   assert.match(r.body, /og:url" content="https:\/\/shop\.test\/journal\/heritage-story"/);
 });
 
+test('a look without a photo is shown with its first product, and lists the pieces when it has no description', async () => {
+  const r = await run(og, { type: 'look', id: 'dusk' });
+  assert.match(r.body, /og:image" content="https:\/\/cdn\.test\/dusk-ai\.webp"/, 'the look photo wins when there is one');
+  assert.match(r.body, /og:description" content="Shop the full look: Wrap, Hoops\./);
+  assert.match(r.body, /og:url" content="https:\/\/shop\.test\/looks\/dusk"/);
+  const plain = await run(og, { type: 'look', id: 'evening-wrap' });
+  assert.match(plain.body, /og:image" content="https:\/\/api\.test\/media\/scarf\.webp"/, 'falls back to the first product photo');
+  assert.match(plain.body, /og:title" content="The Evening Wrap \| Rose Uju"/);
+});
+
+test('an unknown look gives a 404, and a down API still gives a brand card', async () => {
+  assert.equal((await run(og, { type: 'look', id: 'nope' })).status, 404);
+  apiDown = true;
+  const r = await run(og, { type: 'look', id: 'dusk' });
+  assert.equal(r.status, 200);
+  assert.match(r.body, /og:title" content="Rose Uju \| Cultivated Beauty, Worn Well"/);
+});
+
 test('unknown product gives a 404 and is not cached', async () => {
   const r = await run(og, { type: 'product', id: '999' });
   assert.equal(r.status, 404);
@@ -116,7 +138,7 @@ test('SITE_URL overrides the request host', async () => {
 test('sitemap lists pages, products and safe journal slugs, as valid escaped XML', async () => {
   const r = await run(sitemap);
   assert.match(r.headers['content-type'], /xml/);
-  for (const loc of ['https://shop.test/', 'https://shop.test/shop', 'https://shop.test/product/7', 'https://shop.test/product/8', 'https://shop.test/journal/heritage-story']) {
+  for (const loc of ['https://shop.test/', 'https://shop.test/shop', 'https://shop.test/product/7', 'https://shop.test/product/8', 'https://shop.test/journal/heritage-story', 'https://shop.test/looks/evening-wrap', 'https://shop.test/looks/dusk']) {
     assert.ok(r.body.includes(`<loc>${loc}</loc>`), loc);
   }
   assert.ok(!r.body.includes('bad slug'), 'unsafe slugs are left out');
@@ -135,7 +157,8 @@ test('vercel.json sends only link-preview bots to the card functions', async () 
   const rules = cfg.rewrites;
   assert.equal(rules.at(-1).destination, '/index.html', 'catch-all must stay last');
   const botRules = rules.filter((r) => r.has);
-  assert.equal(botRules.length, 3);
+  assert.equal(botRules.length, 4);
+  assert.ok(botRules.some((r) => r.source === '/looks/:slug' && r.destination === '/api/og?type=look&id=:slug'));
   const re = new RegExp(`^${botRules[0].has[0].value}$`);
   const bots = [
     'WhatsApp/2.23.20.0 A', 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)', 'Facebot',

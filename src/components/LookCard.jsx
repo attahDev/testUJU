@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import ShareButton from './ShareButton.jsx';
 import { useCart } from '../context/cartStore.js';
 import { useCatalog } from '../context/catalogStore.js';
 import { useInView } from '../hooks/useInView.js';
@@ -15,7 +16,10 @@ function LookMedia({ look }) {
   if (look.image) {
     return (
       <div className="look-media look-media--photo">
-        <img src={look.image} alt={look.name} loading="lazy" />
+        <div className="look-media__photo">
+          <img src={look.image} alt={look.name} loading="lazy" />
+          {look.aiGenerated && <span className="look-media__ai">AI-generated image</span>}
+        </div>
         <div className="look-media__strip">
           {look.products.map((p) => (
             <Link key={p.id} to={`/product/${p.id}`} aria-label={p.name}>
@@ -89,7 +93,7 @@ export default function LookCard({ look }) {
 
       <div className="look-card__body">
         <p className="look-card__eyebrow">The Look</p>
-        <h3 className="look-card__title">{look.name}</h3>
+        <h3 className="look-card__title"><Link to={`/looks/${look.slug}`}>{look.name}</Link></h3>
         {look.description && <p className="look-card__desc">{look.description}</p>}
 
         <ul className="look-pieces">
@@ -143,6 +147,11 @@ export default function LookCard({ look }) {
             {added ? 'Added to bag ✓' : `Add full look · ${money(total)}`}
           </button>
           {added && <Link to="/cart" className="look-card__bag">View bag →</Link>}
+          <ShareButton
+            url={`${window.location.origin}/looks/${look.slug}`}
+            title={`${look.name} | Rose Uju`}
+            text={`${look.name}: ${look.products.length} pieces styled by Rose Uju.`}
+          />
         </div>
       </div>
     </article>

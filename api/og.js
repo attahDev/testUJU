@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     siteName,
   };
 
-  if ((type === 'product' || type === 'article') && !id) return sendHtml(res, 404, cardHtml(home), 'no-store');
+  if ((type === 'product' || type === 'article' || type === 'look') && !id) return sendHtml(res, 404, cardHtml(home), 'no-store');
 
   if (type === 'product') {
     const found = await getJson(`/api/products/${id}`);
@@ -45,6 +45,26 @@ export default async function handler(req, res) {
         type: 'product',
         siteName,
         extra: price ? `<meta property="product:price:amount" content="${price}">\n<meta property="product:price:currency" content="${currency}">` : '',
+      })
+    );
+  }
+
+  if (type === 'look') {
+    const found = await getJson('/api/looks');
+    if (!found.ok && found.status !== 404) return sendHtml(res, 200, cardHtml(home), 'public, s-maxage=30');
+    const look = (found.data || []).find((l) => l.slug === id);
+    if (!look) return sendHtml(res, 404, cardHtml(home), 'no-store');
+    const names = look.products.map((p) => p.name).join(', ');
+    return sendHtml(
+      res,
+      200,
+      cardHtml({
+        title: `${look.name} | ${siteName}`,
+        description: clip(look.description) || `Shop the full look: ${names}.`,
+        image: absoluteUrl(look.image_url || look.products[0]?.image_url, api) || defaultImage,
+        url: `${site}/looks/${look.slug}`,
+        type: 'website',
+        siteName,
       })
     );
   }

@@ -113,3 +113,9 @@
 
 .admin-form label small { display: block; margin-top: 4px; font-weight: 400; font-size: 0.8125rem; color: var(--color-text-soft); }
 .admin-warning { padding: 14px 16px; border: 1px solid var(--color-clay); border-left-width: 4px; background: rgba(181, 86, 44, 0.07); font-size: 0.9375rem; line-height: 1.5; margin-bottom: 8px; }
+
+.look-ai { display: flex; flex-direction: column; gap: 12px; padding: 16px; border: 1px dashed var(--color-line); border-radius: var(--radius); }
+.look-ai__intro { color: var(--color-text-soft); font-size: 0.875rem; line-height: 1.5; margin: 0; }
+.look-ai__result { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+.look-ai__result img { width: 260px; max-width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); background: var(--color-cream-deep); }
+.look-ai__actions { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
