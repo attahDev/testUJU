@@ -4,10 +4,11 @@ const PAGES = ['/', '/shop', '/collections', '/looks', '/customise', '/about', '
 
 export default async function handler(req, res) {
   const site = siteBase(req);
-  const [products, articles] = await Promise.all([getJson('/api/products'), getJson('/api/articles')]);
+  const [products, articles, looks] = await Promise.all([getJson('/api/products'), getJson('/api/articles'), getJson('/api/looks')]);
   const urls = [
     ...PAGES,
     ...(products.data || []).map((p) => `/product/${p.id}`),
+    ...(looks.data || []).filter((l) => safeId(l.slug)).map((l) => `/looks/${l.slug}`),
     ...(articles.data || []).filter((a) => safeId(a.slug)).map((a) => `/journal/${a.slug}`),
   ];
   const xml =

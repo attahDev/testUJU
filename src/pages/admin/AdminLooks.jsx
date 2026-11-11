@@ -1,15 +1,19 @@
 import { useState } from 'react';
-import { api } from '../../api/client.js';
+import { api, uploadImage } from '../../api/client.js';
 import { useCatalog } from '../../context/catalogStore.js';
 import ImageUpload from './ImageUpload.jsx';
 import { useApiList } from './useApiList.js';
 
-const EMPTY = { name: '', description: '', image_url: '', product_ids: [], position: '0', active: true };
+const EMPTY = { name: '', description: '', image_url: '', ai_generated: false, product_ids: [], position: '0', active: true };
+const AI_IDLE = { busy: false, saving: false, src: '', error: '' };
 
 export default function AdminLooks() {
   const looks = useApiList('/api/admin/looks');
   const products = useApiList('/api/admin/products');
-  const { refresh } = useCatalog();
+  const { refresh, config } = useCatalog();
+  const [ai, setAi] = useState(AI_IDLE);
+  const [aiStyle, setAiStyle] = useState('editorial');
+  const [aiNote, setAiNote] = useState('');
   const [editing, setEditing] = useState(null);
   const [draft, setDraft] = useState(EMPTY);
   const [formError, setFormError] = useState('');
@@ -19,10 +23,36 @@ export default function AdminLooks() {
     setEditing(look ? look.id : 'new');
     setDraft(
       look
-        ? { name: look.name, description: look.description, image_url: look.image_url, product_ids: look.product_ids, position: String(look.position), active: look.active }
+        ? { name: look.name, description: look.description, image_url: look.image_url, ai_generated: look.ai_generated, product_ids: look.product_ids, position: String(look.position), active: look.active }
         : EMPTY
     );
     setFormError('');
+    setAi(AI_IDLE);
+  }
+
+  async function generate() {
+    setAi({ ...AI_IDLE, busy: true });
+    try {
+      const res = await api('/api/admin/looks/model-photo', {
+        method: 'POST',
+        body: { product_ids: draft.product_ids, style: aiStyle, model_note: aiNote },
+      });
+      setAi({ ...AI_IDLE, src: `data:${res.mime_type};base64,${res.data}` });
+    } catch (err) {
+      setAi({ ...AI_IDLE, error: err.message });
+    }
+  }
+
+  async function useAiPhoto() {
+    setAi((prev) => ({ ...prev, saving: true, error: '' }));
+    try {
+      const blob = await (await fetch(ai.src)).blob();
+      const url = await uploadImage(new File([blob], 'look-model.png', { type: blob.type || 'image/png' }));
+      setDraft((prev) => ({ ...prev, image_url: url, ai_generated: true }));
+      setAi(AI_IDLE);
+    } catch (err) {
+      setAi((prev) => ({ ...prev, saving: false, error: err.message }));
+    }
   }
 
   function set(name, value) {
@@ -96,8 +126,52 @@ export default function AdminLooks() {
           </div>
         </div>
 
-        <ImageUpload label="Lookbook photo (optional). Without one, the look is composed from the product images." value={draft.image_url} onChange={(url) => set('image_url', url)} />
-        {draft.image_url && <button type="button" className="admin-link" onClick={() => set('image_url', '')}>Remove photo</button>}
+        <ImageUpload
+          label="Lookbook photo (optional). Without one, the look is composed from the product images."
+          value={draft.image_url}
+          onChange={(url) => setDraft((prev) => ({ ...prev, image_url: url, ai_generated: false }))}
+        />
+        {draft.image_url && draft.ai_generated && <p className="admin-note">This photo is AI-generated, so the shop labels it "AI-generated image".</p>}
+        {draft.image_url && (
+          <button type="button" className="admin-link" onClick={() => setDraft((prev) => ({ ...prev, image_url: '', ai_generated: false }))}>Remove photo</button>
+        )}
+
+        {config.aiPreview && (
+          <div className="look-ai">
+            <strong>Create a model photo with AI</strong>
+            <p className="look-ai__intro">
+              Makes a picture of a fictional model wearing the pieces you picked above. You review it before it is used, and the shop
+              labels it "AI-generated image". Always check that every piece still looks like the real product.
+            </p>
+            <div className="admin-row">
+              <label>Style
+                <select value={aiStyle} onChange={(e) => setAiStyle(e.target.value)}>
+                  <option value="editorial">Outdoor editorial (golden hour)</option>
+                  <option value="studio">Clean studio</option>
+                  <option value="street">City street</option>
+                </select>
+              </label>
+              <label>Describe the model (optional)
+                <input value={aiNote} maxLength={120} placeholder="woman in her thirties, short natural hair" onChange={(e) => setAiNote(e.target.value)} />
+              </label>
+            </div>
+            <button type="button" className="admin-btn admin-btn--ghost" onClick={generate} disabled={ai.busy || ai.saving || draft.product_ids.length < 2}>
+              {ai.busy ? 'Creating… (about 20 seconds)' : ai.src ? 'Try again' : 'Create model photo'}
+            </button>
+            {draft.product_ids.length < 2 && <small>Pick at least two pieces first.</small>}
+            {ai.error && <p className="admin-error" role="alert">{ai.error}</p>}
+            {ai.src && (
+              <div className="look-ai__result">
+                <img src={ai.src} alt="AI-generated model photo, for your review" />
+                <div className="look-ai__actions">
+                  <button type="button" className="admin-btn" onClick={useAiPhoto} disabled={ai.saving}>{ai.saving ? 'Saving…' : 'Use this photo'}</button>
+                  <button type="button" className="admin-link" onClick={() => setAi(AI_IDLE)} disabled={ai.saving}>Discard</button>
+                  <small>Remember to press Save look afterwards.</small>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="admin-row">
           <label>Order (lower shows first)<input type="number" value={draft.position} onChange={(e) => set('position', e.target.value)} /></label>

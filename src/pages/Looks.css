@@ -1,3 +1,5 @@
 .looks-page h1 { font-size: var(--step-1); margin-bottom: 16px; }
 .looks-page__lead { max-width: 56ch; color: var(--color-text-soft); margin-bottom: 48px; }
 .looks-page__list { display: flex; flex-direction: column; gap: clamp(48px, 7vw, 96px); }
+.looks-page__back { margin-bottom: 32px; font-size: 0.875rem; }
+.looks-page__back a { color: var(--color-clay); text-decoration: underline; }

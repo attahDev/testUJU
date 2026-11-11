@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../api/client.js';
+import ShareButton from '../components/ShareButton.jsx';
 import { useCatalog } from '../context/catalogStore.js';
 import NotFound from './NotFound.jsx';
 import { usePageMeta } from '../hooks/usePageMeta.js';
@@ -46,13 +47,6 @@ function ArticleView({ article }) {
     }
   }
 
-  const pageUrl = encodeURIComponent(window.location.href);
-  const shareLinks = [
-    { label: 'Share on LinkedIn', text: 'in', href: `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}` },
-    { label: 'Share on Facebook', text: 'f', href: `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}` },
-    { label: 'Share on X', text: 'X', href: `https://twitter.com/intent/tweet?url=${pageUrl}&text=${encodeURIComponent(article.title)}` },
-  ];
-
   return (
     <article className="journal-detail">
       <header className="container journal-detail__head">
@@ -62,10 +56,8 @@ function ArticleView({ article }) {
           <span>By {article.author}</span>
           <span>{article.date}</span>
           <span>{article.readTime}</span>
-          <span className="journal-detail__share">
-            {shareLinks.map((s) => (
-              <a key={s.label} href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}>{s.text}</a>
-            ))}
+          <span className="journal-detail__sharebtn">
+            <ShareButton url={window.location.href} title={`${article.title} | Rose Uju`} text={article.title} />
           </span>
         </div>
       </header>

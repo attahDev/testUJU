@@ -47,3 +47,7 @@ Sign in with an admin account at `/account`, then open Admin. Manage products, j
 ### Checks
 
 `npm run test:seo` tests the functions and the bot matching in `vercel.json` against a fake backend. After deploying, confirm a real preview: run `curl -A "WhatsApp/2.23" https://YOUR-SITE/product/1` and look for `og:title` and `og:image`, then paste a product link into WhatsApp or the Facebook Sharing Debugger. Previews are cached by those apps, so use the debugger's re-scrape button after changing a photo.
+
+## Sharing
+
+`src/components/ShareButton.jsx` is used on products, looks and Journal articles. Phones open the system share sheet (WhatsApp, Instagram, Messages, ...); computers get a menu with WhatsApp, Facebook, X, email and copy-link. Each look has its own page at `/looks/<name>` so it can be shared, and link-preview bots get a proper card for it from `api/og.js`.

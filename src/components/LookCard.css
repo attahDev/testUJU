@@ -10,7 +10,12 @@
 .look-media { background: var(--color-cream-deep); }
 .look-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .look-media--photo { display: flex; flex-direction: column; gap: 8px; background: none; }
-.look-media--photo > img { aspect-ratio: 4 / 5; }
+.look-media__photo { position: relative; }
+.look-media__photo img { aspect-ratio: 4 / 5; }
+.look-media__ai {
+  position: absolute; left: 12px; bottom: 12px; padding: 5px 10px; border-radius: 999px; font-size: 0.6875rem;
+  letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: rgba(33, 23, 18, 0.62); backdrop-filter: blur(4px);
+}
 .look-media__strip { display: flex; gap: 8px; }
 .look-media__strip a { flex: 1; aspect-ratio: 1; background: var(--color-cream-deep); overflow: hidden; }
 
@@ -108,3 +113,6 @@
 }
 .look-card.is-settled .look-media, .look-card.is-settled .look-card__eyebrow, .look-card.is-settled .look-card__title,
 .look-card.is-settled .look-card__desc, .look-card.is-settled .look-piece, .look-card.is-settled .look-card__foot { transition-delay: 0s; transition-duration: 0.25s; }
+
+.look-card__title a { color: inherit; text-decoration: none; }
+.look-card__title a:hover { color: var(--color-clay); }

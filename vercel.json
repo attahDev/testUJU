@@ -42,6 +42,17 @@
       "destination": "/api/og?type=article&id=:id"
     },
     {
+      "source": "/looks/:slug",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(WhatsApp|facebookexternalhit|Facebot|Twitterbot|Slackbot|TelegramBot|LinkedInBot|Discordbot|Pinterest|SkypeUriPreview|Embedly|Redditbot|redditbot|vkShare|Iframely).*"
+        }
+      ],
+      "destination": "/api/og?type=look&id=:slug"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

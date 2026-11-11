@@ -7,6 +7,7 @@ import Product from './pages/Product.jsx';
 import Collections from './pages/Collections.jsx';
 import { Privacy, Returns, Terms } from './pages/Legal.jsx';
 import TrackOrder from './pages/TrackOrder.jsx';
+import LookDetail from './pages/LookDetail.jsx';
 import Looks from './pages/Looks.jsx';
 import Wishlist from './pages/Wishlist.jsx';
 import Cart from './pages/Cart.jsx';
@@ -41,6 +42,7 @@ export default function App() {
             <Route path="/returns" element={<Returns />} />
             <Route path="/track-order" element={<TrackOrder />} />
             <Route path="/looks" element={<Looks />} />
+            <Route path="/looks/:slug" element={<LookDetail />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
