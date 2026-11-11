@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api/client.js';
+import { useCatalog } from '../context/catalogStore.js';
 import './Footer.css';
 
 export default function Footer() {
   const [subscribed, setSubscribed] = useState(false);
+  const { settings } = useCatalog();
+  const hasContact = settings.support_email || settings.support_phone || settings.business_address;
 
   const [error, setError] = useState('');
 
@@ -41,7 +44,7 @@ export default function Footer() {
       <div className="site-footer__grid">
         <div className="site-footer__col site-footer__col--logo">
           <span className="site-footer__mark">RU</span>
-          <p>Rose Uju</p>
+          <p>{settings.business_name}</p>
         </div>
         <div className="site-footer__col">
           <h4>Quick Links</h4>
@@ -53,15 +56,29 @@ export default function Footer() {
           <Link to="/account">My Account</Link>
           <Link to="/track-order">Find My Order</Link>
         </div>
-        <div className="site-footer__col">
-          <h4>Contact Us</h4>
-          <p>+1 (2345) 679-01-23</p>
-          <p>support@roseuju.agency</p>
-        </div>
+        {hasContact ? (
+          <div className="site-footer__col">
+            <h4>Contact Us</h4>
+            {settings.support_phone && <a href={`tel:${settings.support_phone.replace(/[^+\d]/g, '')}`}>{settings.support_phone}</a>}
+            {settings.support_email && <a href={`mailto:${settings.support_email}`}>{settings.support_email}</a>}
+            {settings.business_address && <p>{settings.business_address}</p>}
+          </div>
+        ) : (
+          <div className="site-footer__col">
+            <h4>Help</h4>
+            <Link to="/track-order">Find My Order</Link>
+            <Link to="/returns">Returns &amp; Shipping</Link>
+          </div>
+        )}
       </div>
 
       <div className="site-footer__bottom">
-        <p>© 2026 Rose Uju. All rights reserved</p>
+        <p>© 2026 {settings.business_name}. All rights reserved</p>
+        <nav className="site-footer__legal" aria-label="Legal">
+          <Link to="/terms">Terms</Link>
+          <Link to="/privacy">Privacy</Link>
+          <Link to="/returns">Returns &amp; Shipping</Link>
+        </nav>
       </div>
     </footer>
   );

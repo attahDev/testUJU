@@ -121,3 +121,8 @@
 .site-footer__thanks { font-family: var(--font-display); font-size: 1.25rem; }
 
 .site-footer__error { color: #E8A08C; font-size: 0.8125rem; }
+
+.site-footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; align-items: center; }
+.site-footer__legal { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.site-footer__legal a { font-size: 0.8125rem; color: rgba(244, 240, 232, 0.7); }
+.site-footer__legal a:hover { color: var(--color-cream); }

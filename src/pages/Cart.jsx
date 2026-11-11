@@ -59,7 +59,7 @@ export default function Cart() {
 
           <label className="cart-agree">
             <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
-            I agree to the Terms and Conditions
+            <span>I agree to the <Link to="/terms">Terms and Conditions</Link> and <Link to="/returns">Returns &amp; Shipping</Link></span>
           </label>
 
           <Button

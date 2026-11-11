@@ -44,3 +44,4 @@
 @media (max-width: 800px) {
   .cart-layout { grid-template-columns: 1fr; }
 }
+.cart-agree a { color: var(--color-clay); text-decoration: underline; }
