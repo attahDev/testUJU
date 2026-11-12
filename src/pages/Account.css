@@ -49,3 +49,16 @@
 .account-orders__guest { margin-top: 24px; font-size: 0.875rem; color: var(--color-text-soft); }
 .account-orders__guest a { color: var(--color-clay); text-decoration: underline; }
 .account-form__legal a { color: var(--color-clay); text-decoration: underline; }
+
+/* ---- premium pass ---- */
+.account-page h1 { font-size: clamp(2.6rem, 2rem + 4vw, 5rem); line-height: 0.92; letter-spacing: -0.04em; margin-bottom: 16px; }
+.account-page__title { font-size: var(--step-2); border-bottom: none; padding-bottom: 0; }
+.account-page--narrow { max-width: 560px; }
+.account-form { gap: 16px; }
+.account-form input { background: var(--color-white); border-radius: 16px; min-height: 52px; padding: 0 20px; width: 100%; min-width: 0; }
+.account-form input:focus { outline: 2px solid var(--color-clay); outline-offset: 1px; }
+.account-form input[type='checkbox'] { width: 20px; min-height: 0; accent-color: var(--color-clay); }
+.account-order { background: rgba(255,255,255,0.5); border: 1px solid var(--color-line); border-radius: var(--radius-lg); padding: 18px 22px; margin-bottom: 12px; }
+.account-order__thumbs img { border-radius: 12px; }
+.account-verify { border-left: none; border-radius: var(--radius-lg); }
+.account-verify button { border-radius: var(--radius-pill); min-height: 44px; padding: 0 20px; }

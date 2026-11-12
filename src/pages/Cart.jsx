@@ -19,14 +19,16 @@ export default function Cart() {
 
   return (
     <div className="container section cart-page">
-      <h1>Cart</h1>
+      <h1>Your cart</h1>
 
       <div className="cart-layout">
         <div className="cart-items">
           {items.length === 0 && (
-            <p className="cart-empty">
-              Your cart is empty. <Link to="/shop">Continue shopping</Link>.
-            </p>
+            <div className="cart-empty">
+              <h2>Your cart is empty</h2>
+              <p>Pieces you add will wait for you here.</p>
+              <Button as={Link} to="/shop">Browse the shop</Button>
+            </div>
           )}
           {items.map((item) => (
             <div key={item.key} className="cart-item">
@@ -54,7 +56,7 @@ export default function Cart() {
         </div>
 
         <aside className="order-summary">
-          <h3>Order Summary</h3>
+          <h3>Order summary</h3>
           <div className="order-summary__row"><span>Subtotal</span><span>{money(subtotal)}</span></div>
           <div className="order-summary__row"><span>Shipping</span><span>{money(shipping)}</span></div>
           <div className="order-summary__row order-summary__row--total"><span>Total (Tax incl.)</span><span>{money(total)}</span></div>

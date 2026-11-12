@@ -127,9 +127,11 @@ function CheckoutForm() {
     return (
       <div className="container section checkout-page">
         <h1>Checkout</h1>
-        <p className="cart-empty">
-          Your cart is empty. <Link to="/shop">Continue shopping</Link>.
-        </p>
+        <div className="cart-empty">
+          <h2>Your cart is empty</h2>
+          <p>Add a piece before checking out.</p>
+          <Link to="/shop" className="btn btn--solid">Browse the shop</Link>
+        </div>
       </div>
     );
   }

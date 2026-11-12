@@ -115,8 +115,8 @@
     background: var(--color-clay); border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     box-shadow: 0 -10px 30px rgba(22, 40, 28, 0.18);
   }
-  .qty-stepper { border-color: rgba(243,240,228,0.35); color: var(--color-cream); padding: 6px 10px; gap: 6px; }
-  .qty-stepper button { color: var(--color-cream); }
+  .product-cta .qty-stepper { border-color: rgba(243,240,228,0.35); color: var(--color-cream); padding: 6px 10px; gap: 6px; }
+  .product-cta .qty-stepper button { color: var(--color-cream); }
   .product-cta .btn--solid { background: var(--color-cream); color: var(--color-clay); padding: 0 12px; }
   .product-cta__like { border-color: rgba(243,240,228,0.35); color: var(--color-cream); }
   .product-cta__like.is-liked { color: var(--color-cream); border-color: var(--color-cream); }

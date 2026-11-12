@@ -60,5 +60,22 @@
 .journal-hero { height: min(78vh, 720px); min-height: 420px; }
 .journal-hero__content h1 { font-size: clamp(2rem, 4.2vw, 3.5rem); max-width: 18ch; font-weight: 400; }
 .journal-feature, .journal-feature img, .journal-feature-stack__deco, .journal-card img, .journal-card__media { border-radius: 12px; }
-.journal-page .eyebrow { color: var(--color-ink); text-transform: uppercase; letter-spacing: 0.04em; }
+.journal-page .eyebrow { color: var(--color-ink); }
 .journal-card__meta { color: var(--color-gold); }
+
+/* ---- premium pass ---- */
+.journal-hero { margin: 16px var(--gutter) 0; border-radius: var(--radius-lg); height: min(72vh, 640px); min-height: 380px; }
+.journal-hero__content { bottom: clamp(20px, 4vw, 48px); }
+.journal-hero__content.container { padding-left: clamp(20px, 4vw, 52px); padding-right: clamp(20px, 4vw, 52px); }
+.journal-hero__content h1 { font-size: clamp(2.6rem, 1.6rem + 5vw, 6rem); font-weight: 500; line-height: 0.92; letter-spacing: -0.04em; max-width: 14ch; }
+.journal-page__title { font-size: var(--step-1); line-height: 0.95; }
+.journal-page .eyebrow { color: var(--color-clay); letter-spacing: 0; font-size: 0.875rem; font-weight: 500; }
+.journal-feature, .journal-feature img, .journal-feature-stack__deco, .journal-card img, .journal-card__media { border-radius: var(--radius-lg); }
+.journal-feature__caption { padding: 24px; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+.journal-feature__caption h3, .journal-feature__caption--light h3 { font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.05; }
+.journal-card h3 { font-size: 1.5rem; line-height: 1.05; }
+.journal-card__meta { color: var(--color-text-soft); font-size: 0.8125rem; }
+@media (max-width: 620px) {
+  .journal-hero { margin-top: 12px; border-radius: 24px; min-height: 340px; height: 62vh; }
+  .journal-feature--tall { aspect-ratio: 4/5; }
+}
