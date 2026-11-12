@@ -151,8 +151,8 @@ export default function Customise() {
       <section className="customise-hero">
         <img src={siteImage('customise-banner')} alt="" />
         <div className="customise-hero__content container">
-          <p className="crumb">Home &gt; <span>Customize</span></p>
-          <h1>Customize Your Design</h1>
+          <p className="crumb">Home &gt; <span>Customise</span></p>
+          <h1>Customise your design</h1>
         </div>
       </section>
 
@@ -161,7 +161,7 @@ export default function Customise() {
           {STEPS.map((label, i) => (
             <div key={label} className={"customise-step" + (i === step ? ' is-active' : i < step ? ' is-done' : '')}>
               <span className="customise-step__num">{i + 1}</span>
-              {label}
+              <span className="customise-step__label">{label}</span>
               {i < STEPS.length - 1 && <span className="customise-step__arrow">→</span>}
             </div>
           ))}

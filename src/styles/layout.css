@@ -57,3 +57,18 @@ input, select, textarea { font-size: max(16px, 1rem); } /* stops iOS zooming int
 @media (max-width: 520px) {
   .journal-card h3 { font-size: 1.35rem; }
 }
+
+/* ---- Touch targets ----
+   Visuals stay as designed; only the area that reacts to a thumb grows (WCAG 2.2 target size, Apple's 44pt guidance). */
+@media (pointer: coarse) {
+  .site-footer__col a, .site-footer__legal a { display: inline-block; padding: 11px 0; }
+  .site-header__logo { display: inline-flex; align-items: center; min-height: 44px; }
+  .swatch, .qty-stepper button, .accordion__head, .look-piece__check { position: relative; }
+  .swatch::after, .qty-stepper button::after, .look-piece__check::after { content: ''; position: absolute; inset: -9px; }
+  .account-page__switch button { position: relative; }
+  .account-page__switch button::after { content: ''; position: absolute; inset: -11px -6px; }
+  .cart-item__remove { position: relative; }
+  .cart-item__remove::after { content: ''; position: absolute; inset: -12px; }
+  select { min-height: 44px; }
+  .look-piece__name { display: inline-block; padding: 10px 0; }
+}

@@ -207,3 +207,45 @@
 .ai-preview__toggle button.is-active { border-color: var(--color-clay); color: var(--color-clay); }
 .ai-preview__note { font-size: 0.75rem; color: var(--color-text-soft); margin: 0; }
 .ai-preview__error { font-size: 0.8125rem; color: #b5342e; margin: 0; }
+
+/* ---- Polish pass: bring the wizard onto the shared tokens (rounded, green/sage, no stray gold/salmon) ---- */
+.customise-hero .crumb span { color: rgba(255, 255, 255, 0.72); }
+.customise-hero { border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+.customise-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(22, 40, 28, 0.7) 0%, transparent 70%); }
+.customise-hero__content { z-index: 1; }
+
+/* step tracker: filled = current, sage = finished, outlined = still to come */
+.customise-step__num { border: 1px solid var(--color-line); background: transparent; color: var(--color-text-soft); }
+.customise-step:not(.is-active):not(.is-done) .customise-step__num,
+.customise-step:nth-child(n + 3):not(.is-active):not(.is-done) .customise-step__num { background: transparent; color: var(--color-text-soft); }
+.customise-step.is-active .customise-step__num { background: var(--color-clay); border-color: var(--color-clay); color: var(--color-white); }
+.customise-step.is-done .customise-step__num { background: var(--color-sage); border-color: var(--color-sage); color: var(--color-ink); }
+
+/* product choices read as tappable cards instead of ruled rows */
+.product-type-list { gap: 8px; }
+.product-type { border: 1px solid var(--color-line); border-radius: var(--radius); padding: 16px 18px; font-size: 0.9375rem; letter-spacing: 0; background: rgba(255, 255, 255, 0.45); min-height: 52px; align-items: center; transition: background 0.2s ease, border-color 0.2s ease; }
+.product-type.is-active { background: var(--color-clay); border-color: var(--color-clay); color: var(--color-white); }
+.pattern-tile { border-radius: var(--radius); }
+.pattern-tile.is-active { border-color: var(--color-clay); box-shadow: 0 0 0 3px rgba(39, 68, 47, 0.18); }
+.pattern-filter { border-color: var(--color-line); min-height: 40px; }
+.pattern-filter.is-active { background: var(--color-clay); border-color: var(--color-clay); }
+.customise-preview__frame { border-radius: var(--radius-lg); }
+.personalize-input { border-radius: var(--radius); }
+.next-steps-btn { border-radius: var(--radius-pill); padding: 16px 20px; font-size: 0.9375rem; letter-spacing: 0; min-height: 52px; }
+.colour-dot { min-width: 40px; min-height: 40px; }
+.customise-patterns { border-color: var(--color-line); }
+
+@media (max-width: 1000px) {
+  .customise-patterns { border-top-color: var(--color-line); border-bottom-color: var(--color-line); }
+}
+/* phones: a compact tracker that only names the current step, so it never wraps or overflows */
+@media (max-width: 720px) {
+  .customise-steps { flex-wrap: nowrap; gap: 6px; font-size: 1rem; overflow: hidden; }
+  .customise-step { gap: 8px; flex: none; }
+  .customise-step.is-active { flex: 0 1 auto; min-width: 0; }
+  .customise-step__num { width: 32px; height: 32px; font-size: 0.8125rem; flex: none; }
+  .customise-step:not(.is-active) .customise-step__label { display: none; }
+  .customise-step__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .customise-step__arrow { display: none; }
+  .customise-hero { height: clamp(170px, 46vw, 240px); }
+}
