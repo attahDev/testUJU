@@ -4,6 +4,7 @@ import { useCatalog } from '../context/catalogStore.js';
 import { useWishlist } from '../context/wishlistStore.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Cart.css';
+import EmptyState from '../components/EmptyState.jsx';
 import './Wishlist.css';
 
 export default function Wishlist() {
@@ -17,9 +18,7 @@ export default function Wishlist() {
     <div className="container section wishlist-page">
       <h1>Wishlist</h1>
       {products.length === 0 ? (
-        <p className="cart-empty">
-          Nothing saved yet. Tap the heart on any piece to keep it here. <Link to="/shop">Browse the shop</Link>.
-        </p>
+        <EmptyState title="Nothing saved yet" text="Tap the heart on any piece to keep it here." to="/shop" action="Browse the shop" />
       ) : (
         <>
           <p className="wishlist-page__note">

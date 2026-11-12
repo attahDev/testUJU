@@ -116,3 +116,18 @@
 
 .look-card__title a { color: inherit; text-decoration: none; }
 .look-card__title a:hover { color: var(--color-clay); }
+
+/* ---- premium pass ---- */
+.look-media__photo, .look-media__photo img, .look-media__strip a, .look-media__hero, .look-media__side, .look-media--collage { border-radius: var(--radius-lg); }
+.look-media__strip a { border-radius: 18px; }
+.look-media__side { border-radius: 22px; }
+.look-media__photo { overflow: hidden; }
+.look-card__eyebrow { letter-spacing: 0; font-size: 0.875rem; font-weight: 500; }
+.look-card__title { font-size: var(--step-1); line-height: 0.95; letter-spacing: -0.03em; }
+.look-card__add { background: var(--color-clay); border-color: var(--color-clay); color: var(--color-cream); border-radius: var(--radius-pill); min-height: 56px; font-weight: 500; }
+.look-card__add:hover:not([disabled]) { background: var(--color-clay-dark); }
+.look-piece input[type='checkbox'] { width: 20px; height: 20px; accent-color: var(--color-clay); }
+.look-piece img { border-radius: 14px; }
+.look-piece select { min-height: 40px; border-radius: var(--radius-pill); background: var(--color-white); padding: 0 12px; font-size: 0.875rem; }
+.look-piece__thumb { border-radius: 14px; }
+.look-piece__check input { width: 20px; height: 20px; }

@@ -6,6 +6,7 @@ import Button from '../components/Button.jsx';
 import { useAuth } from '../context/authStore.js';
 import { useCatalog } from '../context/catalogStore.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
+import EmptyState from '../components/EmptyState.jsx';
 import './Account.css';
 
 export function AuthForm({ heading, lead } = {}) {
@@ -104,14 +105,12 @@ function Orders() {
     api('/api/orders').then(setOrders).catch(() => setOrders([]));
   }, []);
 
-  if (orders === null) return <p className="cart-empty">Loading your orders…</p>;
+  if (orders === null) return <p>Loading your orders…</p>;
   if (orders.length === 0) {
     return (
-      <p className="cart-empty">
-        You have not placed any orders yet. <Link to="/shop">Start shopping</Link>.
-        <br />
-        Ordered before without an account? <Link to="/track-order">Find your order</Link>.
-      </p>
+      <EmptyState title="No orders yet" text="Orders you place will show up here." to="/shop" action="Start shopping">
+        <p className="cart-empty__note">Ordered before without an account? <Link to="/track-order">Find your order</Link></p>
+      </EmptyState>
     );
   }
   return (

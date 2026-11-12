@@ -85,3 +85,9 @@
   .cart-item__bottom strong { margin-left: 0; }
   .order-summary { border-radius: var(--radius-lg); }
 }
+.cart-empty__note { margin: 8px 0 0; font-size: 0.9375rem; }
+.cart-empty__note a { color: var(--color-clay); text-decoration: underline; }
+
+/* buttons inside an empty-state panel keep their own colours on every page (account/wishlist links would otherwise override) */
+.cart-empty .btn { color: var(--color-cream); text-decoration: none; }
+.cart-empty .btn:hover { color: var(--color-cream); }
