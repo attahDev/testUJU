@@ -88,3 +88,29 @@
 .about-feel__card { max-width: 620px; padding: clamp(28px, 4vw, 56px); }
 .about-feel__card h2 { font-weight: 600; font-size: clamp(1.75rem, 3vw, 2.75rem); }
 .about-feel__card p { color: var(--color-ink); }
+
+/* ---- premium pass ---- */
+.about-hero { margin: 16px var(--gutter) 0; border-radius: var(--radius-lg); min-height: min(80vh, 680px); background: var(--color-clay); }
+.about-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(22,40,28,0.7), rgba(22,40,28,0.35)); }
+.about-hero__inner::before { display: none; }
+.about-hero__inner { padding-left: 0; padding-right: 0; max-width: 1100px; }
+.about-hero__top { top: 28px; padding-left: clamp(20px, 4vw, 52px); padding-right: clamp(20px, 4vw, 52px); }
+.about-hero__top .crumb, .about-hero__label { z-index: 2; }
+.about-hero__label { font-family: var(--font-display); font-size: 1.25rem; letter-spacing: -0.01em; }
+.about-hero__center h1 { font-size: clamp(2.4rem, 1rem + 4vw, 4.5rem); line-height: 0.94; letter-spacing: -0.04em; }
+.about-hero__side { border: none; border-radius: 999px 999px var(--radius-lg) var(--radius-lg); box-shadow: none; aspect-ratio: 3/4; }
+.about-craft { gap: clamp(24px, 4vw, 64px); }
+.about-craft__copy h2 { font-weight: 500; font-size: var(--step-1); line-height: 0.95; }
+.about-craft__copy p, .about-craft__copy--right { font-size: 1.125rem; line-height: 1.65; color: var(--color-text-soft); max-width: 40ch; }
+.about-craft__image { transform: none; border-radius: 999px 999px var(--radius-lg) var(--radius-lg); box-shadow: none; }
+.about-feel { margin: 0 var(--gutter); border-radius: var(--radius-lg); height: min(76vh, 620px); }
+.about-feel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(22,40,28,0.55), transparent 60%); }
+.about-feel__card { z-index: 1; left: clamp(16px, 3vw, 40px); bottom: clamp(16px, 3vw, 40px); right: clamp(16px, 3vw, 40px); max-width: 520px; border-radius: var(--radius-lg); }
+.about-feel__card h2 { font-weight: 500; font-size: var(--step-1); line-height: 0.95; }
+.about-cta p { font-size: var(--step-2); line-height: 1; max-width: 18ch; }
+@media (max-width: 860px) {
+  .about-hero { margin-top: 12px; border-radius: 24px; min-height: 520px; }
+  .about-craft__image { max-width: 340px; margin: 0 auto; }
+  .about-craft__copy p, .about-craft__copy--right { max-width: none; }
+  .about-feel { border-radius: 24px; height: 520px; }
+}

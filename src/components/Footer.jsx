@@ -1,27 +1,11 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api } from '../api/client.js';
+import NewsletterForm from './NewsletterForm.jsx';
 import { useCatalog } from '../context/catalogStore.js';
 import './Footer.css';
 
 export default function Footer() {
-  const [subscribed, setSubscribed] = useState(false);
   const { settings } = useCatalog();
   const hasContact = settings.support_email || settings.support_phone || settings.business_address;
-
-  const [error, setError] = useState('');
-
-  async function handleSubscribe(e) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    setError('');
-    try {
-      await api('/api/newsletter', { method: 'POST', auth: false, body: { email: new FormData(form).get('newsletter') } });
-      setSubscribed(true);
-    } catch (err) {
-      setError(err.message);
-    }
-  }
 
   return (
     <footer className="site-footer">
@@ -30,15 +14,7 @@ export default function Footer() {
           <h3>Join the Cultivated Circle</h3>
           <p>Be the first to hear about new collections, journal stories and private events.</p>
         </div>
-        {subscribed ? (
-          <p className="site-footer__thanks">Thank you for joining the Cultivated Circle.</p>
-        ) : (
-          <form className="site-footer__form" onSubmit={handleSubscribe}>
-            <input type="email" name="newsletter" placeholder="Email address" aria-label="Email address" required />
-            <button type="submit">Subscribe</button>
-            {error && <span className="site-footer__error">{error}</span>}
-          </form>
-        )}
+        <NewsletterForm formClass="site-footer__form" thanksClass="site-footer__thanks" errorClass="site-footer__error" />
       </div>
 
       <div className="site-footer__grid">

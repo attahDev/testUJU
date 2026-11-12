@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useCatalog } from '../context/catalogStore.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
+import NewsletterForm from '../components/NewsletterForm.jsx';
 import './Collections.css';
 
 const BLURBS = {
@@ -56,10 +57,7 @@ export default function Collections() {
           <p>
             Get new collections and journal stories in your inbox.
           </p>
-          <form className="collections-cta__form" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="Email address" aria-label="Email address" required />
-            <button type="submit">→</button>
-          </form>
+          <NewsletterForm formClass="collections-cta__form" thanksClass="collections-cta__thanks" errorClass="collections-cta__error" thanks="Thank you. You’re on the list." />
         </div>
       </section>
     </div>
