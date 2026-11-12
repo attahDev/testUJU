@@ -30,7 +30,7 @@
 .look-media__hero:hover img, .look-media__side:hover img { transform: scale(1.04); }
 
 /* body */
-.look-card__eyebrow { font-size: var(--step-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-clay); margin-bottom: 8px; }
+.look-card__eyebrow { font-size: var(--step-small); letter-spacing: 0.16em; color: var(--color-clay); margin-bottom: 8px; }
 .look-card__title { font-family: var(--font-display); font-size: var(--step-2); font-weight: 500; margin-bottom: 10px; }
 .look-card__desc { color: var(--color-text-soft); max-width: 48ch; margin-bottom: 24px; }
 

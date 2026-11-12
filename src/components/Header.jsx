@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/cartStore.js';
 import { useWishlist } from '../context/wishlistStore.js';
-import { useCatalog } from '../context/catalogStore.js';
 import './Header.css';
 
 const NAV = [
@@ -21,9 +21,14 @@ export default function Header() {
   const { count } = useCart();
   const { count: wishCount } = useWishlist();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const { status } = useCatalog();
-  const overlay = pathname === '/' && status === 'ready';
+
+  // while the mobile menu is open, lock page scroll and let Escape close it
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    const onKey = (e) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', onKey); };
+  }, [open]);
 
   function submitSearch(e) {
     e.preventDefault();
@@ -35,10 +40,10 @@ export default function Header() {
   }
 
   return (
-    <header className={`site-header${overlay ? ' site-header--overlay' : ''}`}>
+    <header className="site-header">
       <div className="site-header__inner">
         <button
-          className="site-header__burger"
+          className={`site-header__burger${open ? ' is-open' : ''}`}
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -46,7 +51,7 @@ export default function Header() {
           <span />
         </button>
 
-        <Link to="/" className="site-header__logo">Rose Uju</Link>
+        <Link to="/" className="site-header__logo" onClick={() => setOpen(false)}>Rose Uju</Link>
 
         <nav className={`site-header__nav ${open ? 'is-open' : ''}`}>
           {NAV.map((item) => (

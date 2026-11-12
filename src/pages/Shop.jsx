@@ -15,6 +15,7 @@ export default function Shop() {
   const [activeCategories, setActiveCategories] = useState([]);
   const [activeMaterials, setActiveMaterials] = useState([]);
   const [sort, setSort] = useState('featured');
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [priceMin, setPriceMin] = useState(null);
   const [priceMax, setPriceMax] = useState(null);
   const [params, setParams] = useSearchParams();
@@ -54,13 +55,23 @@ export default function Shop() {
         <img src={siteImage('shop-banner')} alt="" />
         <div className="shop-hero__content container">
           <p className="shop-hero__crumb">Home / Shop</p>
-          <h1>Shop All</h1>
+          <h1>Shop all</h1>
         </div>
       </section>
 
       <section className="container section shop-layout">
-        <aside className="shop-filters">
-          <h4>Filter By</h4>
+        <aside className={`shop-filters${filtersOpen ? ' is-open' : ''}`}>
+          <button
+            type="button"
+            className="shop-filters__toggle"
+            aria-expanded={filtersOpen}
+            aria-controls="shop-filters-body"
+            onClick={() => setFiltersOpen((v) => !v)}
+          >
+            Filters{hasFilters ? ' (on)' : ''} <span aria-hidden="true">{filtersOpen ? '–' : '+'}</span>
+          </button>
+          <div className="shop-filters__body" id="shop-filters-body">
+          <h4>Filter by</h4>
 
           <div className="filter-group">
             <h5>Collection</h5>
@@ -111,6 +122,7 @@ export default function Shop() {
               Clear all filters
             </button>
           )}
+          </div>
         </aside>
 
         <div className="shop-results">
@@ -124,9 +136,9 @@ export default function Shop() {
               )}
             </p>
             <select value={sort} onChange={(e) => setSort(e.target.value)}>
-              <option value="featured">Sort by: Featured</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
             </select>
           </div>
 

@@ -1,5 +1,5 @@
 .tracking-info { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--color-line); display: flex; flex-direction: column; gap: 4px; }
-.tracking-info__label { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-clay); }
+.tracking-info__label { font-size: 0.75rem; letter-spacing: 0.14em; color: var(--color-clay); }
 .tracking-info__number { font-size: 0.9375rem; }
 .tracking-info__date { font-size: 0.8125rem; color: var(--color-text-soft); }
 .tracking-info__link { margin-top: 6px; font-size: 0.875rem; color: var(--color-clay); text-decoration: underline; }

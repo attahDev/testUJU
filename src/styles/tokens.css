@@ -1,24 +1,27 @@
 :root {
   /* Color */
-  --color-cream: #F4F0E8;
-  --color-cream-deep: #EDE6D8;
-  --color-clay: #B5592F;
-  --color-clay-dark: #9C4A26;
-  --color-espresso: #3A2620;
-  --color-ink: #211712;
-  --color-gold: #C89B4A;
+  /* Palette: deep garden green on warm bone, sage for surfaces, brass for small accents.
+     --color-clay / --color-espresso keep their old names so every component picks up the new brand colour. */
+  --color-cream: #F3F0E4;
+  --color-cream-deep: #E4E5D2;
+  --color-sage: #AEBB9D;
+  --color-clay: #27442F;
+  --color-clay-dark: #1B3322;
+  --color-espresso: #16281C;
+  --color-ink: #16201A;
+  --color-gold: #B8924A;
   --color-olive: #6F7A4E;
   --color-white: #FFFFFF;
-  --color-line: rgba(33, 23, 18, 0.14);
-  --color-text-soft: rgba(33, 23, 18, 0.68);
+  --color-line: rgba(22, 32, 26, 0.14);
+  --color-text-soft: rgba(22, 32, 26, 0.68);
 
   /* Type */
   --font-display: 'Bodoni Moda', 'Didot', 'Times New Roman', serif;
   --font-body: 'Jost', 'Helvetica Neue', Arial, sans-serif;
 
   /* Scale (major third-ish, tuned by eye) */
-  --step-1: clamp(1.9rem, 1.5rem + 1.8vw, 3.4rem);   /* hero / page H1 */
-  --step-2: clamp(1.5rem, 1.25rem + 1.1vw, 2.25rem); /* section H2 */
+  --step-1: clamp(2.2rem, 1.6rem + 3vw, 4.6rem);   /* hero / page H1 */
+  --step-2: clamp(1.75rem, 1.3rem + 2vw, 3rem); /* section H2 */
   --step-3: 1.375rem;                                 /* card / sub H3 */
   --step-body: 1rem;
   --step-small: 0.8125rem;
@@ -26,7 +29,10 @@
   /* Layout */
   --content-max: 1280px;
   --gutter: clamp(20px, 5vw, 64px);
-  --radius: 2px;
+  --radius: 18px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+  --header-h: 68px;
 }
 
 * { box-sizing: border-box; }

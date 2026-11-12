@@ -9,7 +9,8 @@
 
 .eyebrow {
   color: var(--color-clay);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   margin-bottom: 12px;
 }
 .eyebrow--center { text-align: center; }
@@ -26,7 +27,7 @@
   .product-grid--3 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 520px) {
-  .product-grid--4, .product-grid--3 { grid-template-columns: 1fr 1fr; }
+  .product-grid--4, .product-grid--3 { grid-template-columns: 1fr 1fr; gap: 12px; }
 }
 
 .journal-grid {
@@ -35,7 +36,7 @@
   gap: clamp(20px, 2.5vw, 36px);
 }
 .journal-card { display: block; }
-.journal-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 16px; }
+.journal-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 16px; border-radius: var(--radius); }
 .journal-card__meta { font-size: 0.75rem; color: var(--color-clay); letter-spacing: 0.03em; }
 .journal-card h3 { font-size: 1.15rem; margin-top: 8px; margin-bottom: 8px; }
 .journal-card p { font-size: 0.875rem; color: var(--color-text-soft); }
@@ -44,8 +45,15 @@
 }
 
 /* journal card: the photo sits in a frame so it can zoom slowly on hover */
-.journal-card__media { display: block; overflow: hidden; margin-bottom: 16px; }
+.journal-card__media { display: block; overflow: hidden; margin-bottom: 16px; border-radius: var(--radius-lg); }
 .journal-card__media img { margin-bottom: 0; transition: transform 0.9s cubic-bezier(0.2, 0.6, 0.2, 1); }
 .journal-card:hover .journal-card__media img { transform: scale(1.04); }
 .journal-card h3 { transition: color 0.3s ease; }
 .journal-card:hover h3 { color: var(--color-clay); }
+
+/* touch devices: comfortable tap targets, no sticky hover states */
+button, .btn, a.icon-btn { -webkit-tap-highlight-color: transparent; }
+input, select, textarea { font-size: max(16px, 1rem); } /* stops iOS zooming into fields */
+@media (max-width: 520px) {
+  .journal-card h3 { font-size: 1.35rem; }
+}
