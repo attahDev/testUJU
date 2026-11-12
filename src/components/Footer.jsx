@@ -28,7 +28,7 @@ export default function Footer() {
       <div className="site-footer__top">
         <div className="site-footer__brand">
           <h3>Join the Cultivated Circle</h3>
-          <p>Subscribe to receive early access to new collections, editorial content, and invitations to intimate brand events.</p>
+          <p>Be the first to hear about new collections, journal stories and private events.</p>
         </div>
         {subscribed ? (
           <p className="site-footer__thanks">Thank you for joining the Cultivated Circle.</p>
@@ -47,18 +47,18 @@ export default function Footer() {
           <p>{settings.business_name}</p>
         </div>
         <div className="site-footer__col">
-          <h4>Quick Links</h4>
-          <Link to="/about">Our Craft</Link>
+          <h4>Explore</h4>
+          <Link to="/about">Our craft</Link>
           <Link to="/shop">Shop</Link>
           <Link to="/customise">Customise</Link>
           <Link to="/collections">Collections</Link>
-          <Link to="/journal">The Journal</Link>
-          <Link to="/account">My Account</Link>
-          <Link to="/track-order">Find My Order</Link>
+          <Link to="/journal">The journal</Link>
+          <Link to="/account">My account</Link>
+          <Link to="/track-order">Find my order</Link>
         </div>
         {hasContact ? (
           <div className="site-footer__col">
-            <h4>Contact Us</h4>
+            <h4>Contact us</h4>
             {settings.support_phone && <a href={`tel:${settings.support_phone.replace(/[^+\d]/g, '')}`}>{settings.support_phone}</a>}
             {settings.support_email && <a href={`mailto:${settings.support_email}`}>{settings.support_email}</a>}
             {settings.business_address && <p>{settings.business_address}</p>}
@@ -66,7 +66,7 @@ export default function Footer() {
         ) : (
           <div className="site-footer__col">
             <h4>Help</h4>
-            <Link to="/track-order">Find My Order</Link>
+            <Link to="/track-order">Find my order</Link>
             <Link to="/returns">Returns &amp; Shipping</Link>
           </div>
         )}

@@ -8,7 +8,7 @@ import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Cart.css';
 
 export default function Cart() {
-  usePageMeta({ title: 'Your Bag', noindex: true });
+  usePageMeta({ title: 'Your cart', noindex: true });
   const { items, removeItem, setQty, subtotal } = useCart();
   const { config, money } = useCatalog();
   const { user } = useAuth();
@@ -59,11 +59,11 @@ export default function Cart() {
           <h3>Order summary</h3>
           <div className="order-summary__row"><span>Subtotal</span><span>{money(subtotal)}</span></div>
           <div className="order-summary__row"><span>Shipping</span><span>{money(shipping)}</span></div>
-          <div className="order-summary__row order-summary__row--total"><span>Total (Tax incl.)</span><span>{money(total)}</span></div>
+          <div className="order-summary__row order-summary__row--total"><span>Total (includes tax)</span><span>{money(total)}</span></div>
 
           <label className="cart-agree">
             <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
-            <span>I agree to the <Link to="/terms">Terms and Conditions</Link> and <Link to="/returns">Returns &amp; Shipping</Link></span>
+            <span>I agree to the <Link to="/terms">terms and conditions</Link> and <Link to="/returns">Returns &amp; Shipping</Link></span>
           </label>
 
           <Button

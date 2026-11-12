@@ -42,7 +42,7 @@ export default function ProductReviews({ productId, summary }) {
               ))}
             </>
           ) : (
-            <p className="product-reviews__empty">No reviews yet. Be the first to share your thoughts.</p>
+            <p className="product-reviews__empty">No reviews yet. Be the first to review this piece.</p>
           )}
         </div>
 
@@ -63,13 +63,13 @@ export default function ProductReviews({ productId, summary }) {
               </button>
             ))}
           </div>
-          <input type="text" placeholder="Your name*" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-          <input type="email" placeholder="Your email* (not shown)" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-          <textarea placeholder="Your review*" required rows={4} value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} />
+          <input type="text" placeholder="Your name" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+          <input type="email" placeholder="Your email (not shown)" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+          <textarea placeholder="Your review" required rows={4} value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} />
           {error && <span className="product-reviews__error">{error}</span>}
           {status === 'sent' && <span className="product-reviews__note">Thank you. Your review will appear once it has been approved.</span>}
           <button className="product-reviews__submit" type="submit" disabled={status === 'sending'}>
-            {status === 'sending' ? 'Sending…' : 'Submit review'}
+            {status === 'sending' ? 'Sending…' : 'Post review'}
           </button>
         </form>
       </div>

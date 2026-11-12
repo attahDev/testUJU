@@ -143,7 +143,7 @@ export default function Shop() {
           </div>
 
           {filtered.length === 0 ? (
-            <p className="shop-empty">No products match those filters yet.</p>
+            <p className="shop-empty">Nothing matches those filters. Try removing one.</p>
           ) : (
             <div className="product-grid product-grid--3">
               {filtered.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}

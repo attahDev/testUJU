@@ -14,9 +14,9 @@ import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Product.css';
 
 const PANELS = [
-  { title: 'Cultural Story', body: 'Every pattern in this piece traces back to a motif carried across generations, reinterpreted for a modern wardrobe.' },
-  { title: 'Materials', body: '100% mulberry silk with hand-finished edges, sourced from long-standing artisan partners.' },
-  { title: 'Care Guide', body: 'Dry clean only. Store flat or rolled to avoid creasing. Keep away from direct sunlight for prolonged periods.' },
+  { title: 'Cultural story', body: 'Our pieces draw on motifs carried across generations in Afro-Caribbean culture, reinterpreted for a modern wardrobe.' },
+  { title: 'Materials', body: '' },
+  { title: 'Care guide', body: 'Follow the care label on your piece. Store it flat or rolled to avoid creasing, and keep it out of direct sunlight.' },
 ];
 
 export default function Product() {
@@ -106,7 +106,7 @@ function ProductView({ product }) {
           {product.description && <p className="product-info__desc">{product.description}</p>}
 
           {colors.length > 0 && <div className="product-option">
-            <span className="product-option__label">Color: {color}</span>
+            <span className="product-option__label">Colour: {color}</span>
             <div className="swatches">
               {colors.map((c) => (
                 <button
@@ -141,7 +141,7 @@ function ProductView({ product }) {
               <span>{String(qty).padStart(2, '0')}</span>
               <button onClick={() => setQty((q) => q + 1)} aria-label="Increase quantity">+</button>
             </div>
-            <Button onClick={handleAdd} disabled={soldOut}>{soldOut ? 'Sold out' : added ? 'Added ✓' : 'Add to Cart'}</Button>
+            <Button onClick={handleAdd} disabled={soldOut}>{soldOut ? 'Sold out' : added ? 'Added ✓' : 'Add to cart'}</Button>
             <HeartButton productId={product.id} className="product-cta__like" />
             <ShareButton variant="icon" url={page} title={`${product.name} | Rose Uju`} text={`${product.name} from Rose Uju`} />
           </div>
@@ -149,7 +149,7 @@ function ProductView({ product }) {
       </div>
 
       <div className="product-details">
-        <h2 className="product-details__label">Additional Information</h2>
+        <h2 className="product-details__label">Product details</h2>
         <div className="accordion">
           <div className={"accordion__item" + (openPanel === -1 ? ' is-open' : '')}>
             <button className="accordion__head" onClick={() => setOpenPanel(openPanel === -1 ? -2 : -1)}>
@@ -164,7 +164,7 @@ function ProductView({ product }) {
               <button className="accordion__head" onClick={() => setOpenPanel(openPanel === i ? -2 : i)}>
                 {panel.title} <span>{openPanel === i ? '–' : '+'}</span>
               </button>
-              {openPanel === i && <p className="accordion__body">{panel.body}</p>}
+              {openPanel === i && <p className="accordion__body">{panel.title === 'Materials' ? (product.material ? `Material: ${product.material}.` : 'Material details for this piece are coming soon.') : panel.body}</p>}
             </div>
           ))}
         </div>
@@ -175,13 +175,13 @@ function ProductView({ product }) {
       <section className="product-banner">
         <img src={siteImage('product-banner')} alt="" />
         <div className="product-banner__copy">
-          <h2>Style in Elegance</h2>
-          <p>Wear African clothes to the world and experience greatness in the culture</p>
+          <h2>Made to be worn</h2>
+          <p>Heritage patterns, tailored for everyday life.</p>
         </div>
       </section>
 
       <section className="section">
-        <h2 className="related-title">You May Also Love</h2>
+        <h2 className="related-title">You may also like</h2>
         <div className="product-grid product-grid--4">
           {related.map((p, i) => <ProductCard key={p.id} product={p} index={i} columns={4} />)}
         </div>

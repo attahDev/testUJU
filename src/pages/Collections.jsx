@@ -4,7 +4,7 @@ import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Collections.css';
 
 const BLURBS = {
-  Adornments: 'Jewelry and scarves that carry pattern and story in every fold.',
+  Adornments: 'Jewellery and scarves that carry pattern and story in every fold.',
   Apparel: 'Tailoring shaped by comfort, cut for a life in motion.',
   Foundations: 'Beauty rituals built on botanicals passed down through generations.',
   Rituals: 'Objects for slowing down — candles, oils, and quiet moments.',
@@ -18,10 +18,10 @@ export default function Collections() {
   return (
     <div className="collections-page">
       <section className="collections-hero container">
-        <p className="eyebrow">(2026)</p>
-        <h1>Rose Uju Collections</h1>
+        <p className="eyebrow">Collections</p>
+        <h1>Rose Uju collections</h1>
         <p className="collections-hero__sub">
-          Explore our captivating collections embracing elegance in unparalleled luxury style.
+          Each collection is rooted in heritage and made for modern wear.
         </p>
       </section>
 
@@ -33,7 +33,7 @@ export default function Collections() {
             <div className="collection-row__copy">
               <h2>{name}</h2>
               <p>{BLURBS[name]}</p>
-              <Link to="/shop" className="discover-dot">Discover</Link>
+              <Link to="/shop" className="discover-dot">Browse the shop</Link>
             </div>
             <div className="collection-row__items">
               {items.map((p) => (
@@ -51,14 +51,13 @@ export default function Collections() {
       <section className="collections-cta">
         <div className="container collections-cta__inner">
           <div>
-            <h2>Stay<br />Stylish</h2>
+            <h2>Stay in<br />the loop</h2>
           </div>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in
-            hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur.
+            Get new collections and journal stories in your inbox.
           </p>
           <form className="collections-cta__form" onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="Newsletter Sign Up" aria-label="Email" required />
+            <input type="email" placeholder="Email address" aria-label="Email address" required />
             <button type="submit">→</button>
           </form>
         </div>

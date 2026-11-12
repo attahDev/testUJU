@@ -19,7 +19,7 @@ export default function Journal() {
         {ARTICLES.length === 0 && <p>New stories are coming soon.</p>}
         <div className="journal-grid">
           {ARTICLES.map((a, i) => (
-            <JournalCard key={a.id} article={a} meta={`${a.tag.toUpperCase()} • ${a.readTime}`} delay={stagger(i)} />
+            <JournalCard key={a.id} article={a} meta={`${a.tag} · ${a.readTime}`} delay={stagger(i)} />
           ))}
         </div>
       </div>
@@ -37,7 +37,7 @@ export default function Journal() {
 
       <section className="container section">
         <p className="eyebrow">Fashion</p>
-        <h2 className="journal-page__title">Top Fashion Stories</h2>
+        <h2 className="journal-page__title">Top fashion stories</h2>
 
         <div className="journal-feature-grid">
           <Link to={`/journal/${featured3[0].id}`} className="journal-feature journal-feature--tall">
@@ -72,12 +72,12 @@ export default function Journal() {
 
       {grid3.length > 0 && <section className="container section">
         <div className="journal-page__divider">
-          <p className="eyebrow">Fashion</p>
+          <p className="eyebrow">More stories</p>
           <hr />
         </div>
         <div className="journal-grid">
           {grid3.map((a, i) => (
-            <JournalCard key={a.id} article={a} meta={`${a.tag.toUpperCase()} • ${a.readTime}`} delay={stagger(i)} />
+            <JournalCard key={a.id} article={a} meta={`${a.tag} · ${a.readTime}`} delay={stagger(i)} />
           ))}
         </div>
       </section>}

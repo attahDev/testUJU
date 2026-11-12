@@ -144,9 +144,9 @@ export default function LookCard({ look }) {
 
         <div className="look-card__foot">
           <button type="button" className="look-card__add" onClick={addLook} disabled={picked.length === 0}>
-            {added ? 'Added to bag ✓' : `Add full look · ${money(total)}`}
+            {added ? 'Added to cart ✓' : `Add full look · ${money(total)}`}
           </button>
-          {added && <Link to="/cart" className="look-card__bag">View bag →</Link>}
+          {added && <Link to="/cart" className="look-card__bag">View cart</Link>}
           <ShareButton
             url={`${window.location.origin}/looks/${look.slug}`}
             title={`${look.name} | Rose Uju`}

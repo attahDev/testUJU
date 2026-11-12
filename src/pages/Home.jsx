@@ -32,7 +32,7 @@ export default function Home() {
       <Hero />
 
       <section className="container section">
-        <Reveal as="p" className="eyebrow eyebrow--center">The Prints Collection</Reveal>
+        <Reveal as="p" className="eyebrow eyebrow--center">Shop by collection</Reveal>
         <div className="collection-grid">
           {COLLECTION_TILES.map((tile, i) => (
             <Reveal key={tile.name} as={Link} to="/collections" className="collection-tile" delay={120 + (i % 3) * 130}>
@@ -44,7 +44,7 @@ export default function Home() {
       </section>
 
       <section className="container section">
-        <SectionHeading title={<>New<br />This Week</>} linkTo="/shop" />
+        <SectionHeading title={<>New<br />this week</>} linkTo="/shop" />
         <div className="product-grid product-grid--3">
           {newThisWeek.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
         </div>
@@ -58,7 +58,7 @@ export default function Home() {
       )}
 
       <section className="container section">
-        <SectionHeading title="Featured Product" linkTo="/shop" />
+        <SectionHeading title="Featured pieces" linkTo="/shop" />
         <div className="product-grid product-grid--4">
           {featured.map((p, i) => <ProductCard key={p.id} product={p} index={i} columns={4} />)}
         </div>
@@ -71,23 +71,20 @@ export default function Home() {
           alt="Rose Uju founder portrait"
         />
         <div className="story__copy">
-          <p className="eyebrow">Rooted in Heritage, Crafted for Today</p>
+          <p className="eyebrow">Rooted in heritage, made for today</p>
           <p>
-            Rose Uju was born from the desire to seamlessly weave the profound
-            narratives of Afro-Caribbean culture into the fabric of modern
-            luxury. We believe true elegance is cultivated through an
-            appreciation of origin — every piece is a testament to the
-            meticulous craftsmanship, thoughtful design, and deep respect for
-            the stories that shape us.
+            Rose Uju weaves Afro-Caribbean culture into modern luxury. Every
+            piece is designed with care and with respect for the stories
+            behind it, from the patterns we choose to the way we finish them.
           </p>
-          <Button as={Link} to="/about" variant="outline">Read More</Button>
+          <Button as={Link} to="/about" variant="outline">Read our story</Button>
         </div>
       </section>
 
       <section className="container section">
         <div className="journal-heading">
           <p className="eyebrow eyebrow--center">The Rose Uju Journal</p>
-          <h2>Stories of culture, style, and cultivated living</h2>
+          <h2>Stories of culture, style and cultivated living</h2>
         </div>
         <div className="journal-grid">
           {stories.map((a, i) => (
@@ -101,11 +98,10 @@ export default function Home() {
           <p className="eyebrow">Gifting</p>
           <h2>The Cultivated Sets</h2>
           <p>
-            Curated collections designed to introduce the senses to the world
-            of Rose Uju. Perfectly packaged for giving, or for honoring your
-            own daily rituals.
+            Curated sets, packaged for giving. Choose one as a gift, or keep it
+            for your own daily rituals.
           </p>
-          <Button as={Link} to="/collections">Read More</Button>
+          <Button as={Link} to="/collections">Explore the collections</Button>
         </div>
         <img
           className="gifting__image"

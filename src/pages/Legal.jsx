@@ -151,7 +151,7 @@ export function Privacy() {
       <h2>Cookies and similar storage</h2>
       <p>
         We do not use advertising or tracking cookies. Your browser&apos;s storage is used only to make the site work: keeping you
-        signed in, remembering your bag, your wishlist and your Customise draft. If we ever add analytics, we will update this page first.
+        signed in, remembering your cart, your wishlist and your Customise draft. If we ever add analytics, we will update this page first.
       </p>
 
       <h2>How long we keep it</h2>

@@ -159,11 +159,11 @@ function CheckoutForm() {
         <form className="checkout-form" onSubmit={handleSubmit} noValidate>
           {step === 0 && (
             <>
-              <h4>Contact Info</h4>
+              <h4>Contact details</h4>
               {field('email', 'Email', { type: 'email', autoComplete: 'email' })}
               {field('phone', 'Phone', { type: 'tel', autoComplete: 'tel' })}
 
-              <h4>Shipping Address</h4>
+              <h4>Shipping address</h4>
               <div className="checkout-form__row">
                 {field('firstName', 'First Name', { autoComplete: 'given-name' })}
                 {field('lastName', 'Last Name', { autoComplete: 'family-name' })}
@@ -180,7 +180,7 @@ function CheckoutForm() {
 
           {step === 1 && (
             <>
-              <h4>Shipping Method</h4>
+              <h4>Shipping method</h4>
               {config.shipping.map((option) => (
                 <label key={option.id} className="shipping-option">
                   <input
@@ -197,7 +197,7 @@ function CheckoutForm() {
 
           {step === 2 && (
             <>
-              <h4>Review &amp; Pay</h4>
+              <h4>Review and pay</h4>
               <div className="checkout-review">
                 <p><strong>{form.firstName} {form.lastName}</strong></p>
                 <p>{form.address}</p>
@@ -224,7 +224,7 @@ function CheckoutForm() {
 
         <aside className="checkout-summary">
           <div className="checkout-summary__head">
-            <span>Your Order</span>
+            <span>Your order</span>
             <span className="checkout-summary__count">({items.length})</span>
           </div>
           {items.map((item) => (
@@ -263,7 +263,7 @@ export default function Checkout() {
     return (
       <AuthForm
         heading="Sign in to check out"
-        lead="An account is needed to place an order, so you can track it and reach us about it. Your bag is saved and will be waiting."
+        lead="An account is needed to place an order, so you can track it and reach us about it. Your cart is saved and will be waiting."
       />
     );
   }

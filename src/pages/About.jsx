@@ -17,7 +17,7 @@ export default function About() {
         />
         <div className="about-hero__top container">
           <p className="crumb crumb--light">Home / About</p>
-          <p className="about-hero__label">About Us</p>
+          <p className="about-hero__label">About us</p>
         </div>
         <div className="about-hero__inner container">
           <img
@@ -26,23 +26,23 @@ export default function About() {
             alt="Silk scarf detail"
           />
           <div className="about-hero__center">
-            <h1>We Don't Make Fashion<br />We Make Statements</h1>
+            <h1>We don’t make fashion.<br />We make statements.</h1>
           </div>
           <img
             className="about-hero__side about-hero__side--right"
             src={siteImage('about-jewelry')}
-            alt="Gold jewelry detail"
+            alt="Gold jewellery detail"
           />
         </div>
       </section>
 
       <section className="container section about-craft">
         <div className="about-craft__copy">
-          <h2>Our Craft</h2>
+          <h2>Our craft</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.
-            Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis
-            ligula consectetur, ultrices mauris.
+            Every Rose Uju piece starts with a pattern that has a story behind
+            it. We take motifs from Afro-Caribbean heritage and rework them into
+            scarves, jewellery and tailoring you can wear every day.
           </p>
         </div>
         <img
@@ -51,10 +51,10 @@ export default function About() {
           alt="Portrait in natural setting"
         />
         <p className="about-craft__copy about-craft__copy--right">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.
-          Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis
-          ligula consectetur, ultrices mauris. Nullam quis imperdiet augue. Vestibulum
-          auctor ornare leo, non suscipit magna interdum eu.
+          Our made-to-order pieces are cut and finished just for you, so what
+          you design in Customise is what we make. For everything else, we
+          describe each piece as accurately as we can, including its colour,
+          material and care.
         </p>
       </section>
 
@@ -64,14 +64,14 @@ export default function About() {
           alt="Model in Rose Uju garment"
         />
         <div className="about-feel__card">
-          <h2>This is What We Feel</h2>
-          <p>Wear African clothes to the world and experience greatness in the culture</p>
+          <h2>Wear your heritage</h2>
+          <p>Clothing and jewellery that carry Afro-Caribbean culture into everyday life.</p>
         </div>
       </section>
 
       <section className="container section about-cta">
         <p>Ready to see the pieces behind the story?</p>
-        <Button as={Link} to="/shop">Shop the Collection</Button>
+        <Button as={Link} to="/shop">Shop the collection</Button>
       </section>
     </div>
   );

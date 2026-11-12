@@ -88,32 +88,32 @@ function ArticleView({ article }) {
         )}
 
         <section className="journal-comment">
-          <h3 className="journal-comment__heading">Leave a Comment</h3>
+          <h3 className="journal-comment__heading">Leave a comment</h3>
           <form onSubmit={handleSubmit}>
             <div className="journal-comment__row">
               <div className="journal-comment__col">
                 <input
-                  type="text" placeholder="Your Name*" required
+                  type="text" placeholder="Your name" required
                   value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
                 <input
-                  type="email" placeholder="Your Email*" required
+                  type="email" placeholder="Your email (not shown)" required
                   value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
               </div>
               <textarea
-                placeholder="Your Comments*" required
+                placeholder="Your comment" required
                 value={form.comment} onChange={(e) => setForm({ ...form, comment: e.target.value })}
               />
             </div>
             {error && <p className="journal-comment__error">{error}</p>}
             {status === 'sent' && <p className="journal-comment__note">Thank you. Your comment will appear once it has been approved.</p>}
-            <button type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Leave a Comment'}</button>
+            <button type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Post comment'}</button>
           </form>
         </section>
 
         <p className="journal-detail__back">
-          <Link to="/journal">← Back to The Journal</Link>
+          <Link to="/journal">← Back to the journal</Link>
         </p>
       </div>
     </article>

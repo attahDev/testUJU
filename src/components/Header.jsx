@@ -8,9 +8,9 @@ import './Header.css';
 const NAV = [
   { label: 'Shop', to: '/shop' },
   { label: 'Collections', to: '/collections' },
-  { label: 'Shop the Look', to: '/looks' },
+  { label: 'Shop the look', to: '/looks' },
   { label: 'Customise', to: '/customise' },
-  { label: 'The Journal', to: '/journal' },
+  { label: 'The journal', to: '/journal' },
   { label: 'About', to: '/about' },
 ];
 

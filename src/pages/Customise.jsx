@@ -8,8 +8,10 @@ import { readJSON, writeJSON } from '../utils/storage.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Customise.css';
 
-const STEPS = ['Choose Product', 'Choose Pattern', 'Personalize', 'Preview', 'Checkout'];
+const STEPS = ['Choose product', 'Choose pattern', 'Personalise', 'Preview', 'Checkout'];
+// These exact strings are validated by the API, so only the label shown to customers is changed.
 const PRODUCT_TYPES = ['Scarf', 'Phone Case', 'Apparel', 'Jewelry'];
+const PRODUCT_LABELS = { 'Phone Case': 'Phone case', Jewelry: 'Jewellery' };
 const PATTERNS = [
   { name: 'Ankara Bloom', tag: 'Ankara', image: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?w=500&q=80' },
   { name: 'Isi Agu Weave', tag: 'Isi Agu', image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&q=80' },
@@ -169,7 +171,7 @@ export default function Customise() {
 
         <div className="customise-layout">
           <div className="customise-products">
-            <h4>Choose Product</h4>
+            <h4>Choose product</h4>
             <div className="product-type-list">
               {PRODUCT_TYPES.map((p) => (
                 <button
@@ -177,14 +179,14 @@ export default function Customise() {
                   className={"product-type" + (product === p ? ' is-active' : '')}
                   onClick={() => setProduct(p)}
                 >
-                  {p} <span>›</span>
+                  {PRODUCT_LABELS[p] || p} <span>›</span>
                 </button>
               ))}
             </div>
           </div>
 
           <div className="customise-patterns">
-            <h4>Choose Pattern</h4>
+            <h4>Choose pattern</h4>
             <div className="pattern-filters">
               {PATTERN_TAGS.map((t) => (
                 <button key={t} className={"pattern-filter" + (tag === t ? ' is-active' : '')} onClick={() => setTag(t)}>
@@ -207,7 +209,7 @@ export default function Customise() {
 
             {step >= 2 && (
               <div className="customise-personalize">
-                <h4>Personalize</h4>
+                <h4>Personalise</h4>
                 <input
                   className="personalize-input"
                   type="text"
@@ -323,7 +325,7 @@ export default function Customise() {
             <p className="customise-price">{product} · {money(price)}</p>
 
             <button className="next-steps-btn" onClick={goNext}>
-              {step < STEPS.length - 1 ? 'Next Steps' : 'Add to Cart & Checkout'}
+              {step < STEPS.length - 1 ? 'Next step' : 'Add to cart and check out'}
             </button>
           </div>
         </div>
