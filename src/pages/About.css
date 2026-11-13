@@ -88,8 +88,6 @@
 .about-feel__card { max-width: 620px; padding: clamp(28px, 4vw, 56px); }
 .about-feel__card h2 { font-weight: 600; font-size: clamp(1.75rem, 3vw, 2.75rem); }
 .about-feel__card p { color: var(--color-ink); }
-
-/* ---- premium pass ---- */
 .about-hero { margin: 16px var(--gutter) 0; border-radius: var(--radius-lg); min-height: min(80vh, 680px); background: var(--color-clay); }
 .about-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(22,40,28,0.7), rgba(22,40,28,0.35)); }
 .about-hero__inner::before { display: none; }

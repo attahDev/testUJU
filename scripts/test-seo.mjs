@@ -1,5 +1,3 @@
-// Run with: npm run test:seo
-// Exercises the serverless functions in /api against a fake backend, plus the bot matching in vercel.json.
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import og from '../api/og.js';

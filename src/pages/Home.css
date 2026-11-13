@@ -13,8 +13,6 @@
 }
 .collection-tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
 .collection-tile:hover img { transform: scale(1.05); }
-
-/* scroll reveal: the tile rises in while its photo slowly settles, then the label follows */
 .collection-tile.reveal img { transform: scale(1.14); transition: transform 1.8s cubic-bezier(0.2, 0.6, 0.2, 1) var(--reveal-delay, 0ms); }
 .collection-tile.reveal.is-visible img { transform: scale(1); }
 .collection-tile.reveal.is-visible:hover img { transform: scale(1.05); transition: transform 0.6s ease; }
@@ -87,8 +85,6 @@
   .gifting { grid-template-columns: 1fr; }
   .gifting__image { order: -1; }
 }
-
-/* the green gifting panel is a .container, so on phones keep it inset with its own margin */
 .gifting.container { max-width: calc(var(--content-max) - 2 * var(--gutter)); margin-left: auto; margin-right: auto; width: calc(100% - 2 * var(--gutter)); padding-left: clamp(24px, 4vw, 56px); padding-right: clamp(24px, 4vw, 56px); }
 .collection-grid { grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 720px) {

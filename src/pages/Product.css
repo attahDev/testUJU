@@ -102,8 +102,6 @@
 .product-cta__like.is-liked { color: var(--color-clay); border-color: var(--color-clay); }
 
 .product-cta__like { color: var(--color-ink); }
-
-/* Phones: Add to cart becomes a dark green bar pinned to the bottom of the screen, always reachable */
 @media (max-width: 800px) {
   .crumb { margin-bottom: 16px; }
   .product-top { gap: 20px; }

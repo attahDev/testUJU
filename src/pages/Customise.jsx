@@ -9,7 +9,6 @@ import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Customise.css';
 
 const STEPS = ['Choose product', 'Choose pattern', 'Personalise', 'Preview', 'Checkout'];
-// These exact strings are validated by the API, so only the label shown to customers is changed.
 const PRODUCT_TYPES = ['Scarf', 'Phone Case', 'Apparel', 'Jewelry'];
 const PRODUCT_LABELS = { 'Phone Case': 'Phone case', Jewelry: 'Jewellery' };
 const PATTERNS = [

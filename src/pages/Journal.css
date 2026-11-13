@@ -11,7 +11,7 @@
 }
 .journal-hero__content {
   position: absolute; left: 0; right: 0; bottom: 32px;
-  z-index: 1; /* the dark gradient (::after) is painted later, so lift the title above it */
+  z-index: 1;
 }
 .journal-hero__content h1 {
   color: var(--color-white);
@@ -62,8 +62,6 @@
 .journal-feature, .journal-feature img, .journal-feature-stack__deco, .journal-card img, .journal-card__media { border-radius: 12px; }
 .journal-page .eyebrow { color: var(--color-ink); }
 .journal-card__meta { color: var(--color-gold); }
-
-/* ---- premium pass ---- */
 .journal-hero { margin: 16px var(--gutter) 0; border-radius: var(--radius-lg); height: min(72vh, 640px); min-height: 380px; }
 .journal-hero__content { bottom: clamp(20px, 4vw, 48px); }
 .journal-hero__content.container { padding-left: clamp(20px, 4vw, 52px); padding-right: clamp(20px, 4vw, 52px); }

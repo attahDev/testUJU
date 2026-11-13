@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-// One empty-state panel for cart, wishlist, looks and orders, so they all read and look the same.
 export default function EmptyState({ title, text, to, action, children }) {
   return (
     <div className="cart-empty">

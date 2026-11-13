@@ -81,8 +81,6 @@
   color: var(--color-ink);
 }
 .shop-empty { color: var(--color-text-soft); padding: 40px 0; }
-
-/* the Filters button only exists on phones; desktop shows the sidebar */
 .shop-filters__toggle { display: none; }
 @media (max-width: 820px) {
   .shop-layout { grid-template-columns: 1fr; gap: 20px; }

@@ -3,10 +3,6 @@ import './ShareButton.css';
 
 const onTouchDevice = () => typeof window !== 'undefined' && window.matchMedia?.('(pointer: coarse)').matches;
 
-/**
- * Phones open the system share sheet (WhatsApp, Instagram, Messages and so on). Computers get a small menu
- * with WhatsApp, Facebook, X, email and copy-link.
- */
 export default function ShareButton({ url, title, text = '', variant = 'text', className = '' }) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -33,7 +29,7 @@ export default function ShareButton({ url, title, text = '', variant = 'text', c
       try {
         await navigator.share({ title, text, url: link });
       } catch (err) {
-        if (err?.name !== 'AbortError') setOpen(true); // the sheet failed to open: fall back to the menu
+        if (err?.name !== 'AbortError') setOpen(true);
       }
       return;
     }

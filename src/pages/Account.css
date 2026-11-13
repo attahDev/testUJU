@@ -49,8 +49,6 @@
 .account-orders__guest { margin-top: 24px; font-size: 0.875rem; color: var(--color-text-soft); }
 .account-orders__guest a { color: var(--color-clay); text-decoration: underline; }
 .account-form__legal a { color: var(--color-clay); text-decoration: underline; }
-
-/* ---- premium pass ---- */
 .account-page h1 { font-size: clamp(2.6rem, 2rem + 4vw, 5rem); line-height: 0.92; letter-spacing: -0.04em; margin-bottom: 16px; }
 .account-page__title { font-size: var(--step-2); border-bottom: none; padding-bottom: 0; }
 .account-page--narrow { max-width: 560px; }

@@ -11,7 +11,6 @@ export default function Wishlist() {
   usePageMeta({ title: 'Wishlist', noindex: true });
   const { ids, synced } = useWishlist();
   const { getProduct } = useCatalog();
-  // Ids of products that no longer exist are simply skipped.
   const products = ids.map(getProduct).filter(Boolean);
 
   return (

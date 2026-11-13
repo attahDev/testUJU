@@ -59,9 +59,6 @@
 }
 
 .product-card__name, .product-card__price { transition: color 0.3s ease; }
-
-
-/* hearts give a small pop when saved */
 .product-card__like svg { transition: transform 0.25s ease; }
 .product-card__like.is-liked svg { animation: heart-pop 0.45s cubic-bezier(0.3, 1.6, 0.5, 1); }
 @keyframes heart-pop { 0% { transform: scale(0.7); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }

@@ -1,7 +1,3 @@
-/*
- * Every built-in picture on the storefront that the owner can swap from the admin ("Site images").
- * `fallback` is what shows until a replacement is uploaded, so nothing ever breaks.
- */
 const u = (id, w) => `https://images.unsplash.com/photo-${id}?w=${w}&q=80`;
 
 export const SITE_IMAGE_GROUPS = ['Homepage', 'About page', 'Other pages'];

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { api } from '../api/client.js';
 
-// One newsletter sign-up used in the footer and on the Collections page, so both behave the same way.
 export default function NewsletterForm({ formClass, thanksClass, errorClass, thanks = 'Thank you for joining the Cultivated Circle.' }) {
   const [subscribed, setSubscribed] = useState(false);
   const [busy, setBusy] = useState(false);

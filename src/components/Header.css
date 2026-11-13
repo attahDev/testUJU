@@ -107,7 +107,6 @@
   .site-header__inner { grid-template-columns: 44px 1fr auto; gap: 8px; }
   .site-header__burger { display: block; }
   .site-header__logo { justify-self: center; font-size: 1.4rem; }
-  /* the menu becomes a full-screen sheet with large serif links */
   .site-header__nav {
     position: fixed;
     top: var(--header-h);

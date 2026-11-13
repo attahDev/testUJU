@@ -22,7 +22,6 @@ export default function Header() {
   const { count: wishCount } = useWishlist();
   const navigate = useNavigate();
 
-  // while the mobile menu is open, lock page scroll and let Escape close it
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
     const onKey = (e) => e.key === 'Escape' && setOpen(false);

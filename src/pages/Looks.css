@@ -3,8 +3,6 @@
 .looks-page__list { display: flex; flex-direction: column; gap: clamp(48px, 7vw, 96px); }
 .looks-page__back { margin-bottom: 32px; font-size: 0.875rem; }
 .looks-page__back a { color: var(--color-clay); text-decoration: underline; }
-
-/* ---- premium pass ---- */
 .looks-page h1 { font-size: clamp(2.8rem, 2rem + 5vw, 6rem); line-height: 0.9; letter-spacing: -0.04em; }
 .looks-page__lead { font-size: 1.125rem; }
 .looks-page__list { gap: clamp(40px, 6vw, 72px); }

@@ -5,9 +5,6 @@
   overflow: hidden;
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
-
-/* The headline is split in two. The first line sits behind the photo, the second in front of it,
-   so the type and the photograph lock together. */
 .hero__stage {
   position: relative;
   display: grid;
@@ -66,8 +63,6 @@
 }
 .hero__foot p { max-width: 34ch; font-size: 1.0625rem; color: var(--color-text-soft); line-height: 1.5; }
 .hero__actions { display: flex; gap: 12px; flex-wrap: wrap; }
-
-/* one orchestrated entrance: the arch opens upward, then the two lines of type rise into place */
 .hero__arch { animation: hero-arch 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .hero__line > span { animation: hero-line 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 .hero__line--back > span { animation-delay: 0.15s; }
