@@ -1,10 +1,9 @@
 import { useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard.jsx';
 import { useCatalog } from '../context/catalogStore.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 import './Shop.css';
-
 
 export default function Shop() {
   usePageMeta({ title: 'Shop', description: 'Browse the full Rose Uju collection: scarves, coats, jewellery, bags and more.' });
@@ -23,6 +22,7 @@ export default function Shop() {
   const prices = PRODUCTS.map((p) => p.price);
   const boundMin = prices.length ? Math.floor(Math.min(...prices)) : 0;
   const boundMax = prices.length ? Math.ceil(Math.max(...prices)) : 0;
+  const span = boundMax - boundMin;
   const lo = priceMin ?? boundMin;
   const hi = priceMax ?? boundMax;
 
@@ -52,13 +52,17 @@ export default function Shop() {
     <>
       <section className="shop-hero">
         <img src={siteImage('shop-banner')} alt="" />
-        <div className="shop-hero__content container">
-          <p className="shop-hero__crumb">Home / Shop</p>
+        <div className="shop-hero__content">
+          <nav className="crumbs" aria-label="Breadcrumb">
+            <Link to="/">Home</Link>
+            <span className="crumbs__sep" aria-hidden="true" />
+            <span className="crumbs__here">Shop</span>
+          </nav>
           <h1>Shop All</h1>
         </div>
       </section>
 
-      <section className="container section shop-layout">
+      <section className="shop-layout">
         <aside className="shop-filters">
           <h4>Filter By</h4>
 
@@ -84,10 +88,11 @@ export default function Shop() {
 
           <div className="filter-group">
             <h5>Price</h5>
-            <div className="price-range">
+            <div className="price-range" style={{ '--lo': span ? (lo - boundMin) / span : 0, '--hi': span ? (hi - boundMin) / span : 1 }}>
+              <div className="price-range__track"><div className="price-range__fill" /></div>
               <input type="range" min={boundMin} max={boundMax} value={lo} aria-label="Minimum price" onChange={(e) => setPriceMin(Math.min(Number(e.target.value), hi))} />
               <input type="range" min={boundMin} max={boundMax} value={hi} aria-label="Maximum price" onChange={(e) => setPriceMax(Math.max(Number(e.target.value), lo))} />
-              <div className="price-range__labels"><span>{money(lo)}</span><span>{money(hi)}</span></div>
+              <div className="price-range__labels"><span>{money(lo)}</span><span>{money(hi)}{hi === boundMax ? '+' : ''}</span></div>
             </div>
           </div>
 
@@ -106,17 +111,17 @@ export default function Shop() {
             </div>
           </div>
 
-          {hasFilters && (
-            <button className="clear-filters" onClick={() => { setActiveCollections([]); setActiveCategories([]); setActiveMaterials([]); setPriceMin(null); setPriceMax(null); }}>
+          <div className="filter-group filter-group--last">
+            <button className="clear-filters" disabled={!hasFilters} onClick={() => { setActiveCollections([]); setActiveCategories([]); setActiveMaterials([]); setPriceMin(null); setPriceMax(null); }}>
               Clear all filters
             </button>
-          )}
+          </div>
         </aside>
 
         <div className="shop-results">
           <div className="shop-results__bar">
             <p>
-              Showing {filtered.length} of {PRODUCTS.length} results
+              Showing {filtered.length ? `1-${filtered.length}` : '0'} of {PRODUCTS.length} results
               {query && (
                 <>
                   {' '}for “{params.get('q')}” <button className="clear-filters" onClick={() => setParams({})}>Clear search</button>

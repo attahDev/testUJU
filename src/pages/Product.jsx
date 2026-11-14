@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import NotFound from './NotFound.jsx';
 import Button from '../components/Button.jsx';
 import ProductCard from '../components/ProductCard.jsx';
@@ -68,7 +68,13 @@ function ProductView({ product }) {
     api(`/api/products/${product.id}/reviews`, { auth: false }).then(setSummary).catch(() => setSummary(null));
   }, [product.id]);
 
-  const related = products.filter((p) => p.id !== product.id).slice(0, 4);
+  const related = products.filter((p) => p.id !== product.id).slice(0, 8);
+  const rail = useRef(null);
+
+  function slide(dir) {
+    const el = rail.current;
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
+  }
 
   function handleAdd() {
     addItem(product, { color, size, qty });
@@ -77,8 +83,16 @@ function ProductView({ product }) {
   }
 
   return (
-    <div className="container section">
-      <p className="crumb">Home &gt; Shop &gt; {product.collection} &gt; <span>{product.name}</span></p>
+    <div className="product-page">
+      <nav className="crumb" aria-label="Breadcrumb">
+        <Link to="/">Home</Link>
+        <i aria-hidden="true" />
+        <Link to="/shop">Shop</Link>
+        <i aria-hidden="true" />
+        <Link to="/collections">{product.collection}</Link>
+        <i aria-hidden="true" />
+        <span>{product.name}</span>
+      </nav>
 
       <div className="product-top">
         <div className="product-gallery">
@@ -89,6 +103,7 @@ function ProductView({ product }) {
           </div>
           <div className="product-gallery__main">
             <img src={mainImage} alt={product.name} />
+            <HeartButton productId={product.id} className="product-gallery__like" />
           </div>
         </div>
 
@@ -106,7 +121,7 @@ function ProductView({ product }) {
           {product.description && <p className="product-info__desc">{product.description}</p>}
 
           {colors.length > 0 && <div className="product-option">
-            <span className="product-option__label">Color: {color}</span>
+            <span className="product-option__label"><b>Color:</b> {color}</span>
             <div className="swatches">
               {colors.map((c) => (
                 <button
@@ -121,7 +136,7 @@ function ProductView({ product }) {
           </div>}
 
           {sizes.length > 0 && <div className="product-option">
-            <span className="product-option__label">Size</span>
+            <span className="product-option__label"><b>Size</b></span>
             <div className="size-options">
               {sizes.map((s) => (
                 <button
@@ -142,7 +157,6 @@ function ProductView({ product }) {
               <button onClick={() => setQty((q) => q + 1)} aria-label="Increase quantity">+</button>
             </div>
             <Button onClick={handleAdd} disabled={soldOut}>{soldOut ? 'Sold out' : added ? 'Added ✓' : 'Add to Cart'}</Button>
-            <HeartButton productId={product.id} className="product-cta__like" />
             <ShareButton variant="icon" url={page} title={`${product.name} | Rose Uju`} text={`${product.name} from Rose Uju`} />
           </div>
         </div>
@@ -181,8 +195,20 @@ function ProductView({ product }) {
       </section>
 
       <section className="section">
-        <h2 className="related-title">You May Also Love</h2>
-        <div className="product-grid product-grid--4">
+        <div className="related-head">
+          <h2 className="related-title">You May Also Love</h2>
+          {related.length > 4 && (
+            <div className="related-arrows">
+              <button type="button" aria-label="Previous products" onClick={() => slide(-1)}>
+                <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M7 1 1 7l6 6" stroke="currentColor" strokeWidth="1.6" /></svg>
+              </button>
+              <button type="button" aria-label="Next products" onClick={() => slide(1)}>
+                <svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="m1 1 6 6-6 6" stroke="currentColor" strokeWidth="1.6" /></svg>
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="related-rail" ref={rail}>
           {related.map((p, i) => <ProductCard key={p.id} product={p} index={i} columns={4} />)}
         </div>
       </section>
