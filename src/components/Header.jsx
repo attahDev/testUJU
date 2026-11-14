@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/cartStore.js';
-import { useWishlist } from '../context/wishlistStore.js';
 import { useCatalog } from '../context/catalogStore.js';
 import './Header.css';
 
 const NAV = [
   { label: 'Shop', to: '/shop' },
   { label: 'Collections', to: '/collections' },
-  { label: 'Shop the Look', to: '/looks' },
   { label: 'Customise', to: '/customise' },
   { label: 'The Journal', to: '/journal' },
   { label: 'About', to: '/about' },
@@ -19,7 +17,6 @@ export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState('');
   const { count } = useCart();
-  const { count: wishCount } = useWishlist();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { status } = useCatalog();
@@ -63,17 +60,13 @@ export default function Header() {
 
         <div className="site-header__icons">
           <button aria-label="Search" aria-expanded={searchOpen} className="icon-btn" onClick={() => setSearchOpen((v) => !v)}>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.3"/><line x1="12.6" y1="12.6" x2="17" y2="17" stroke="currentColor" strokeWidth="1.3"/></svg>
+            <svg width="24" height="24" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.3"/><line x1="12.6" y1="12.6" x2="17" y2="17" stroke="currentColor" strokeWidth="1.3"/></svg>
           </button>
-          <Link to="/wishlist" aria-label={`Wishlist${wishCount ? ` (${wishCount})` : ''}`} className="icon-btn icon-btn--cart">
-            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 14s-6-3.6-6-8.2A3.6 3.6 0 0 1 8 3.6 3.6 3.6 0 0 1 14 5.8C14 10.4 8 14 8 14Z" stroke="currentColor" strokeWidth="1.1"/></svg>
-            {wishCount > 0 && <span className="icon-btn__badge">{wishCount}</span>}
-          </Link>
           <Link to="/account" aria-label="Account" className="icon-btn">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="5.5" r="3.25" stroke="currentColor" strokeWidth="1.3"/><path d="M2.5 16c1-3.2 4-5 6.5-5s5.5 1.8 6.5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
+            <svg width="24" height="24" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="5.5" r="3.25" stroke="currentColor" strokeWidth="1.3"/><path d="M2.5 16c1-3.2 4-5 6.5-5s5.5 1.8 6.5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
           </Link>
           <Link to="/cart" aria-label="Cart" className="icon-btn icon-btn--cart">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 5h12l-1 9.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 4 14.5L3 5Z" stroke="currentColor" strokeWidth="1.3"/><path d="M6.2 5V3.8a2.8 2.8 0 0 1 5.6 0V5" stroke="currentColor" strokeWidth="1.3"/></svg>
+            <svg width="24" height="24" viewBox="0 0 18 18" fill="none"><path d="M3 5h12l-1 9.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 4 14.5L3 5Z" stroke="currentColor" strokeWidth="1.3"/><path d="M6.2 5V3.8a2.8 2.8 0 0 1 5.6 0V5" stroke="currentColor" strokeWidth="1.3"/></svg>
             {count > 0 && <span className="icon-btn__badge">{count}</span>}
           </Link>
         </div>

@@ -2,8 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: clamp(24px, 3vw, 40px);
   gap: 16px;
+  margin-bottom: clamp(24px, 3vw, 44px);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-ink);
 }
 .section-heading__eyebrow {
   color: var(--color-clay);
@@ -11,13 +13,21 @@
   margin-bottom: 6px;
 }
 .section-heading__title {
-  font-size: var(--step-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 3.4vw, 3.25rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
 }
 .section-heading__link {
-  font-size: 0.8125rem;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
   white-space: nowrap;
-  padding-bottom: 3px;
-  border-bottom: 1px solid var(--color-ink);
+  padding-bottom: 14px;
 }
 .section-heading__link span { display: inline-block; transition: transform 0.2s ease; }
 .section-heading__link:hover span { transform: translateX(3px); }
