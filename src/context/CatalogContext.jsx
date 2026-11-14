@@ -11,7 +11,6 @@ async function fetchCatalog() {
     api('/api/products', { auth: false }),
     api('/api/articles', { auth: false }),
     api('/api/config', { auth: false }),
-    // Looks are an extra: if they fail to load the rest of the shop still works.
     api('/api/looks', { auth: false }).catch(() => []),
     api('/api/site-images', { auth: false }).catch(() => ({})),
     api('/api/site-settings', { auth: false }).catch(() => ({})),

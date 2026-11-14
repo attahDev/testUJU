@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { prefersReducedMotion } from './useReducedMotion.js';
 
-/*
- * An IntersectionObserver only reports when an element crosses the edge of the screen, so a big jump
- * (the End key, a restored scroll position) can carry an element from "below" to "above" the viewport
- * without it ever being reported. One shared, throttled scroll check catches those: anything already
- * scrolled past is simply shown.
- */
 const waiting = new Set();
 let queued = false;
 let listening = false;
@@ -41,7 +35,6 @@ function unwatch(item) {
   }
 }
 
-/** True once the element has scrolled into view (and stays true). Instantly true when motion is reduced. */
 export function useInView({ threshold = 0.15, rootMargin = '0px 0px -8% 0px' } = {}) {
   const ref = useRef(null);
   const [inView, setInView] = useState(() => prefersReducedMotion() || typeof IntersectionObserver === 'undefined');
@@ -74,7 +67,6 @@ export function useInView({ threshold = 0.15, rootMargin = '0px 0px -8% 0px' } =
   return [ref, inView];
 }
 
-/** Staggers items by their column so a row arrives left to right instead of all at once. */
 export function stagger(index, columns = 3, step = 90) {
   return (index % columns) * step;
 }

@@ -1,7 +1,6 @@
 import { formatDate } from '../api/mappers.js';
 import './TrackingInfo.css';
 
-/** Carrier, number and a link to the carrier's own tracking page. Renders nothing until the order has tracking. */
 export default function TrackingInfo({ order }) {
   if (!order.tracking_number && !(order.status === 'delivered' && order.delivered_at)) return null;
   const carrier = order.carrier && order.carrier !== 'Other' ? order.carrier : '';

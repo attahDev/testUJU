@@ -1,13 +1,6 @@
 import { useEffect } from 'react';
 import { useCatalog } from '../context/catalogStore.js';
 
-/*
- * Sets the browser tab title, search description, share tags, canonical link and (optionally) search-engine
- * product data for the current page, and puts the site-wide defaults back when the page is left.
- *
- * This is what Google and the tab bar see. Link-preview bots (WhatsApp, Facebook, ...) do not run scripts, so
- * product and Journal links get their cards from the server-side functions in /api instead.
- */
 const META = [
   ['name', 'description'],
   ['property', 'og:title'],
@@ -38,7 +31,6 @@ function write(attr, key, content) {
   el.setAttribute('content', content);
 }
 
-// The values from the page shell (index.html), captured once so they can be restored.
 const DEFAULTS =
   typeof document === 'undefined'
     ? null

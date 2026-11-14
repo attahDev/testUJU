@@ -1,4 +1,3 @@
-// Mirrors the server's defaults so the pages still read properly if the settings request fails.
 export const STORE_DEFAULTS = {
   business_name: 'Rose Uju',
   support_email: '',

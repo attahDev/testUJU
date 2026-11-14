@@ -10,7 +10,6 @@ function inStock(p) {
   return p.stock > 0;
 }
 
-/** Lookbook photo if there is one; otherwise a collage composed from the product images. */
 function LookMedia({ look }) {
   const [hero, ...rest] = look.products;
   if (look.image) {
@@ -56,7 +55,6 @@ export default function LookCard({ look }) {
   const [problem, setProblem] = useState('');
   const [added, setAdded] = useState(false);
 
-  // Once the entrance has played, drop the staggered delays so later interactions respond instantly.
   useEffect(() => {
     if (!inView) return undefined;
     const timer = setTimeout(() => setSettled(true), 2600);
