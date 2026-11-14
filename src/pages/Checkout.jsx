@@ -125,7 +125,7 @@ function CheckoutForm() {
 
   if (items.length === 0) {
     return (
-      <div className="container section checkout-page">
+      <div className="checkout-page">
         <h1>Checkout</h1>
         <p className="cart-empty">
           Your cart is empty. <Link to="/shop">Continue shopping</Link>.
@@ -135,8 +135,10 @@ function CheckoutForm() {
   }
 
   return (
-    <div className="container section checkout-page">
-      <button className="checkout-back" onClick={() => (step > 0 ? setStep(step - 1) : navigate(-1))} aria-label="Go back">←</button>
+    <div className="checkout-page">
+      <button className="checkout-back" onClick={() => (step > 0 ? setStep(step - 1) : navigate(-1))} aria-label="Go back">
+        <svg width="68" height="14" viewBox="0 0 68 14" fill="none"><path d="M67 7H2m6-6L2 7l6 6" stroke="currentColor" strokeWidth="1.3" /></svg>
+      </button>
       <h1>Checkout</h1>
 
       <div className="checkout-steps">
@@ -221,10 +223,8 @@ function CheckoutForm() {
         </form>
 
         <aside className="checkout-summary">
-          <div className="checkout-summary__head">
-            <span>Your Order</span>
-            <span className="checkout-summary__count">({items.length})</span>
-          </div>
+          <span className="checkout-summary__count">({items.length})</span>
+          <div className="checkout-summary__head">Your Order</div>
           {items.map((item) => (
             <div key={item.key} className="checkout-summary__item">
               <img src={item.image} alt={item.name} />
@@ -235,7 +235,7 @@ function CheckoutForm() {
                 </div>
                 <p>{[item.color, item.size].filter(Boolean).join(' / ')}</p>
                 <div className="checkout-summary__item-bottom">
-                  <span>({item.qty})</span>
+                  <span className="checkout-summary__qty">({item.qty})</span>
                   <strong>{money(item.price * item.qty)}</strong>
                 </div>
               </div>
@@ -256,7 +256,7 @@ export default function Checkout() {
   usePageMeta({ title: 'Checkout', noindex: true });
   const { user, ready } = useAuth();
   const { items } = useCart();
-  if (!ready) return <div className="container section checkout-page"><p>Loading…</p></div>;
+  if (!ready) return <div className="checkout-page"><p>Loading…</p></div>;
   if (!user && items.length > 0) {
     return (
       <AuthForm

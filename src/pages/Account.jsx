@@ -233,6 +233,7 @@ export default function Account() {
           <p className="account-page__lead">{user.email}</p>
         </div>
         <div className="account-page__actions">
+          <Button as={Link} to="/wishlist" variant="outline">Saved pieces</Button>
           {user.is_admin && <Button as={Link} to="/admin" variant="dark">Admin</Button>}
           <Button variant="outline" onClick={logout}>Sign out</Button>
         </div>

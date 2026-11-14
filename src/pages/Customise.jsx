@@ -150,13 +150,17 @@ export default function Customise() {
     <div className="customise-page">
       <section className="customise-hero">
         <img src={siteImage('customise-banner')} alt="" />
-        <div className="customise-hero__content container">
-          <p className="crumb">Home &gt; <span>Customize</span></p>
+        <div className="customise-hero__content">
+          <nav className="crumbs" aria-label="Breadcrumb">
+            <Link to="/">Home</Link>
+            <span className="crumbs__sep" aria-hidden="true" />
+            <span className="crumbs__here">Customize</span>
+          </nav>
           <h1>Customize Your Design</h1>
         </div>
       </section>
 
-      <div className="container customise-body">
+      <div className="customise-body">
         <div className="customise-steps">
           {STEPS.map((label, i) => (
             <div key={label} className={"customise-step" + (i === step ? ' is-active' : i < step ? ' is-done' : '')}>
