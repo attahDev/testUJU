@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Home from './pages/Home.jsx';
@@ -25,7 +26,15 @@ import ResetPassword from './pages/ResetPassword.jsx';
 import Admin from './pages/admin/Admin.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
+const GRAIN_PATHS = ['/', '/about', '/cart', '/checkout', '/customise', '/collections'];
+
 export default function App() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    document.body.dataset.surface = GRAIN_PATHS.includes(pathname) ? 'grain' : 'flat';
+  }, [pathname]);
+
   return (
     <div className="site">
       <ScrollToTop />
