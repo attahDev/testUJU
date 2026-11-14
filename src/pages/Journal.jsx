@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import JournalCard from '../components/JournalCard.jsx';
 import { stagger } from '../hooks/useInView.js';
 import { Link } from 'react-router-dom';
@@ -11,6 +12,7 @@ export default function Journal() {
   const [hero] = ARTICLES;
   const featured3 = ARTICLES.slice(0, 3);
   const grid3 = ARTICLES.slice(3);
+  const rail = useRef(null);
 
   if (ARTICLES.length < 3) {
     return (
@@ -19,7 +21,7 @@ export default function Journal() {
         {ARTICLES.length === 0 && <p>New stories are coming soon.</p>}
         <div className="journal-grid">
           {ARTICLES.map((a, i) => (
-            <JournalCard key={a.id} article={a} meta={`${a.tag.toUpperCase()} • ${a.readTime}`} delay={stagger(i)} />
+            <JournalCard key={a.id} article={a} meta={`${a.tag} · ${a.readTime}`} delay={stagger(i)} />
           ))}
         </div>
       </div>
@@ -30,13 +32,13 @@ export default function Journal() {
     <div className="journal-page">
       <section className="journal-hero">
         <img src={hero.image} alt="" />
-        <div className="journal-hero__content container">
+        <div className="journal-hero__content">
           <h1>{hero.title}</h1>
         </div>
       </section>
 
-      <section className="container section">
-        <p className="eyebrow">Fashion</p>
+      <section className="journal-top">
+        <p className="journal-page__kicker">Fashion</p>
         <h2 className="journal-page__title">Top Fashion Stories</h2>
 
         <div className="journal-feature-grid">
@@ -49,9 +51,9 @@ export default function Journal() {
             </div>
           </Link>
           <div className="journal-feature-stack">
-            <Link to={`/journal/${featured3[1].id}`} className="journal-feature">
+            <Link to={`/journal/${featured3[1].id}`} className="journal-feature journal-feature--plain">
               <img src={featured3[1].image} alt="" />
-              <div className="journal-feature__caption journal-feature__caption--light">
+              <div className="journal-feature__caption">
                 <span>{featured3[1].date} ISSUE</span>
                 <h3>{featured3[1].title}</h3>
                 <p>By {featured3[1].author}</p>
@@ -59,7 +61,7 @@ export default function Journal() {
             </Link>
             <img className="journal-feature-stack__deco" src={siteImage('journal-deco')} alt="" />
           </div>
-          <Link to={`/journal/${featured3[2].id}`} className="journal-feature journal-feature--tall">
+          <Link to={`/journal/${featured3[2].id}`} className="journal-feature journal-feature--side">
             <img src={featured3[2].image} alt="" />
             <div className="journal-feature__caption">
               <span>{featured3[2].date} ISSUE</span>
@@ -70,15 +72,27 @@ export default function Journal() {
         </div>
       </section>
 
-      {grid3.length > 0 && <section className="container section">
+      {grid3.length > 0 && <section className="journal-more">
         <div className="journal-page__divider">
-          <p className="eyebrow">Fashion</p>
+          <p>Fashion</p>
           <hr />
         </div>
-        <div className="journal-grid">
-          {grid3.map((a, i) => (
-            <JournalCard key={a.id} article={a} meta={`${a.tag.toUpperCase()} • ${a.readTime}`} delay={stagger(i)} />
-          ))}
+        <div className="journal-more__wrap">
+          <div className="journal-more__rail" ref={rail}>
+            {grid3.map((a, i) => (
+              <JournalCard key={a.id} article={a} meta={`${a.tag} · ${a.readTime}`} delay={stagger(i)} />
+            ))}
+          </div>
+          {grid3.length > 3 && (
+            <button
+              type="button"
+              className="journal-more__next"
+              aria-label="Next stories"
+              onClick={() => rail.current?.scrollBy({ left: rail.current.clientWidth * 0.8, behavior: 'smooth' })}
+            >
+              <svg width="30" height="14" viewBox="0 0 30 14" fill="none"><path d="M0 7h28m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.6" /></svg>
+            </button>
+          )}
         </div>
       </section>}
     </div>

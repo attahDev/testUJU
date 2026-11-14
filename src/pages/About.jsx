@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Button from '../components/Button.jsx';
 import { useCatalog } from '../context/catalogStore.js';
 import { usePageMeta } from '../hooks/usePageMeta.js';
 import './About.css';
@@ -15,11 +14,11 @@ export default function About() {
           src={siteImage('about-hero')}
           alt=""
         />
-        <div className="about-hero__top container">
-          <p className="crumb crumb--light">Home / About</p>
+        <div className="about-hero__top">
+          <p className="about-hero__crumb"><Link to="/">Home</Link> / About</p>
           <p className="about-hero__label">About Us</p>
         </div>
-        <div className="about-hero__inner container">
+        <div className="about-hero__inner">
           <img
             className="about-hero__side about-hero__side--left"
             src={siteImage('about-scarf')}
@@ -36,8 +35,8 @@ export default function About() {
         </div>
       </section>
 
-      <section className="container section about-craft">
-        <div className="about-craft__copy">
+      <section className="about-craft">
+        <div className="about-craft__copy about-craft__copy--left">
           <h2>Our Craft</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.
@@ -67,11 +66,6 @@ export default function About() {
           <h2>This is What We Feel</h2>
           <p>Wear African clothes to the world and experience greatness in the culture</p>
         </div>
-      </section>
-
-      <section className="container section about-cta">
-        <p>Ready to see the pieces behind the story?</p>
-        <Button as={Link} to="/shop">Shop the Collection</Button>
       </section>
     </div>
   );
