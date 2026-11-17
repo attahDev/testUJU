@@ -1,9 +1,5 @@
 import { TAGLINE, absoluteUrl, apiBase, cardHtml, clip, getJson, safeId, sendHtml, siteBase } from './_shared.js';
 
-/*
- * Link-preview cards for WhatsApp, Facebook, Slack, Telegram and similar. vercel.json sends only those bots here;
- * people and search engines get the normal site. Any failure falls back to the generic brand card so a share never breaks.
- */
 export default async function handler(req, res) {
   const type = Array.isArray(req.query?.type) ? req.query.type[0] : req.query?.type || 'home';
   const id = safeId(req.query?.id);
