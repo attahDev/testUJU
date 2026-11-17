@@ -29,7 +29,7 @@ export default function ShareButton({ url, title, text = '', variant = 'text', c
       try {
         await navigator.share({ title, text, url: link });
       } catch (err) {
-        if (err?.name !== 'AbortError') setOpen(true); // the sheet failed to open: fall back to the menu
+        if (err?.name !== 'AbortError') setOpen(true);
       }
       return;
     }

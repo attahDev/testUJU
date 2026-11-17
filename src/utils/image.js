@@ -29,7 +29,7 @@ export async function prepareImage(file) {
 
     let blob = await toBlob(canvas, 'image/webp', 0.86);
     if (!blob || blob.type !== 'image/webp') blob = await toBlob(canvas, 'image/jpeg', 0.88);
-    if (!blob || blob.size >= file.size) return file; // never make it bigger
+    if (!blob || blob.size >= file.size) return file;
     const ext = blob.type === 'image/webp' ? 'webp' : 'jpg';
     const base = file.name.replace(/\.[^.]+$/, '') || 'photo';
     return new File([blob], `${base}.${ext}`, { type: blob.type });
